@@ -1,5 +1,6 @@
 import React from 'react';
 import './index.css';
+import { ENTER_KEY } from '../../constantValue';
 
 const TodoAdd = ({getNewItem,toggleAll,todoLength}) => {
     const handleCheck = ({target}) =>{
@@ -8,12 +9,12 @@ const TodoAdd = ({getNewItem,toggleAll,todoLength}) => {
     
     const handleOnKeyDown =(event) =>{
         let content = event.target.value.trim();
-        if (event.keyCode===13 && content !== '') {
+        if (event.keyCode===ENTER_KEY && content !== '') {
             getNewItem(content);
             event.target.value = '';
         }
     }
-    
+
     return (
         <div id='add-todo'>
             <input id="toggle-all" type="checkbox" onChange={handleCheck} />
