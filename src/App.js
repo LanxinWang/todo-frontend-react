@@ -20,14 +20,6 @@ function App() {
     );
   };
 
-  const deleteTodo = (todoId) => {
-    setTodos(
-      todos.filter((todo) => {
-        return todo.id !== todoId;
-      })
-    );
-  };
-
   const checkTodo = (isChecked, todoId) => {
     let todoPosition = todos.findIndex((todo) => todo.id === parseInt(todoId));
     todos[todoPosition].status = isChecked
@@ -60,7 +52,9 @@ function App() {
         />
         <TodoList
           todos={todos}
-          deleteTodo={deleteTodo}
+          deleteTodo={(todoId) => {
+            setTodos(todos.filter((todo) => todo.id !== todoId));
+          }}
           checkTodo={checkTodo}
           todoStatus={selectedTodoStatus}
         />
