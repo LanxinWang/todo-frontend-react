@@ -13,6 +13,14 @@ function App() {
     TODO_MENU.ALL
   );
 
+  const addTodo = (newTodo) => {
+    setTodos([newTodo, ...todos]);
+  };
+
+  const deleteTodo = (todoId) => {
+    setTodos(todos.filter((todo) => todo.id !== todoId));
+  };
+
   const toggleAll = (toggleFlag) => {
     setTodos(
       todos.map((todo) => {
@@ -42,17 +50,13 @@ function App() {
       </header>
       <div id="todo-app">
         <TodoInput
-          addTodo={(newTodo) => {
-            setTodos([newTodo, ...todos]);
-          }}
+          addTodo={addTodo}
           toggleAll={toggleAll}
           todoLength={todos.length}
         />
         <TodoList
           todos={todos}
-          deleteTodo={(todoId) => {
-            setTodos(todos.filter((todo) => todo.id !== todoId));
-          }}
+          deleteTodo={deleteTodo}
           checkTodo={checkTodo}
           selectedTodoStatusOption={selectedTodoStatusOption}
         />
