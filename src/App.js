@@ -1,4 +1,3 @@
-import "./App.css";
 import "./component/TodoInput";
 import TodoInput from "./component/TodoInput";
 import TodoList from "./component/TodoList";
@@ -6,6 +5,7 @@ import TodoMenu from "./component/TodoMenu";
 import { useState } from "react";
 import TODO_STATUS, { TITLE, TODO_MENU } from "./constants";
 import remove from "lodash.remove";
+import { Div, Footer, H1 } from "./style";
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -44,11 +44,11 @@ function App() {
   };
 
   return (
-    <div className="TODO">
-      <header id="title">
-        <h1>{TITLE}</h1>
+    <div>
+      <header>
+        <H1>{TITLE}</H1>
       </header>
-      <div id="todo-app">
+      <Div>
         <TodoInput
           addTodo={addTodo}
           toggleAll={toggleAll}
@@ -68,8 +68,8 @@ function App() {
           selectedTodoStatusOption={selectedTodoStatusOption}
           clearCompletedTodo={clearCompletedTodo}
         />
-      </div>
-      <footer id="info">
+      </Div>
+      <Footer id="info">
         <p>Double-click to edit a todo</p>
         <p>
           Create by <a href="http://github.com/petehunt/">petehunt</a>
@@ -77,7 +77,7 @@ function App() {
         <p>
           Part of <a href="http://todomvc.com">TodoMVC</a>
         </p>
-      </footer>
+      </Footer>
     </div>
   );
 }
