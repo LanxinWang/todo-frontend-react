@@ -1,8 +1,10 @@
 import React from "react";
 import "./index.css";
-import { ENTER_KEY } from "../../constants";
+import TODO_STATUS, { ENTER_KEY } from "../../constants";
 
-const TodoAdd = ({ getNewItem, toggleAll, todoLength }) => {
+let todoId = 0;
+
+const TodoAdd = ({ addTodo, toggleAll, todoLength }) => {
   const handleCheck = ({ target }) => {
     toggleAll(target.checked);
   };
@@ -10,8 +12,12 @@ const TodoAdd = ({ getNewItem, toggleAll, todoLength }) => {
   const handleOnKeyDown = (event) => {
     let content = event.target.value.trim();
     if (event.keyCode === ENTER_KEY && content !== "") {
-      // todo = {}
-      getNewItem(content);
+      let newTodo = {
+        id: todoId++,
+        status: TODO_STATUS.ACTIVE,
+        content,
+      };
+      addTodo(newTodo);
       event.target.value = "";
     }
   };
