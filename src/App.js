@@ -1,28 +1,15 @@
 import "./App.css";
-import "./component/TodoAdd";
-import TodoAdd from "./component/TodoAdd";
+import "./component/TodoInput";
+import TodoInput from "./component/TodoInput";
 import TodoList from "./component/TodoList";
-import TodoCount from "./component/TodoCount";
+import TodoMenu from "./component/TodoMenu";
 import { useState } from "react";
-import TODO_STATUS, { TITLE } from "./constantValue";
+import TODO_STATUS, { TITLE, TODO_MENU } from "./constants";
 import remove from "lodash.remove";
 
 function App() {
   const [todos, setTodos] = useState([]);
-  const [index, setIndex] = useState(0);
-  const [selectedTodoStatus, setSelectedTodoStatus] = useState("all");
-
-  const addTodoItem = (content) => {
-    setTodos([
-      {
-        index,
-        status: TODO_STATUS.ACTIVE,
-        content,
-      },
-      ...todos,
-    ]);
-    setIndex(index + 1);
-  };
+  const [selectedTodoStatus, setSelectedTodoStatus] = useState(TODO_MENU.ALL);
 
   const toggleAll = (toggleFlag) => {
     setTodos(
@@ -33,18 +20,16 @@ function App() {
     );
   };
 
-  const deleteTodo = (todoIndex) => {
+  const deleteTodo = (todoId) => {
     setTodos(
       todos.filter((todo) => {
-        return todo.index !== todoIndex;
+        return todo.id !== todoId;
       })
     );
   };
 
-  const checkTodo = (isChecked, todoIndex) => {
-    let todoPosition = todos.findIndex(
-      (todo) => todo.index === parseInt(todoIndex)
-    );
+  const checkTodo = (isChecked, todoId) => {
+    let todoPosition = todos.findIndex((todo) => todo.id === parseInt(todoId));
     todos[todoPosition].status = isChecked
       ? TODO_STATUS.COMPLETED
       : TODO_STATUS.ACTIVE;
@@ -66,8 +51,10 @@ function App() {
         <h1>{TITLE}</h1>
       </header>
       <div id="todo-app">
-        <TodoAdd
-          getNewItem={addTodoItem}
+        <TodoInput
+          addTodo={(newTodo) => {
+            setTodos([newTodo, ...todos]);
+          }}
           toggleAll={toggleAll}
           todoLength={todos.length}
         />
@@ -77,7 +64,7 @@ function App() {
           checkTodo={checkTodo}
           todoStatus={selectedTodoStatus}
         />
-        <TodoCount
+        <TodoMenu
           todos={todos}
           getTodoStatus={getTodoStatus}
           selectedTodoStatus={selectedTodoStatus}
