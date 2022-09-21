@@ -1,6 +1,5 @@
 import React from "react";
 import { TODO_MENU } from "../../constants";
-import "./index.css";
 import { Ul, ToggleInput, ToggleLabel, P, DestroyButton } from "./style";
 
 function TodoList({ todos, deleteTodo, checkTodo, selectedTodoStatusOption }) {
