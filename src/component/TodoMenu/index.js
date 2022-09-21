@@ -1,50 +1,43 @@
 import React from "react";
 import TODO_STATUS from "../../constants";
-import "./index.css";
 import { TODO_MENU } from "../../constants";
+import { TodoMenuDiv, FilterUl, ClearButton, MenuButton } from "./style";
 
 const todoMenu = [TODO_MENU.ALL, TODO_MENU.ACTIVE, TODO_MENU.COMPLETED];
 
-function TodoCount({
+function TodoMenu({
   todos,
   setSelectedTodoStatusOption,
   selectedTodoStatusOption,
   clearCompletedTodo,
 }) {
   return (
-    <div
-      id="count-todo"
-      style={{ display: todos.length > 0 ? "flex" : "none" }}
-    >
-      <span id="active-count">
+    <TodoMenuDiv todoLength={todos.length}>
+      <span>
         <strong>
           {todos.filter((todo) => todo.status === TODO_STATUS.ACTIVE).length}
         </strong>
         <span> items left</span>
       </span>
 
-      <ul id="filters">
+      <FilterUl>
         {todoMenu.map((statusOption) => (
           <li key={statusOption}>
-            <button
+            <MenuButton
               id={statusOption}
+              selectedTodoStatusOption={selectedTodoStatusOption}
               onClick={(event) => {
                 setSelectedTodoStatusOption(event.target.id);
               }}
-              className={
-                statusOption === selectedTodoStatusOption ? "selected" : ""
-              }
             >
               {statusOption}
-            </button>
+            </MenuButton>
           </li>
         ))}
-      </ul>
-      <button id="clear-completed" onClick={clearCompletedTodo}>
-        Clear completed
-      </button>
-    </div>
+      </FilterUl>
+      <ClearButton onClick={clearCompletedTodo}>Clear completed</ClearButton>
+    </TodoMenuDiv>
   );
 }
 
-export default TodoCount;
+export default TodoMenu;
