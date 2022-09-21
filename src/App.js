@@ -9,7 +9,9 @@ import remove from "lodash.remove";
 
 function App() {
   const [todos, setTodos] = useState([]);
-  const [selectedTodoStatus, setSelectedTodoStatus] = useState(TODO_MENU.ALL);
+  const [selectedTodoStatusOption, setSelectedTodoStatusOption] = useState(
+    TODO_MENU.ALL
+  );
 
   const toggleAll = (toggleFlag) => {
     setTodos(
@@ -26,10 +28,6 @@ function App() {
       ? TODO_STATUS.COMPLETED
       : TODO_STATUS.ACTIVE;
     setTodos([...todos]);
-  };
-
-  const getTodoStatus = (selectedTodoStatus) => {
-    setSelectedTodoStatus(selectedTodoStatus);
   };
 
   const clearCompletedTodo = () => {
@@ -56,12 +54,14 @@ function App() {
             setTodos(todos.filter((todo) => todo.id !== todoId));
           }}
           checkTodo={checkTodo}
-          todoStatus={selectedTodoStatus}
+          selectedTodoStatusOption={selectedTodoStatusOption}
         />
         <TodoMenu
           todos={todos}
-          getTodoStatus={getTodoStatus}
-          selectedTodoStatus={selectedTodoStatus}
+          setSelectedTodoStatusOption={(selectedTodoStatusOption) => {
+            setSelectedTodoStatusOption(selectedTodoStatusOption);
+          }}
+          selectedTodoStatusOption={selectedTodoStatusOption}
           clearCompletedTodo={clearCompletedTodo}
         />
       </div>
