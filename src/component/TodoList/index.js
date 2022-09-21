@@ -1,6 +1,7 @@
 import React from "react";
-import TODO_STATUS, { TODO_MENU } from "../../constants";
+import { TODO_MENU } from "../../constants";
 import "./index.css";
+import { Ul, ToggleInput, ToggleLabel, P, DestroyButton } from "./style";
 
 function TodoList({ todos, deleteTodo, checkTodo, selectedTodoStatusOption }) {
   const TodosByStatusOption = () => {
@@ -12,28 +13,26 @@ function TodoList({ todos, deleteTodo, checkTodo, selectedTodoStatusOption }) {
 
   return (
     <div id="show-todo">
-      <ul id="todo-list">
+      <Ul>
         {TodosByStatusOption().map((todo) => (
           <li key={todo.id}>
             <div className="todo-item">
-              <input
-                className="toggle"
-                type="checkbox"
+              <ToggleInput
                 id={todo.id}
                 onChange={(event) => {
                   checkTodo(event.target.checked, event.target.id);
                 }}
-                checked={todo.status === TODO_STATUS.ACTIVE ? false : true}
+                todoStatus={todo.status}
               />
-              <label htmlFor={todo.id} />
-              <p className={todo.status}>{todo.content}</p>
-              <button className="destroy" onClick={() => deleteTodo(todo.id)}>
+              <ToggleLabel htmlFor={todo.id} />
+              <P className={todo.status}>{todo.content}</P>
+              <DestroyButton onClick={() => deleteTodo(todo.id)}>
                 ×
-              </button>
+              </DestroyButton>
             </div>
           </li>
         ))}
-      </ul>
+      </Ul>
     </div>
   );
 }
