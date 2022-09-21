@@ -11,10 +11,6 @@ function TodoCount({
   selectedTodoStatusOption,
   clearCompletedTodo,
 }) {
-  const handleClick = (event) => {
-    setSelectedTodoStatusOption(event.target.id);
-  };
-
   return (
     <div
       id="count-todo"
@@ -32,7 +28,9 @@ function TodoCount({
           <li key={statusOption}>
             <button
               id={statusOption}
-              onClick={handleClick}
+              onClick={(event) => {
+                setSelectedTodoStatusOption(event.target.id);
+              }}
               className={
                 statusOption === selectedTodoStatusOption ? "selected" : ""
               }
