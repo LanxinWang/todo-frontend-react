@@ -1,7 +1,6 @@
 import React from "react";
-import "./index.css";
 import TODO_STATUS, { ENTER_KEY } from "../../constants";
-
+import { Label, Div, NewTodoInput, ToggleAllInput } from "./styles";
 let todoId = 0;
 
 const TodoAdd = ({ addTodo, toggleAll, todoLength }) => {
@@ -23,20 +22,13 @@ const TodoAdd = ({ addTodo, toggleAll, todoLength }) => {
   };
 
   return (
-    <div id="add-todo">
-      <input id="toggle-all" type="checkbox" onChange={handleCheck} />
-      <label
-        htmlFor="toggle-all"
-        style={{ visibility: todoLength > 0 ? "visible" : "hidden" }}
-      >
+    <Div>
+      <ToggleAllInput id="toggle-all" onChange={handleCheck} />
+      <Label htmlFor="toggle-all" todoLength={todoLength}>
         ❯
-      </label>
-      <input
-        id="new-todo"
-        placeholder="What needs to be done?"
-        onKeyDown={handleOnKeyDown}
-      ></input>
-    </div>
+      </Label>
+      <NewTodoInput onKeyDown={handleOnKeyDown}></NewTodoInput>
+    </Div>
   );
 };
 
