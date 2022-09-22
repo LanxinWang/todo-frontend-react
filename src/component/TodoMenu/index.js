@@ -26,8 +26,8 @@ function TodoMenu({
             <MenuButton
               id={statusOption}
               selectedTodoStatusOption={selectedTodoStatusOption}
-              onClick={(event) => {
-                setSelectedTodoStatusOption(event.target.id);
+              onClick={(e) => {
+                setSelectedTodoStatusOption(e.target.id);
               }}
             >
               {statusOption}
