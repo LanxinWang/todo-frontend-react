@@ -1,8 +1,16 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen } from "@testing-library/react";
+import App from "./App";
 
-test('renders learn react link', () => {
+test("renders APP", () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const todoTitle = screen.queryByRole("heading");
+  const todoInput = screen.getByPlaceholderText("What needs to be done?");
+  const todoList = screen.getByRole("list");
+  const todoMenu = screen.getAllByRole("link");
+  const todoFooter = screen.getByRole("contentinfo");
+  expect(todoTitle).toBeInTheDocument();
+  expect(todoInput).toBeInTheDocument();
+  expect(todoList).toBeInTheDocument();
+  expect(todoMenu.length).toBe(2);
+  expect(todoFooter).toBeInTheDocument();
 });

@@ -48,7 +48,7 @@ function App() {
       <header>
         <H1>{TITLE}</H1>
       </header>
-      <Div>
+      <Div id="todo-main">
         <TodoInput
           addTodo={addTodo}
           toggleAll={toggleAll}
