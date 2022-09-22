@@ -1,25 +1,17 @@
 import React from "react";
-import { TODO_MENU } from "../../constants";
 import { Ul, ToggleInput, ToggleLabel, P, DestroyButton } from "./style";
 
-function TodoList({ todos, deleteTodo, checkTodo, selectedTodoStatusOption }) {
-  const TodosByStatusOption = () => {
-    if (selectedTodoStatusOption === TODO_MENU.ALL) {
-      return todos;
-    }
-    return todos.filter((todo) => todo.status === selectedTodoStatusOption);
-  };
-
+function TodoList({ todos, deleteTodo, checkTodo }) {
   return (
     <div id="show-todo">
       <Ul>
-        {TodosByStatusOption().map((todo) => (
+        {todos().map((todo) => (
           <li key={todo.id}>
             <div className="todo-item">
               <ToggleInput
                 id={todo.id}
-                onChange={(event) => {
-                  checkTodo(event.target.checked, event.target.id);
+                onChange={(e) => {
+                  checkTodo(e.target.checked, e.target.id);
                 }}
                 todoStatus={todo.status}
               />

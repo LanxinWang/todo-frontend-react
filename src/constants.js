@@ -1,6 +1,6 @@
 export const ENTER_KEY = "Enter";
 export const TITLE = "Todos";
-const TODO_STATUS = {
+export const TODO_STATUS = {
   ACTIVE: "active",
   COMPLETED: "completed",
 };
