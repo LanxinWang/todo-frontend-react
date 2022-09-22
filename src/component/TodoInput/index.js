@@ -13,7 +13,7 @@ const TodoAdd = ({ addTodo, toggleAll, todoLength }) => {
       </Label>
       <NewTodoInput
         id="new-todo-input"
-        onKeyDown={(e) => addTodo(e.target.value, e.keyCode)}
+        onKeyDown={(e) => addTodo(e.target.value, e.key)}
       ></NewTodoInput>
     </Div>
   );
