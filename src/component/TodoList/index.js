@@ -5,7 +5,7 @@ function TodoList({ todos, deleteTodo, checkTodo }) {
   return (
     <div id="show-todo">
       <Ul>
-        {todos().map((todo) => (
+        {todos.map((todo) => (
           <li key={todo.id}>
             <div className="todo-item">
               <ToggleInput
@@ -15,8 +15,9 @@ function TodoList({ todos, deleteTodo, checkTodo }) {
                 }}
                 todoStatus={todo.status}
               />
-              <ToggleLabel htmlFor={todo.id} />
-              <P className={todo.status}>{todo.content}</P>
+              <ToggleLabel htmlFor={todo.id}>
+                <P className={todo.status}>{todo.name}</P>
+              </ToggleLabel>
               <DestroyButton onClick={() => deleteTodo(todo.id)}>
                 ×
               </DestroyButton>
