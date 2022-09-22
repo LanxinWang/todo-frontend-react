@@ -3,18 +3,25 @@ import TodoInput from "./component/TodoInput";
 import TodoList from "./component/TodoList";
 import TodoMenu from "./component/TodoMenu";
 import { useState } from "react";
-import TODO_STATUS, { TITLE, TODO_MENU } from "./constants";
+import TODO_STATUS, { TITLE, TODO_MENU, ENTER_KEY } from "./constants";
 import remove from "lodash.remove";
 import { Div, Footer, H1 } from "./style";
-
+let todoId = 0;
 function App() {
   const [todos, setTodos] = useState([]);
   const [selectedTodoStatusOption, setSelectedTodoStatusOption] = useState(
     TODO_MENU.ALL
   );
 
-  const addTodo = (newTodo) => {
+  const addTodo = (content, keyCode) => {
+    if (content.trim() === "" || keyCode !== ENTER_KEY) return;
+    let newTodo = {
+      id: todoId++,
+      status: TODO_STATUS.ACTIVE,
+      content,
+    };
     setTodos([newTodo, ...todos]);
+    document.getElementById("new-todo-input").value = "";
   };
 
   const deleteTodo = (todoId) => {
