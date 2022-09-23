@@ -1,4 +1,5 @@
 import React from "react";
+import { ENTER_KEY } from "../../constants";
 import { Label, Div, NewTodoInput, ToggleAllInput } from "./styles";
 
 const TodoAdd = ({ addTodo, toggleAll, todoLength }) => {
@@ -13,7 +14,12 @@ const TodoAdd = ({ addTodo, toggleAll, todoLength }) => {
       </Label>
       <NewTodoInput
         id="new-todo-input"
-        onKeyDown={(e) => addTodo(e.target.value, e.key)}
+        onKeyDown={(e) => {
+          if (e.key === ENTER_KEY) {
+            addTodo(e.target.value);
+            e.target.value = "";
+          }
+        }}
       ></NewTodoInput>
     </Div>
   );
