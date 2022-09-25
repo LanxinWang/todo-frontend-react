@@ -39,8 +39,8 @@ function App() {
   };
 
   const checkTodo = (isChecked, todoId) => {
-    let todoPosition = todos.findIndex((todo) => todo.id === parseInt(todoId));
-    todos[todoPosition].status = isChecked
+    let todoIndex = todos.findIndex((todo) => todo.id === parseInt(todoId));
+    todos[todoIndex].status = isChecked
       ? TODO_STATUS.COMPLETED
       : TODO_STATUS.ACTIVE;
     setTodos([...todos]);
@@ -63,6 +63,9 @@ function App() {
       </header>
       <Div id="todo-main">
         <TodoInput
+          activeTodoLength={
+            todos.filter((todo) => todo.status === TODO_STATUS.ACTIVE).length
+          }
           addTodo={addTodo}
           toggleAll={toggleAll}
           todoLength={todos.length}
