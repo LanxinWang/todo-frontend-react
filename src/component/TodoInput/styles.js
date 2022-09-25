@@ -38,7 +38,7 @@ export const NewTodoInput = styled.input.attrs(() => ({
   }
 `;
 
-export const ToggleAllInput = styled.input.attrs(() => ({
+export const ToggleAllInput = styled.input.attrs((props) => ({
   type: "checkbox",
 }))`
   display: none;
