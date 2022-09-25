@@ -1,4 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
+import { unmountComponentAtNode } from "react-dom";
+import { act } from "react-dom/test-utils";
 import TodoMenu from "./index";
 
 const mockedTodos = [
@@ -14,29 +16,41 @@ const selectedTodoStatusOption = "all";
 const clearCompletedTodo = jest.fn();
 
 describe("Todo Menu", () => {
+  let container = null;
   beforeEach(() => {
-    // eslint-disable-next-line testing-library/no-render-in-setup
+    container = document.createElement("div");
+    document.body.appendChild(container);
+  });
+
+  afterEach(() => {
+    setSelectedTodoStatusOption.mockClear();
+    clearCompletedTodo.mockClear();
+    unmountComponentAtNode(container);
+    container.remove();
+    container = null;
+  });
+
+  const setup = () => {
     render(
       <TodoMenu
         todos={mockedTodos}
         selectedTodoStatusOption={selectedTodoStatusOption}
         setSelectedTodoStatusOption={setSelectedTodoStatusOption}
         clearCompletedTodo={clearCompletedTodo}
-      />
+      />,
+      container
     );
-  });
-  afterEach(() => {
-    setSelectedTodoStatusOption.mockClear();
-    clearCompletedTodo.mockClear();
-  });
+  };
 
   test("renders TodoMenu", () => {
+    setup();
     expect(screen.getAllByRole("listitem").length).toBe(3);
     expect(screen.getByText("items left")).toBeInTheDocument();
     expect(screen.getByText("Clear completed")).toBeInTheDocument();
   });
 
   test("TodoMenu todo status option", () => {
+    setup();
     const activeButton = screen.getByText("active");
     fireEvent.click(activeButton, { target: "active" });
     expect(setSelectedTodoStatusOption).toBeCalledTimes(1);
@@ -44,6 +58,7 @@ describe("Todo Menu", () => {
   });
 
   test("clear completed button click", () => {
+    setup();
     const clearCompletedButton = screen.getByText("Clear completed");
     fireEvent.click(clearCompletedButton);
     expect(clearCompletedTodo).toBeCalledTimes(1);
