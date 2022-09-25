@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
+import { unmountComponentAtNode } from "react-dom";
 import TodoList from "./index";
 
 const mockedTodos = [
@@ -8,41 +9,53 @@ const mockedTodos = [
     name: "test",
   },
 ];
-
 const checkTodo = jest.fn();
 const deleteTodo = jest.fn();
 
-describe("Todo List", () => {
-  beforeEach(() => {
-    // eslint-disable-next-line testing-library/no-render-in-setup
-    render(
-      <TodoList
-        todos={mockedTodos}
-        checkTodo={checkTodo}
-        deleteTodo={deleteTodo}
-      />
-    );
-  });
-  afterEach(() => {
-    checkTodo.mockClear();
-    deleteTodo.mockClear();
-  });
+let container = null;
+beforeEach(() => {
+  container = document.createElement("div");
+  document.body.appendChild(container);
+});
 
+afterEach(() => {
+  checkTodo.mockClear();
+  deleteTodo.mockClear();
+  unmountComponentAtNode(container);
+  container.remove();
+  container = null;
+});
+
+const setup = () => {
+  render(
+    <TodoList
+      todos={mockedTodos}
+      checkTodo={checkTodo}
+      deleteTodo={deleteTodo}
+    />,
+    container
+  );
+};
+
+describe("Todo List", () => {
   test("renders TodoList", () => {
+    setup();
     expect(screen.getAllByRole("listitem").length).toBe(mockedTodos.length);
   });
 
   test("DestroyButton click", () => {
+    setup();
     const deleteBtn = screen.getByRole("button");
     fireEvent.click(deleteBtn);
     expect(deleteTodo).toHaveBeenCalledTimes(1);
     expect(deleteTodo).toHaveBeenCalledWith(mockedTodos[0].id);
   });
 
-  test("ToggleInput change", () => {
-    const toggleInput = screen.getByLabelText(mockedTodos[0].name);
-    fireEvent.click(toggleInput, { target: { checked: true, id: 1 } });
+  test("ToggleBox change", () => {
+    setup();
+    const toggleBox = screen.getByLabelText("");
+    fireEvent.click(toggleBox, { target: { checked: false, id: 1 } });
     expect(checkTodo).toHaveBeenCalledTimes(1);
-    expect(checkTodo).toHaveBeenCalledWith(false, "1");
+    expect(checkTodo).toHaveBeenCalledWith(true, "1");
   });
 });
