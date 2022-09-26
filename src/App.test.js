@@ -31,17 +31,13 @@ const setup = () => {
 
 describe("App", () => {
   test("renders APP", () => {
-    setup();
+    render(<App />);
     const todoTitle = screen.queryByRole("heading");
     const todoInput = screen.getByPlaceholderText("What needs to be done?");
-    const todoList = screen
-      .getAllByRole("listitem")
-      .filter((li) => li.className === "todo-item");
     const todoMenu = screen.getAllByRole("link");
     const todoFooter = screen.getByRole("contentinfo");
     expect(todoTitle).toBeInTheDocument();
     expect(todoInput).toBeInTheDocument();
-    expect(todoList.length).toBe(2);
     expect(todoMenu.length).toBe(2);
     expect(todoFooter).toBeInTheDocument();
   });
