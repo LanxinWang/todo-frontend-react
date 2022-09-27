@@ -7,7 +7,6 @@ import TODO_STATUS, { TITLE, TODO_MENU } from "./constants";
 import remove from "lodash.remove";
 import { Div, Footer, H1 } from "./style";
 import { useLocalStorage } from "./useLocalStorage";
-let todoId = 0;
 function App() {
   const [todos, setTodos] = useLocalStorage("todos", []);
   const [selectedTodoStatusOption, setSelectedTodoStatusOption] = useState(
@@ -18,7 +17,7 @@ function App() {
     if (name.trim() === "") return;
     setTodos([
       {
-        id: todoId++,
+        id: Date.now(),
         status: TODO_STATUS.ACTIVE,
         name,
       },
