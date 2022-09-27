@@ -2,24 +2,17 @@ import "./component/TodoInput";
 import TodoInput from "./component/TodoInput";
 import TodoList from "./component/TodoList";
 import TodoMenu from "./component/TodoMenu";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import TODO_STATUS, { TITLE, TODO_MENU } from "./constants";
 import remove from "lodash.remove";
 import { Div, Footer, H1 } from "./style";
+import { useLocalStorage } from "./useLocalStorage";
 let todoId = 0;
 function App() {
-  const [todos, setTodos] = useState(() => {
-    const saved = localStorage.getItem("todos");
-    const initialValue = JSON.parse(saved);
-    return initialValue || [];
-  });
+  const [todos, setTodos] = useLocalStorage("todos", []);
   const [selectedTodoStatusOption, setSelectedTodoStatusOption] = useState(
     TODO_MENU.ALL
   );
-
-  useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos]);
 
   const addTodo = (name) => {
     if (name.trim() === "") return;
