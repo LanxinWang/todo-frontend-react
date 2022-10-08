@@ -1,12 +1,12 @@
-import "./component/TodoInput";
-import TodoInput from "./component/TodoInput";
-import TodoList from "./component/TodoList";
-import TodoMenu from "./component/TodoMenu";
+import "./component/TodoHeader";
+import TodoHeader from "./component/TodoHeader";
+import TodoListBody from "./component/TodoListBody";
+import TodoFooter from "./component/TodoFooter";
 import { useState } from "react";
-import TODO_STATUS, { TITLE, TODO_MENU } from "./constants";
+import TODO_STATUS, { TITLE, TODO_MENU } from "./constants/constants";
 import remove from "lodash.remove";
-import { Div, Footer, H1 } from "./style";
-import { useLocalStorage } from "./useLocalStorage";
+import { TodoApp, TodoList, Footer, H1 } from "./style";
+import { useLocalStorage } from "./hooks/useLocalStorage";
 function App() {
   const [todos, setTodos] = useLocalStorage("todos", []);
   const [selectedTodoStatusOption, setSelectedTodoStatusOption] = useState(
@@ -25,28 +25,30 @@ function App() {
     ]);
   };
 
-  const deleteTodo = (todoId) => {
-    setTodos(todos.filter((todo) => todo.id !== todoId));
+  const deleteTodo = (id) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
   };
 
-  const toggleAll = (toggleFlag) => {
+  const toggleAllTodos = (toggleAllFlag) => {
     setTodos(
       todos.map((todo) => {
-        todo.status = toggleFlag ? TODO_STATUS.COMPLETED : TODO_STATUS.ACTIVE;
+        todo.status = toggleAllFlag
+          ? TODO_STATUS.COMPLETED
+          : TODO_STATUS.ACTIVE;
         return todo;
       })
     );
   };
 
-  const checkTodo = (isChecked, todoId) => {
-    let todoIndex = todos.findIndex((todo) => todo.id === parseInt(todoId));
-    todos[todoIndex].status = isChecked
+  const toggleTodo = (isToggled, id) => {
+    let todoIndex = todos.findIndex((todo) => todo.id === Number(id));
+    todos[todoIndex].status = isToggled
       ? TODO_STATUS.COMPLETED
       : TODO_STATUS.ACTIVE;
     setTodos([...todos]);
   };
 
-  const clearCompletedTodo = () => {
+  const clearCompletedTodos = () => {
     remove(todos, (todo) => todo.status === TODO_STATUS.COMPLETED);
     setTodos([...todos]);
   };
@@ -57,33 +59,33 @@ function App() {
       : todos.filter((todo) => todo.status === selectedTodoStatusOption);
 
   return (
-    <div>
+    <TodoApp>
       <header>
         <H1>{TITLE}</H1>
       </header>
-      <Div id="todo-main">
-        <TodoInput
-          activeTodoLength={
+      <TodoList>
+        <TodoHeader
+          activeTodosNumber={
             todos.filter((todo) => todo.status === TODO_STATUS.ACTIVE).length
           }
-          addTodo={addTodo}
-          toggleAll={toggleAll}
-          todoLength={todos.length}
+          onAddTodo={addTodo}
+          onToggleAllTodos={toggleAllTodos}
+          todosNumber={todos.length}
         />
-        <TodoList
+        <TodoListBody
           todos={TodosByStatusOption}
-          deleteTodo={deleteTodo}
-          checkTodo={checkTodo}
+          onDeleteTodo={deleteTodo}
+          onToggleTodo={toggleTodo}
         />
-        <TodoMenu
+        <TodoFooter
           todos={todos}
-          setSelectedTodoStatusOption={(selectedTodoStatusOption) => {
+          onSetSelectedTodoStatusOption={(selectedTodoStatusOption) => {
             setSelectedTodoStatusOption(selectedTodoStatusOption);
           }}
           selectedTodoStatusOption={selectedTodoStatusOption}
-          clearCompletedTodo={clearCompletedTodo}
+          onClearCompletedTodos={clearCompletedTodos}
         />
-      </Div>
+      </TodoList>
       <Footer id="info">
         <p>Double-click to edit a todo</p>
         <p>
@@ -93,7 +95,7 @@ function App() {
           Part of <a href="http://todomvc.com">TodoMVC</a>
         </p>
       </Footer>
-    </div>
+    </TodoApp>
   );
 }
 
