@@ -9,7 +9,7 @@ const mockedTodos = [
     name: "test",
   },
 ];
-const checkTodo = jest.fn();
+const toggleTodo = jest.fn();
 const deleteTodo = jest.fn();
 
 let container = null;
@@ -19,7 +19,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  checkTodo.mockClear();
+  toggleTodo.mockClear();
   deleteTodo.mockClear();
   unmountComponentAtNode(container);
   container.remove();
@@ -30,8 +30,8 @@ const setup = () => {
   render(
     <TodoListBody
       todos={mockedTodos}
-      checkTodo={checkTodo}
-      deleteTodo={deleteTodo}
+      onToggleTodo={toggleTodo}
+      onDeleteTodo={deleteTodo}
     />,
     container
   );
@@ -55,7 +55,7 @@ describe("Todo List", () => {
     setup();
     const toggleBox = screen.getByLabelText("");
     fireEvent.click(toggleBox, { target: { checked: false, id: 1 } });
-    expect(checkTodo).toHaveBeenCalledTimes(1);
-    expect(checkTodo).toHaveBeenCalledWith(true, "1");
+    expect(toggleTodo).toHaveBeenCalledTimes(1);
+    expect(toggleTodo).toHaveBeenCalledWith(true, "1");
   });
 });
