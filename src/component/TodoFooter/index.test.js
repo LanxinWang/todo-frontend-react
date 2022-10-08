@@ -12,7 +12,7 @@ const mockedTodos = [
 
 const setSelectedTodoStatusOption = jest.fn();
 const selectedTodoStatusOption = "all";
-const clearCompletedTodo = jest.fn();
+const clearCompletedTodos = jest.fn();
 
 describe("Todo Menu", () => {
   let container = null;
@@ -23,7 +23,7 @@ describe("Todo Menu", () => {
 
   afterEach(() => {
     setSelectedTodoStatusOption.mockClear();
-    clearCompletedTodo.mockClear();
+    clearCompletedTodos.mockClear();
     unmountComponentAtNode(container);
     container.remove();
     container = null;
@@ -34,8 +34,8 @@ describe("Todo Menu", () => {
       <TodoFooter
         todos={mockedTodos}
         selectedTodoStatusOption={selectedTodoStatusOption}
-        setSelectedTodoStatusOption={setSelectedTodoStatusOption}
-        clearCompletedTodo={clearCompletedTodo}
+        onSetSelectedTodoStatusOption={setSelectedTodoStatusOption}
+        onClearCompletedTodos={clearCompletedTodos}
       />,
       container
     );
@@ -60,6 +60,6 @@ describe("Todo Menu", () => {
     setup();
     const clearCompletedButton = screen.getByText("Clear completed");
     fireEvent.click(clearCompletedButton);
-    expect(clearCompletedTodo).toBeCalledTimes(1);
+    expect(clearCompletedTodos).toBeCalledTimes(1);
   });
 });
