@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Div = styled.div`
+export const TodoHeaderContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -8,8 +8,8 @@ export const Div = styled.div`
   box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
 `;
 
-export const Label = styled.label`
-  visibility: ${(props) => (props.todoLength > 0 ? "visible" : "hidden")};
+export const ToggleAllLabel = styled.label`
+  visibility: ${(props) => (props.todosNumber > 0 ? "visible" : "hidden")};
   width: 30px;
   height: 40px;
   text-align: center;
@@ -38,8 +38,9 @@ export const NewTodoInput = styled.input.attrs(() => ({
   }
 `;
 
-export const ToggleAllInput = styled.input.attrs((props) => ({
+export const ToggleAllCheckbox = styled.input.attrs((props) => ({
   type: "checkbox",
+  checked: props.activeTodosNumber === 0 ? true : false,
 }))`
   display: none;
   &:checked + label {
