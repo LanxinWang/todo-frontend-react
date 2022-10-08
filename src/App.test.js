@@ -3,6 +3,10 @@ import { unmountComponentAtNode } from "react-dom";
 import App from "./App";
 
 let container = null;
+const mockedTodos = [
+  { id: 1, status: "active", name: "todo1" },
+  { id: 2, status: "active", name: "todo2" },
+];
 beforeEach(() => {
   container = document.createElement("div");
   document.body.appendChild(container);
@@ -15,18 +19,9 @@ afterEach(() => {
 });
 
 const setup = () => {
-  render(<App />);
-  const todoInput = screen.getByPlaceholderText("What needs to be done?");
-
-  fireEvent.keyDown(todoInput, {
-    target: { value: "todo1" },
-    key: "Enter",
-  });
-
-  fireEvent.keyDown(todoInput, {
-    target: { value: "todo2" },
-    key: "Enter",
-  });
+  localStorage.removeItem("todos");
+  localStorage.setItem("todos", JSON.stringify(mockedTodos));
+  render(<App />, container);
 };
 
 describe("App", () => {
