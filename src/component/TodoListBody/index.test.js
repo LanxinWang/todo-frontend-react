@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { unmountComponentAtNode } from "react-dom";
-import TodoList from "./index";
+import TodoListBody from "./index";
 
 const mockedTodos = [
   {
@@ -28,7 +28,7 @@ afterEach(() => {
 
 const setup = () => {
   render(
-    <TodoList
+    <TodoListBody
       todos={mockedTodos}
       checkTodo={checkTodo}
       deleteTodo={deleteTodo}

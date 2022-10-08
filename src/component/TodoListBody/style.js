@@ -1,11 +1,12 @@
 import styled from "styled-components";
-import TODO_STATUS from "../../constants";
+import TODO_STATUS from "../../constants/constants";
 
-export const Ul = styled.ul`
+export const TodoListBodyContainer = styled.ul`
   margin: 0;
   padding: 0;
   list-style: none;
-
+  checked: ${(props) =>
+    props.status === TODO_STATUS.COMPLETED ? true : false};
   .todo-item {
     border-bottom: 1px solid #ededed;
     display: flex;
@@ -23,8 +24,9 @@ export const ToggleLabel = styled.label`
   height: 40px;
 `;
 
-export const ToggleInput = styled.input.attrs(() => ({
+export const ToggleInput = styled.input.attrs((props) => ({
   type: "checkbox",
+  checked: props.todoStatus === TODO_STATUS.COMPLETED ? true : false,
 }))`
   display: none;
   &:checked + label {
@@ -45,7 +47,7 @@ export const P = styled.p`
     props.className === TODO_STATUS.COMPLETED ? "line-through" : "none"};
 `;
 
-export const DestroyButton = styled.button`
+export const DeleteButton = styled.button`
   width: 40px;
   height: 40px;
   margin: auto 10px auto 0;
