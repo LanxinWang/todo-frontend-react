@@ -10,7 +10,7 @@ const mockedTodos = [
   },
 ];
 const addTodo = jest.fn();
-const toggleAll = jest.fn();
+const toggleAllTodos = jest.fn();
 
 let container = null;
 beforeEach(() => {
@@ -20,7 +20,7 @@ beforeEach(() => {
 
 afterEach(() => {
   addTodo.mockClear();
-  toggleAll.mockClear();
+  toggleAllTodos.mockClear();
   unmountComponentAtNode(container);
   container.remove();
   container = null;
@@ -28,7 +28,11 @@ afterEach(() => {
 
 const setup = () => {
   render(
-    <TodoHeader todos={mockedTodos} addTodo={addTodo} toggleAll={toggleAll} />,
+    <TodoHeader
+      todos={mockedTodos}
+      onAddTodo={addTodo}
+      onToggleAllTodos={toggleAllTodos}
+    />,
     container
   );
 };
@@ -57,7 +61,7 @@ describe("Todo Input", () => {
     setup();
     const toggleInput = screen.getByLabelText("❯");
     fireEvent.click(toggleInput, { target: { checked: true } });
-    expect(toggleAll).toHaveBeenCalledTimes(1);
-    expect(toggleAll).toHaveBeenCalledWith(false);
+    expect(toggleAllTodos).toHaveBeenCalledTimes(1);
+    expect(toggleAllTodos).toHaveBeenCalledWith(false);
   });
 });
