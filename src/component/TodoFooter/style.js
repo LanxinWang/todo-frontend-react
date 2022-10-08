@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const TodoMenuDiv = styled.div`
+export const TodoFooterContainer = styled.div`
   display: ${(props) => (props.todoLength > 0 ? "flex" : "none")};
   color: #777;
   padding: 10px 15px;
@@ -16,7 +16,7 @@ export const TodoMenuDiv = styled.div`
   }
 `;
 
-export const FilterUl = styled.ul`
+export const FilterMenu = styled.ul`
   margin: 0;
   padding: 0;
   list-style: none;

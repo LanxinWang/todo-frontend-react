@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { unmountComponentAtNode } from "react-dom";
-import TodoMenu from "./index";
+import TodoFooter from "./index";
 
 const mockedTodos = [
   {
@@ -31,7 +31,7 @@ describe("Todo Menu", () => {
 
   const setup = () => {
     render(
-      <TodoMenu
+      <TodoFooter
         todos={mockedTodos}
         selectedTodoStatusOption={selectedTodoStatusOption}
         setSelectedTodoStatusOption={setSelectedTodoStatusOption}
