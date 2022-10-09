@@ -10,17 +10,17 @@ const mockedTodos = [
 beforeEach(() => {
   container = document.createElement("div");
   document.body.appendChild(container);
+  localStorage.setItem("todos", JSON.stringify(mockedTodos));
 });
 
 afterEach(() => {
+  localStorage.removeItem("todos");
   unmountComponentAtNode(container);
   container.remove();
   container = null;
 });
 
 const setup = () => {
-  localStorage.removeItem("todos");
-  localStorage.setItem("todos", JSON.stringify(mockedTodos));
   render(<App />, container);
 };
 

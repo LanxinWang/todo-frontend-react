@@ -13,8 +13,8 @@ function TodoHeader({
   todosNumber,
   activeTodosNumber,
 }) {
-  const onChange = (toggleAllFlag) => {
-    onToggleAllTodos(toggleAllFlag);
+  const onChange = (checkFlag) => {
+    onToggleAllTodos(checkFlag);
   };
   const handleKeyDown = (e) => {
     if (e.key === ENTER_KEY) {

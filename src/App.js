@@ -29,20 +29,18 @@ function App() {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
 
-  const toggleAllTodos = (toggleAllFlag) => {
+  const toggleAllTodos = (checkFlag) => {
     setTodos(
       todos.map((todo) => {
-        todo.status = toggleAllFlag
-          ? TODO_STATUS.COMPLETED
-          : TODO_STATUS.ACTIVE;
+        todo.status = checkFlag ? TODO_STATUS.COMPLETED : TODO_STATUS.ACTIVE;
         return todo;
       })
     );
   };
 
-  const toggleTodo = (isToggled, id) => {
+  const toggleTodo = (isChecked, id) => {
     let todoIndex = todos.findIndex((todo) => todo.id === Number(id));
-    todos[todoIndex].status = isToggled
+    todos[todoIndex].status = isChecked
       ? TODO_STATUS.COMPLETED
       : TODO_STATUS.ACTIVE;
     setTodos([...todos]);

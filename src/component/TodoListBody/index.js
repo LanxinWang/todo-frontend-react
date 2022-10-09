@@ -8,11 +8,11 @@ import {
 } from "./style";
 
 function TodoListBody({ todos, onDeleteTodo, onToggleTodo }) {
-  const handleChange = (isToggled, todoId) => {
-    onToggleTodo(isToggled, todoId);
+  const handleChange = (isChecked, id) => {
+    onToggleTodo(isChecked, id);
   };
-  const handleClick = (todoId) => {
-    onDeleteTodo(todoId);
+  const handleClick = (id) => {
+    onDeleteTodo(id);
   };
   return (
     <TodoListBodyContainer>
