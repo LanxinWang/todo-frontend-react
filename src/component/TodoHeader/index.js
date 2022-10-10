@@ -13,7 +13,7 @@ function TodoHeader({
   todosNumber,
   activeTodosNumber,
 }) {
-  const onChange = (checkFlag) => {
+  const handleChange = (checkFlag) => {
     onToggleAllTodos(checkFlag);
   };
   const handleKeyDown = (e) => {
@@ -28,7 +28,7 @@ function TodoHeader({
       <ToggleAllCheckbox
         id="toggle-all"
         activeTodosNumber={activeTodosNumber}
-        onChange={(e) => onChange(e.target.checked)}
+        onChange={(e) => handleChange(e.target.checked)}
       />
       <ToggleAllLabel htmlFor="toggle-all" todosNumber={todosNumber}>
         ❯
