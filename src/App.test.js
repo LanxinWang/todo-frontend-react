@@ -25,7 +25,7 @@ const setup = () => {
 };
 
 describe("App", () => {
-  test("renders APP", () => {
+  test("should renders APP", () => {
     render(<App />);
     const todoTitle = screen.queryByRole("heading");
     const todoInput = screen.getByPlaceholderText("What needs to be done?");
@@ -38,8 +38,8 @@ describe("App", () => {
   });
 });
 
-describe("add todo test", () => {
-  test("add a todo when name is not null and key down", async () => {
+describe("add todo", () => {
+  test("should add a todo when name is not null and key down", async () => {
     setup();
     const todoInput = screen.getByPlaceholderText("What needs to be done?");
     fireEvent.keyDown(todoInput, {
@@ -53,7 +53,7 @@ describe("add todo test", () => {
     expect(todoItems.length).toBe(3);
   });
 
-  test("Do not add a todo when name is null and key down", () => {
+  test("should do not add a todo when name is null and key down", () => {
     setup();
     const todoInput = screen.getByPlaceholderText("What needs to be done?");
 
@@ -67,7 +67,7 @@ describe("add todo test", () => {
     expect(todoItems.length).toBe(2);
   });
 
-  test("Do not add a todo when name is not null and key down not 'enter key", () => {
+  test("should do not add a todo when name is not null and key down not 'enter key", () => {
     setup();
     const todoInput = screen.getByPlaceholderText("What needs to be done?");
 
@@ -82,8 +82,8 @@ describe("add todo test", () => {
   });
 });
 
-describe("delete todo test", () => {
-  test("delete first todo in todo list when click destroy button", async () => {
+describe("delete todo", () => {
+  test("should delete first todo in todo list when click destroy button", async () => {
     setup();
     const destroyButton = screen.getAllByText("×")[0];
     const li = screen
@@ -98,8 +98,8 @@ describe("delete todo test", () => {
   });
 });
 
-describe("toggle todo test", () => {
-  test("toggle first todo in todo list", () => {
+describe("toggle todo", () => {
+  test("should toggle first todo in todo list", () => {
     setup();
     const toggleBox = screen.getAllByLabelText("")[0];
     fireEvent.click(toggleBox);
@@ -108,7 +108,7 @@ describe("toggle todo test", () => {
     expect(toggleBox.checked).toBe(false);
   });
 
-  test("toggle all todos checked in todo list", () => {
+  test("should toggle all todos checked in todo list", () => {
     setup();
     const toggleAll = screen.getByLabelText("❯");
     fireEvent.click(toggleAll);
@@ -118,7 +118,7 @@ describe("toggle todo test", () => {
     });
   });
 
-  test("toggle all todos unchecked in todo list", () => {
+  test("should toggle all todos unchecked in todo list", () => {
     setup();
     const toggleAll = screen.getByLabelText("❯");
     fireEvent.click(toggleAll);
@@ -130,8 +130,8 @@ describe("toggle todo test", () => {
   });
 });
 
-describe("clear all completed test", () => {
-  test("clear completed todos in todo list", () => {
+describe("clear all completed todos", () => {
+  test("should clear completed todos in todo list", () => {
     setup();
     const todos = screen.getAllByLabelText("");
     fireEvent.click(todos[0]);
@@ -145,8 +145,8 @@ describe("clear all completed test", () => {
   });
 });
 
-describe("filter todos test", () => {
-  test("show active status todos", () => {
+describe("todo status menu", () => {
+  test("should show active status todos", () => {
     setup();
 
     const activeButton = screen.getByText("active");
@@ -157,7 +157,7 @@ describe("filter todos test", () => {
     expect(activeTodoList.length).toBe(2);
   });
 
-  test("show completed status todos", () => {
+  test("should show completed status todos", () => {
     render(<App />);
     const todoInput = screen.getByPlaceholderText("What needs to be done?");
 
