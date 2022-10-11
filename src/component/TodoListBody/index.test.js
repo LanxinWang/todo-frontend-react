@@ -43,7 +43,7 @@ describe("Todo List", () => {
     expect(screen.getAllByRole("listitem").length).toBe(mockedTodos.length);
   });
 
-  test("DestroyButton click", () => {
+  test("should delete todo when click todo delete button", () => {
     setup();
     const deleteBtn = screen.getByRole("button");
     fireEvent.click(deleteBtn);
@@ -51,7 +51,7 @@ describe("Todo List", () => {
     expect(deleteTodo).toHaveBeenCalledWith(mockedTodos[0].id);
   });
 
-  test("ToggleBox change", () => {
+  test("should exchange todo status when click todo status box", () => {
     setup();
     const toggleBox = screen.getByLabelText("");
     fireEvent.click(toggleBox, { target: { checked: false, id: 1 } });
