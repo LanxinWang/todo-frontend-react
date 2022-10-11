@@ -37,16 +37,16 @@ const setup = () => {
   );
 };
 
-describe("Todo Input", () => {
-  test("renders TodoInput", () => {
+describe("Todo Header", () => {
+  test("should renders TodoHeader", () => {
     setup();
     const newTodoInput = screen.getByPlaceholderText("What needs to be done?");
-    const toggleAll = screen.getByLabelText("❯");
+    const toggleAllButton = screen.getByLabelText("❯");
     expect(newTodoInput).toBeInTheDocument();
-    expect(toggleAll).toBeInTheDocument();
+    expect(toggleAllButton).toBeInTheDocument();
   });
 
-  test("addTodo keydown", () => {
+  test("should add todo when click enter key", () => {
     setup();
     const NewTodoInput = screen.getByRole("textbox");
     fireEvent.keyDown(NewTodoInput, {
@@ -57,10 +57,10 @@ describe("Todo Input", () => {
     expect(addTodo).toHaveBeenCalledWith("test");
   });
 
-  test("ToggleAllInput click", () => {
+  test("should toggle all todos when click toggleAllButton", () => {
     setup();
-    const toggleInput = screen.getByLabelText("❯");
-    fireEvent.click(toggleInput, { target: { checked: true } });
+    const toggleAllButton = screen.getByLabelText("❯");
+    fireEvent.click(toggleAllButton, { target: { checked: true } });
     expect(toggleAllTodos).toHaveBeenCalledTimes(1);
     expect(toggleAllTodos).toHaveBeenCalledWith(false);
   });
