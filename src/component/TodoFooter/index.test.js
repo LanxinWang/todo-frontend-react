@@ -14,7 +14,7 @@ const setSelectedTodoStatusOption = jest.fn();
 const selectedTodoStatusOption = "all";
 const clearCompletedTodos = jest.fn();
 
-describe("Todo Menu", () => {
+describe("Todo Footer", () => {
   let container = null;
   beforeEach(() => {
     container = document.createElement("div");
@@ -41,14 +41,14 @@ describe("Todo Menu", () => {
     );
   };
 
-  test("renders TodoMenu", () => {
+  test("should render TodoFooter", () => {
     setup();
     expect(screen.getAllByRole("listitem").length).toBe(3);
     expect(screen.getByText("items left")).toBeInTheDocument();
     expect(screen.getByText("Clear completed")).toBeInTheDocument();
   });
 
-  test("TodoMenu todo status option", () => {
+  test("should select todo status when click todo status menu option", () => {
     setup();
     const activeButton = screen.getByText("active");
     fireEvent.click(activeButton, { target: "active" });
@@ -56,7 +56,7 @@ describe("Todo Menu", () => {
     expect(setSelectedTodoStatusOption).toHaveBeenCalledWith("active");
   });
 
-  test("clear completed button click", () => {
+  test("should clear completed todos when click clear button", () => {
     setup();
     const clearCompletedButton = screen.getByText("Clear completed");
     fireEvent.click(clearCompletedButton);
