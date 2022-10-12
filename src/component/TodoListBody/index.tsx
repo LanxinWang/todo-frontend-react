@@ -1,4 +1,5 @@
 import React from "react";
+import { Todo } from "../../constants/constants";
 import {
   TodoListBodyContainer,
   ToggleInput,
@@ -6,12 +7,18 @@ import {
   P,
   DeleteButton,
 } from "./style";
+interface TodoListBodyProps {
+  todos: Todo[],
+  onDeleteTodo: (id: string) =>void,
+  onToggleTodo: (isChecked: boolean, id: string) => void
+  
+}
 
-function TodoListBody({ todos, onDeleteTodo, onToggleTodo }) {
-  const handleChange = (isChecked, id) => {
+const TodoListBody = ({ todos, onDeleteTodo, onToggleTodo }: TodoListBodyProps) => {
+  const handleChange = (isChecked: boolean, id: string) => {
     onToggleTodo(isChecked, id);
   };
-  const handleClick = (id) => {
+  const handleClick = (id: string) => {
     onDeleteTodo(id);
   };
   return (

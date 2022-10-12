@@ -11,7 +11,7 @@ export const TODO_MENU = {
 };
 
 export type Todo ={
-  id: number,
+  id: string,
   status: string,
   name: string,
 }
