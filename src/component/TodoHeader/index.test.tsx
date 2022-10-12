@@ -1,10 +1,11 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { unmountComponentAtNode } from "react-dom";
+import TODO_STATUS, { Todo } from "../../constants/constants";
 import TodoHeader from "./index";
 
-const mockedTodos = [
+const mockedTodos:Todo[] = [
   {
-    id: 1,
+    id: "1",
     status: "active",
     name: "test",
   },
@@ -12,7 +13,7 @@ const mockedTodos = [
 const addTodo = jest.fn();
 const toggleAllTodos = jest.fn();
 
-let container = null;
+let container:any = null;
 beforeEach(() => {
   container = document.createElement("div");
   document.body.appendChild(container);
@@ -29,7 +30,8 @@ afterEach(() => {
 const setup = () => {
   render(
     <TodoHeader
-      todos={mockedTodos}
+      todosNumber={mockedTodos.length}
+      activeTodosNumber={mockedTodos.filter((todo) => todo.status === TODO_STATUS.ACTIVE).length}
       onAddTodo={addTodo}
       onToggleAllTodos={toggleAllTodos}
     />,
