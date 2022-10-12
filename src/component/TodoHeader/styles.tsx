@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+
 export const TodoHeaderContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -8,8 +9,11 @@ export const TodoHeaderContainer = styled.div`
   box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
 `;
 
+interface ToggleAllLabelProps {
+  todosNumber: number
+}
 export const ToggleAllLabel = styled.label`
-  visibility: ${(props) => (props.todosNumber > 0 ? "visible" : "hidden")};
+  visibility: ${({todosNumber}:ToggleAllLabelProps) => (todosNumber > 0 ? "visible" : "hidden")};
   width: 30px;
   height: 40px;
   text-align: center;
@@ -18,6 +22,7 @@ export const ToggleAllLabel = styled.label`
   color: #e6e6e6;
   border: none;
 `;
+
 export const NewTodoInput = styled.input.attrs(() => ({
   placeholder: "What needs to be done?",
 }))`
@@ -38,10 +43,15 @@ export const NewTodoInput = styled.input.attrs(() => ({
   }
 `;
 
-export const ToggleAllCheckbox = styled.input.attrs((props) => ({
-  type: "checkbox",
-  checked: props.activeTodosNumber === 0 ? true : false,
-}))`
+interface ToggleAllCheckboxProps {
+  activeTodosNumber: number;
+}
+export const ToggleAllCheckbox = styled.input.attrs<ToggleAllCheckboxProps>(
+  ({ activeTodosNumber }) => ({
+    type: "checkbox",
+    checked: activeTodosNumber === 0 ? true : false,
+  })
+ )<ToggleAllCheckboxProps>`
   display: none;
   &:checked + label {
     color: #737373;
