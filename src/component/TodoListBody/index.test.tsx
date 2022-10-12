@@ -1,10 +1,11 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { unmountComponentAtNode } from "react-dom";
+import { Todo } from "../../constants/constants";
 import TodoListBody from "./index";
 
-const mockedTodos = [
+const mockedTodos: Todo[] = [
   {
-    id: 1,
+    id: "1",
     status: "active",
     name: "test",
   },
@@ -12,7 +13,7 @@ const mockedTodos = [
 const toggleTodo = jest.fn();
 const deleteTodo = jest.fn();
 
-let container = null;
+let container: any = null;
 beforeEach(() => {
   container = document.createElement("div");
   document.body.appendChild(container);
