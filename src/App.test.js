@@ -4,8 +4,8 @@ import App from "./App";
 
 let container = null;
 const mockedTodos = [
-  { id: 1, status: "active", name: "todo1" },
-  { id: 2, status: "active", name: "todo2" },
+  { id: "1", status: "active", name: "todo1" },
+  { id: "2", status: "active", name: "todo2" },
 ];
 beforeEach(() => {
   container = document.createElement("div");

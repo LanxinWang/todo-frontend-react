@@ -3,7 +3,7 @@ import TodoHeader from "./component/TodoHeader";
 import TodoListBody from "./component/TodoListBody";
 import TodoFooter from "./component/TodoFooter";
 import { useState } from "react";
-import TODO_STATUS, { TITLE, TODO_MENU } from "./constants/constants";
+import TODO_STATUS, { TITLE, Todo, TODO_MENU } from "./constants/constants";
 import remove from "lodash.remove";
 import { TodoApp, TodoList, Footer, H1 } from "./style";
 import { useLocalStorage } from "./hooks/useLocalStorage";
@@ -13,11 +13,11 @@ function App() {
     TODO_MENU.ALL
   );
 
-  const addTodo = (name) => {
+  const addTodo = (name: string) => {
     if (name.trim() === "") return;
     setTodos([
       {
-        id: Date.now(),
+        id: Date.now().toString(),
         status: TODO_STATUS.ACTIVE,
         name,
       },
@@ -25,11 +25,11 @@ function App() {
     ]);
   };
 
-  const deleteTodo = (id) => {
+  const deleteTodo = (id: string) => {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
 
-  const toggleAllTodos = (checkFlag) => {
+  const toggleAllTodos = (checkFlag: boolean) => {
     setTodos(
       todos.map((todo) => {
         todo.status = checkFlag ? TODO_STATUS.COMPLETED : TODO_STATUS.ACTIVE;
@@ -38,8 +38,8 @@ function App() {
     );
   };
 
-  const toggleTodo = (isChecked, id) => {
-    let todoIndex = todos.findIndex((todo) => todo.id === Number(id));
+  const toggleTodo = (isChecked: boolean, id: string) => {
+    let todoIndex = todos.findIndex((todo) => todo.id === id);
     todos[todoIndex].status = isChecked
       ? TODO_STATUS.COMPLETED
       : TODO_STATUS.ACTIVE;
@@ -47,7 +47,7 @@ function App() {
   };
 
   const clearCompletedTodos = () => {
-    remove(todos, (todo) => todo.status === TODO_STATUS.COMPLETED);
+    remove(todos, (todo: Todo) => todo.status === TODO_STATUS.COMPLETED);
     setTodos([...todos]);
   };
 
