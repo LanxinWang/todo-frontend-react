@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
-export const TodoFooterContainer = styled.div`
+interface TodoFooterContainerProps {
+  todoLength: number;
+}
+export const TodoFooterContainer = styled.div<TodoFooterContainerProps>`
   display: ${(props) => (props.todoLength > 0 ? "flex" : "none")};
   color: #777;
   padding: 10px 15px;
@@ -30,7 +33,10 @@ export const FilterMenu = styled.ul`
   }
 `;
 
-export const MenuButton = styled.button`
+interface MenuButtonProps {
+  selectedTodoStatusOption: string,
+}
+export const MenuButton = styled.button<MenuButtonProps>`
   color: inherit;
   font-weight: inherit;
   font-family: inherit;

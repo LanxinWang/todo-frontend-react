@@ -1,5 +1,5 @@
 import React from "react";
-import TODO_STATUS from "../../constants/constants";
+import TODO_STATUS, { Todo } from "../../constants/constants";
 import { TODO_MENU } from "../../constants/constants";
 import {
   TodoFooterContainer,
@@ -10,13 +10,21 @@ import {
 
 const todoMenu = [TODO_MENU.ALL, TODO_MENU.ACTIVE, TODO_MENU.COMPLETED];
 
-function TodoFooter({
+interface TodoFooterProps {
+  todos: Todo[],
+  selectedTodoStatusOption: string ,
+  onSetSelectedTodoStatusOption: (menuOption: string) => void,
+  onClearCompletedTodos: () => void,
+
+}
+
+const TodoFooter = ({
   todos,
   selectedTodoStatusOption,
   onSetSelectedTodoStatusOption,
   onClearCompletedTodos,
-}) {
-  const handleMenuClick = (menuOption) => {
+}: TodoFooterProps) => {
+  const handleMenuClick = (menuOption: string) => {
     onSetSelectedTodoStatusOption(menuOption);
   };
 
