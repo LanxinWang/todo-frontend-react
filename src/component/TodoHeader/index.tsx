@@ -7,7 +7,7 @@ import {
   ToggleAllCheckbox,
 } from "./styles";
 
-interface Props {
+export interface TodoHeaderProps {
   onAddTodo:(name:string) => void,
   onToggleAllTodos:(checkFlag:boolean) => void,
   todosNumber:number,
@@ -19,7 +19,7 @@ const TodoHeader =({
   onToggleAllTodos,
   todosNumber,
   activeTodosNumber,
-}:Props)=>
+}:TodoHeaderProps)=>
  {
   const handleChange = (checkFlag:boolean) => {
     onToggleAllTodos(checkFlag);
