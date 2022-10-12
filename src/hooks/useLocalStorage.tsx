@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, SetStateAction, Dispatch } from "react";
 import { Todo } from "../constants/constants";
 
 function getLocalStorage(key:string, defaultValue:Todo[]) {
@@ -7,7 +7,8 @@ function getLocalStorage(key:string, defaultValue:Todo[]) {
   return initial || defaultValue;
 }
 
-export const useLocalStorage = (key:string, defaultValue:Todo[]) => {
+type SetValue<T> = Dispatch<SetStateAction<T>>
+export const useLocalStorage = (key:string, defaultValue:Todo[]):[Todo[], SetValue<Todo[]>] => {
   const [value, setValue] = useState(() => {
     return getLocalStorage(key, defaultValue);
   });
