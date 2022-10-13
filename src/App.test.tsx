@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { unmountComponentAtNode } from "react-dom";
 import App from "./App";
 
-let container = null;
+let container: any = null;
 const mockedTodos = [
   { id: "1", status: "active", name: "todo1" },
   { id: "2", status: "active", name: "todo2" },
@@ -88,7 +88,7 @@ describe("delete todo", () => {
     const destroyButton = screen.getAllByText("×")[0];
     const li = screen
       .getAllByRole("listitem")
-      .filter((todo) => todo.className === "todo-item")[0];
+      .filter((todo) => todo.className === "todo-item")[0] as HTMLLIElement | any;
     fireEvent.click(destroyButton, li.key);
 
     const todoItems = screen
@@ -101,7 +101,7 @@ describe("delete todo", () => {
 describe("toggle todo", () => {
   test("should toggle first todo in todo list", () => {
     setup();
-    const toggleBox = screen.getAllByLabelText("")[0];
+    const toggleBox = screen.getAllByLabelText("")[0] as HTMLInputElement;
     fireEvent.click(toggleBox);
     expect(toggleBox.checked).toBe(true);
     fireEvent.click(toggleBox);
@@ -110,9 +110,9 @@ describe("toggle todo", () => {
 
   test("should toggle all todos checked in todo list", () => {
     setup();
-    const toggleAll = screen.getByLabelText("❯");
+    const toggleAll = screen.getByLabelText("❯") as HTMLInputElement;
     fireEvent.click(toggleAll);
-    const todos = screen.getAllByLabelText("");
+    const todos = screen.getAllByLabelText("") as HTMLInputElement[];
     todos.forEach((todo) => {
       expect(todo.checked).toBe(true);
     });
@@ -120,10 +120,10 @@ describe("toggle todo", () => {
 
   test("should toggle all todos unchecked in todo list", () => {
     setup();
-    const toggleAll = screen.getByLabelText("❯");
+    const toggleAll = screen.getByLabelText("❯") as HTMLInputElement;
     fireEvent.click(toggleAll);
     fireEvent.click(toggleAll);
-    const todos = screen.getAllByLabelText("");
+    const todos = screen.getAllByLabelText("") as HTMLInputElement[];
     todos.forEach((todo) => {
       expect(todo.checked).toBe(false);
     });
