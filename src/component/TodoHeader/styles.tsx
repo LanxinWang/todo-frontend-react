@@ -49,7 +49,7 @@ interface ToggleAllCheckboxProps {
 export const ToggleAllCheckbox = styled.input.attrs<ToggleAllCheckboxProps>(
   ({ activeTodosNumber }) => ({
     type: "checkbox",
-    checked: activeTodosNumber === 0 ? true : false,
+    checked: activeTodosNumber === 0,
   })
  )<ToggleAllCheckboxProps>`
   display: none;
