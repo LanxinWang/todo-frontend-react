@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { unmountComponentAtNode } from "react-dom";
-import { Todo } from "../../constants/constants";
+import { Todo } from "../../types/index";
 import TodoFooter from "./index";
 
 const mockedTodos: Todo[] = [

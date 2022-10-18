@@ -1,5 +1,6 @@
 import React from "react";
-import TODO_STATUS, { Todo } from "../../constants/constants";
+import TODO_STATUS from "../../constants/constants";
+import { Todo } from "../../types/index"
 import { TODO_MENU } from "../../constants/constants";
 import {
   TodoFooterContainer,

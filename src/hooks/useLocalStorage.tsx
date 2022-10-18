@@ -1,5 +1,5 @@
 import { useState, useEffect, SetStateAction, Dispatch } from "react";
-import { Todo } from "../constants/constants";
+import { Todo } from "../types";
 
 function getLocalStorage(key:string, defaultValue:Todo[]) {
   const saved:string = localStorage.getItem(key)||'';

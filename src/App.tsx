@@ -3,7 +3,8 @@ import TodoHeader from "./component/TodoHeader";
 import TodoListBody from "./component/TodoListBody";
 import TodoFooter from "./component/TodoFooter";
 import { useState } from "react";
-import TODO_STATUS, { TITLE, Todo, TODO_MENU } from "./constants/constants";
+import TODO_STATUS, { TITLE, TODO_MENU } from "./constants/constants";
+import {Todo} from "./types"
 import remove from "lodash.remove";
 import { TodoApp, TodoList, Footer, H1 } from "./style";
 import { useLocalStorage } from "./hooks/useLocalStorage";

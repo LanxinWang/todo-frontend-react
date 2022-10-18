@@ -10,10 +10,4 @@ export const TODO_MENU = {
   COMPLETED: "completed",
 };
 
-export type Todo ={
-  id: string,
-  status: string,
-  name: string,
-}
-
 export default TODO_STATUS;

@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { unmountComponentAtNode } from "react-dom";
-import TODO_STATUS, { Todo } from "../../constants/constants";
+import TODO_STATUS from "../../constants/constants";
+import { Todo } from "../../types/index";
 import TodoHeader from "./index";
 
 const mockedTodos:Todo[] = [

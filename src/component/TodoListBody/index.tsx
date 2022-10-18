@@ -1,5 +1,5 @@
 import React from "react";
-import { Todo } from "../../constants/constants";
+import {Todo} from "../../types/index";
 import {
   TodoListBodyContainer,
   ToggleInput,
