@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { unmountComponentAtNode } from "react-dom";
 import App from "./App";
 
-let container: any = null;
+let container: HTMLDivElement;
 const mockedTodos = [
   { id: "1", status: "active", name: "todo1" },
   { id: "2", status: "active", name: "todo2" },
@@ -17,16 +17,15 @@ afterEach(() => {
   localStorage.removeItem("todos");
   unmountComponentAtNode(container);
   container.remove();
-  container = null;
 });
 
 const setup = () => {
-  render(<App />, container);
+  render(<App />, {container});
 };
 
 describe("App", () => {
   test("should renders APP", () => {
-    render(<App />);
+    setup();
     const todoTitle = screen.queryByRole("heading");
     const todoInput = screen.getByPlaceholderText("What needs to be done?");
     const todoMenu = screen.getAllByRole("link");
