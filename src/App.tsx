@@ -26,14 +26,6 @@ function App() {
     );
   };
 
-  const toggleTodo = (isChecked: boolean, id: number) => {
-    let todoIndex = todos.findIndex((todo) => todo.id === id);
-    todos[todoIndex].status = isChecked
-      ? TODO_STATUS.COMPLETED
-      : TODO_STATUS.ACTIVE;
-    setTodos([...todos]);
-  };
-
   const clearCompletedTodos = () => {
     remove(todos, (todo: Todo) => todo.status === TODO_STATUS.COMPLETED);
     setTodos([...todos]);
@@ -61,7 +53,6 @@ function App() {
         />
         <TodoListBody
           todos={selectedTodos}
-          onToggleTodo={toggleTodo}
         />
         <TodoFooter
           todos={todos}

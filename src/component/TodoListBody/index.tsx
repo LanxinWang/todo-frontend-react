@@ -8,18 +8,16 @@ import {
   P,
   DeleteButton,
 } from "./style";
-import {deleteTodo} from "../../store/TodoSlice"
+import {deleteTodo, updateTodoStatus} from "../../store/TodoSlice"
 interface TodoListBodyProps {
   todos: Todo[],
-  onToggleTodo: (isChecked: boolean, id: string) => void
-  
 }
-const TodoListBody = ({ todos, onToggleTodo }: TodoListBodyProps) => {
+const TodoListBody = ({ todos }: TodoListBodyProps) => {
   const dispatch = useDispatch();
-  const handleChange = (isChecked: boolean, id: string) => {
-    onToggleTodo(isChecked, id);
+  const handleChange = (isChecked: boolean, id: number) => {
+    dispatch(updateTodoStatus({id,isChecked}))
   };
-  const handleClick = (id: string) => {
+  const handleClick = (id: number) => {
     dispatch(deleteTodo({id}))
   };
   return (
@@ -27,13 +25,13 @@ const TodoListBody = ({ todos, onToggleTodo }: TodoListBodyProps) => {
       {todos.map((todo) => (
         <li key={todo.id} className="todo-item">
           <ToggleInput
-            id={todo.id}
+            id={todo.id.toString()}
             todoStatus={todo.status}
             onChange={(e) => {
-              handleChange(e.target.checked, e.target.id);
+              handleChange(e.target.checked, todo.id);
             }}
           />
-          <ToggleLabel htmlFor={todo.id} />
+          <ToggleLabel htmlFor={todo.id.toString()} />
           <P className={todo.status}>{todo.name}</P>
           <DeleteButton onClick={() => handleClick(todo.id)}>×</DeleteButton>
         </li>
