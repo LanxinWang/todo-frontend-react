@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import {Todo} from "../../types/index";
 import {
   TodoListBodyContainer,
@@ -7,19 +8,20 @@ import {
   P,
   DeleteButton,
 } from "./style";
+import {deleteTodo} from "../../store/TodoSlice"
 interface TodoListBodyProps {
   todos: Todo[],
   onDeleteTodo: (id: string) =>void,
   onToggleTodo: (isChecked: boolean, id: string) => void
   
 }
-
 const TodoListBody = ({ todos, onDeleteTodo, onToggleTodo }: TodoListBodyProps) => {
+  const dispatch = useDispatch();
   const handleChange = (isChecked: boolean, id: string) => {
     onToggleTodo(isChecked, id);
   };
   const handleClick = (id: string) => {
-    onDeleteTodo(id);
+    dispatch(deleteTodo({id}))
   };
   return (
     <TodoListBodyContainer>
