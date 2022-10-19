@@ -3,6 +3,7 @@ export const TITLE = "Todos";
 export const TODO_STATUS = {
   ACTIVE: "active",
   COMPLETED: "completed",
+  DELETED: "deleted"
 };
 export const TODO_MENU = {
   ALL: "all",
