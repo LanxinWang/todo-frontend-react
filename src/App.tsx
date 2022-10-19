@@ -8,6 +8,9 @@ import {Todo} from "./types"
 import remove from "lodash.remove";
 import { TodoApp, TodoList, Footer, H1 } from "./style";
 import { useLocalStorage } from "./hooks/useLocalStorage";
+import {useSelector} from "react-redux";
+import {RootState} from "./store/store";
+
 function App() {
   const [todos, setTodos] = useLocalStorage("todos", []);
   const [selectedTodoStatusOption, setSelectedTodoStatusOption] = useState(
@@ -57,6 +60,8 @@ function App() {
       ? todos
       : todos.filter((todo) => todo.status === selectedTodoStatusOption);
 
+  const selectedTodos:Todo[] = useSelector((state: RootState) => state.todo.todoList);
+
   return (
     <TodoApp>
       <header>
@@ -65,14 +70,14 @@ function App() {
       <TodoList>
         <TodoHeader
           activeTodosNumber={
-            todos.filter((todo) => todo.status === TODO_STATUS.ACTIVE).length
+            selectedTodos.filter((todo) => todo.status === TODO_STATUS.ACTIVE).length
           }
           onAddTodo={addTodo}
           onToggleAllTodos={toggleAllTodos}
-          todosNumber={todos.length}
+          todosNumber={selectedTodos.length}
         />
         <TodoListBody
-          todos={TodosByStatusOption}
+          todos={selectedTodos}
           onDeleteTodo={deleteTodo}
           onToggleTodo={toggleTodo}
         />
