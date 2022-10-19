@@ -43,14 +43,17 @@ export const todoSlice = createSlice({
     deleteAllCompletedTodos: (state)=>{
       state.todoList = state.todoList.map((todo) => {
         if (todo.status === TODO_STATUS.COMPLETED) {
-          todo.status = TODO_STATUS.DELETED
+          todo.status = TODO_STATUS.DELETED;
         };
         return todo;
       });      
+    },
+    updateTodoFilter: (state,{payload:{menuOption}})=>{
+      state.todoFilter = menuOption;
     }
   }
 })
 
-export const { createTodo, deleteTodo, updateTodoStatus, updateAllTodosStatus, deleteAllCompletedTodos } = todoSlice.actions
+export const { createTodo, deleteTodo, updateTodoStatus, updateAllTodosStatus, deleteAllCompletedTodos, updateTodoFilter} = todoSlice.actions
 
 export default todoSlice.reducer
