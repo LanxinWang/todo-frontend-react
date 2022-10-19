@@ -6,20 +6,13 @@ import { useState } from "react";
 import TODO_STATUS, { TITLE, TODO_MENU } from "./constants/constants";
 import {Todo} from "./types"
 import { TodoApp, TodoList, Footer, H1 } from "./style";
-import { useLocalStorage } from "./hooks/useLocalStorage";
 import {useSelector} from "react-redux";
 import {RootState} from "./store/store";
 
 function App() {
-  const [todos, setTodos] = useLocalStorage("todos", []);
   const [selectedTodoStatusOption, setSelectedTodoStatusOption] = useState(
     TODO_MENU.ALL
   );
-
-  const TodosByStatusOption =
-    selectedTodoStatusOption === TODO_MENU.ALL
-      ? todos
-      : todos.filter((todo) => todo.status === selectedTodoStatusOption);
 
   const selectedTodos:Todo[] = useSelector((state: RootState) => state.todo.todoList);
 
