@@ -28,10 +28,18 @@ export const todoSlice = createSlice({
       state.todoList[index].status = isChecked
         ? TODO_STATUS.COMPLETED
         : TODO_STATUS.ACTIVE;
+    },
+    updateAllTodosStatus: (state, {payload:{checkFlag}})=>{
+      state.todoList.map ((todo) => {
+        todo.status = checkFlag
+        ? TODO_STATUS.COMPLETED
+        : TODO_STATUS.ACTIVE;
+        return todo
+      })
     }
   }
 })
 
-export const { createTodo, deleteTodo, updateTodoStatus } = todoSlice.actions
+export const { createTodo, deleteTodo, updateTodoStatus, updateAllTodosStatus } = todoSlice.actions
 
 export default todoSlice.reducer
