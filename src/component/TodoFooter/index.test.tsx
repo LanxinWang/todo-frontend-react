@@ -5,7 +5,7 @@ import TodoFooter from "./index";
 
 const mockedTodos: Todo[] = [
   {
-    id: "1",
+    id: 0,
     status: "active",
     name: "test",
   },
