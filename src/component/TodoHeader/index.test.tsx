@@ -3,6 +3,8 @@ import { unmountComponentAtNode } from "react-dom";
 import TODO_STATUS from "../../constants/constants";
 import { Todo } from "../../types/index";
 import TodoHeader from "./index";
+import { Provider } from 'react-redux';
+import { store } from '../../store/store';
 
 const mockedTodos:Todo[] = [
   {
@@ -14,7 +16,7 @@ const mockedTodos:Todo[] = [
 const addTodo = jest.fn();
 const toggleAllTodos = jest.fn();
 
-let container:any = null;
+let container: HTMLDivElement;
 beforeEach(() => {
   container = document.createElement("div");
   document.body.appendChild(container);
@@ -25,18 +27,21 @@ afterEach(() => {
   toggleAllTodos.mockClear();
   unmountComponentAtNode(container);
   container.remove();
-  container = null;
 });
 
 const setup = () => {
+
   render(
-    <TodoHeader
-      todosNumber={mockedTodos.length}
-      activeTodosNumber={mockedTodos.filter((todo) => todo.status === TODO_STATUS.ACTIVE).length}
-      onAddTodo={addTodo}
-      onToggleAllTodos={toggleAllTodos}
-    />,
-    container
+    <Provider store={store}>
+      <TodoHeader
+        todosNumber={mockedTodos.length}
+        activeTodosNumber={mockedTodos.filter((todo) => todo.status === TODO_STATUS.ACTIVE).length}
+        onAddTodo={addTodo}
+        onToggleAllTodos={toggleAllTodos}
+    />
+    </Provider>
+    ,
+    {container}
   );
 };
 
@@ -47,17 +52,6 @@ describe("Todo Header", () => {
     const toggleAllButton = screen.getByLabelText("❯");
     expect(newTodoInput).toBeInTheDocument();
     expect(toggleAllButton).toBeInTheDocument();
-  });
-
-  test("should add todo when click enter key", () => {
-    setup();
-    const NewTodoInput = screen.getByRole("textbox");
-    fireEvent.keyDown(NewTodoInput, {
-      target: { value: "test" },
-      key: "Enter",
-    });
-    expect(addTodo).toHaveBeenCalledTimes(1);
-    expect(addTodo).toHaveBeenCalledWith("test");
   });
 
   test("should toggle all todos when click toggleAllButton", () => {
