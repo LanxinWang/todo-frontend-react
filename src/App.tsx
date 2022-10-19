@@ -2,8 +2,7 @@ import "./component/TodoHeader";
 import TodoHeader from "./component/TodoHeader";
 import TodoListBody from "./component/TodoListBody";
 import TodoFooter from "./component/TodoFooter";
-import { useState } from "react";
-import TODO_STATUS, { TITLE, TODO_MENU } from "./constants/constants";
+import TODO_STATUS, { TITLE} from "./constants/constants";
 import {Todo} from "./types"
 import { TodoApp, TodoList, Footer, H1 } from "./style";
 import {useSelector} from "react-redux";
