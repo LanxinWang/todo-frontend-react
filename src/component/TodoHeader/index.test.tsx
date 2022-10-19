@@ -36,7 +36,6 @@ const setup = () => {
       <TodoHeader
         todosNumber={mockedTodos.length}
         activeTodosNumber={mockedTodos.filter((todo) => todo.status === TODO_STATUS.ACTIVE).length}
-        onToggleAllTodos={toggleAllTodos}
     />
     </Provider>
     ,
@@ -51,13 +50,5 @@ describe("Todo Header", () => {
     const toggleAllButton = screen.getByLabelText("❯");
     expect(newTodoInput).toBeInTheDocument();
     expect(toggleAllButton).toBeInTheDocument();
-  });
-
-  test("should toggle all todos when click toggleAllButton", () => {
-    setup();
-    const toggleAllButton = screen.getByLabelText("❯");
-    fireEvent.click(toggleAllButton, { target: { checked: true } });
-    expect(toggleAllTodos).toHaveBeenCalledTimes(1);
-    expect(toggleAllTodos).toHaveBeenCalledWith(false);
   });
 });

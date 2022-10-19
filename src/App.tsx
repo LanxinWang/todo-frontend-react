@@ -17,15 +17,6 @@ function App() {
     TODO_MENU.ALL
   );
 
-  const toggleAllTodos = (checkFlag: boolean) => {
-    setTodos(
-      todos.map((todo) => {
-        todo.status = checkFlag ? TODO_STATUS.COMPLETED : TODO_STATUS.ACTIVE;
-        return todo;
-      })
-    );
-  };
-
   const clearCompletedTodos = () => {
     remove(todos, (todo: Todo) => todo.status === TODO_STATUS.COMPLETED);
     setTodos([...todos]);
@@ -48,7 +39,6 @@ function App() {
           activeTodosNumber={
             selectedTodos.filter((todo) => todo.status === TODO_STATUS.ACTIVE).length
           }
-          onToggleAllTodos={toggleAllTodos}
           todosNumber={selectedTodos.length}
         />
         <TodoListBody

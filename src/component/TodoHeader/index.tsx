@@ -6,23 +6,21 @@ import {
   NewTodoInput,
   ToggleAllCheckbox,
 } from "./styles";
-import { createTodo} from "../../store/TodoSlice";
+import { createTodo, updateAllTodosStatus} from "../../store/TodoSlice";
 import { useDispatch } from 'react-redux'
 export interface TodoHeaderProps {
-  onToggleAllTodos:(checkFlag:boolean) => void,
   todosNumber:number,
   activeTodosNumber:number,
 }
 
 const TodoHeader =({
-  onToggleAllTodos,
   todosNumber,
   activeTodosNumber,
 }:TodoHeaderProps)=>
  {
   const dispatch = useDispatch();
   const handleChange = (checkFlag:boolean) => {
-    onToggleAllTodos(checkFlag);
+    dispatch(updateAllTodosStatus({checkFlag}));
   };
   const handleKeyDown = (e:KeyboardEvent<HTMLInputElement>) => {
     if (e.key === ENTER_KEY) {
