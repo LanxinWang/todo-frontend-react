@@ -1,3 +1,4 @@
+import { TODO_MENU } from "../constants/constants";
 import todoReducer, {todoState, createTodo, deleteTodo, updateTodoStatus, updateAllTodosStatus, deleteAllCompletedTodos} from "./TodoSlice";
 
 const mockTodo = [{
@@ -12,7 +13,8 @@ const mockTodo = [{
 }]
 describe("todo reducer",()=>{
     const initialState: todoState = {
-        todoList: [...mockTodo]
+        todoList: [...mockTodo],
+        todoMenuOption: TODO_MENU.ALL
       };
     it("should handle initial state",()=>{
         expect(todoReducer(undefined, { type: 'unknown' })).toEqual({

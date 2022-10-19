@@ -1,12 +1,14 @@
 import {Todo} from "../types";
 import {createSlice} from '@reduxjs/toolkit';
-import TODO_STATUS from "../constants/constants";
+import TODO_STATUS, {TODO_MENU} from "../constants/constants";
 export interface todoState {
     todoList: Todo[];
+    todoMenuOption: string;
   }
   
   const initialState: todoState = {
-    todoList: []
+    todoList: [],
+    todoMenuOption: TODO_MENU.ALL
   };
 
 export const todoSlice = createSlice({
