@@ -14,7 +14,7 @@ const mockTodo = [{
 describe("todo reducer",()=>{
     const initialState: todoState = {
         todoList: [...mockTodo],
-        todoMenuOption: TODO_MENU.ALL
+        todoFilter: TODO_MENU.ALL
       };
     it("should handle initial state",()=>{
         expect(todoReducer(undefined, { type: 'unknown' })).toEqual({
@@ -67,6 +67,19 @@ describe("todo reducer",()=>{
         }])
     });
     it("should delete all todos which status is completed",()=>{
+        const {todoList} = todoReducer(initialState, deleteAllCompletedTodos());
+        expect(todoList).toEqual([{
+            id: 1,
+            status: "deleted",
+            name: "todo2"
+        },
+        {
+            id: 0,
+            status: "active",
+            name: "todo1"
+        }])
+    });
+    it("should update todo menu option value by ",()=>{
         const {todoList} = todoReducer(initialState, deleteAllCompletedTodos());
         expect(todoList).toEqual([{
             id: 1,

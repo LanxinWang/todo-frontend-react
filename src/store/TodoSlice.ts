@@ -3,12 +3,12 @@ import {createSlice} from '@reduxjs/toolkit';
 import TODO_STATUS, {TODO_MENU} from "../constants/constants";
 export interface todoState {
     todoList: Todo[];
-    todoMenuOption: string;
+    todoFilter: string;
   }
   
   const initialState: todoState = {
     todoList: [],
-    todoMenuOption: TODO_MENU.ALL
+    todoFilter: TODO_MENU.ALL
   };
 
 export const todoSlice = createSlice({
