@@ -1,11 +1,13 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { unmountComponentAtNode } from "react-dom";
+import { Provider } from "react-redux";
 import { Todo } from "../../types/index";
 import TodoListBody from "./index";
+import {store} from "../../store/store"
 
 const mockedTodos: Todo[] = [
   {
-    id: 1,
+    id: 0,
     status: "active",
     name: "test",
   },
@@ -27,12 +29,13 @@ afterEach(() => {
 
 const setup = () => {
   render(
-    <TodoListBody
+    <Provider store={store}>
+      <TodoListBody
       todos={mockedTodos}
-      onToggleTodo={toggleTodo}
-    />,
-    container
-  );
+      onToggleTodo={toggleTodo}/>  
+    </Provider>,
+    container)
+  
 };
 
 describe("Todo List", () => {
