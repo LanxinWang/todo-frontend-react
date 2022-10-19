@@ -23,9 +23,7 @@ function App() {
           }
           todosNumber={selectedTodos.length}
         />
-        <TodoListBody
-          todos={selectedTodos}
-        />
+        <TodoListBody/>
         <TodoFooter
           todos={selectedTodos} />
       </TodoList>

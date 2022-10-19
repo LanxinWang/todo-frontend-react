@@ -1,6 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import {Todo} from "../../types/index";
+import { useDispatch, useSelector } from "react-redux";
 import {
   TodoListBodyContainer,
   ToggleInput,
@@ -9,11 +8,20 @@ import {
   DeleteButton,
 } from "./style";
 import {deleteTodo, updateTodoStatus} from "../../store/TodoSlice"
-interface TodoListBodyProps {
-  todos: Todo[],
-}
-const TodoListBody = ({ todos }: TodoListBodyProps) => {
+import { RootState } from "../../store/store";
+import TODO_STATUS, { TODO_MENU } from "../../constants/constants";
+const TodoListBody = () => {
   const dispatch = useDispatch();
+  const todos = useSelector((state: RootState) => state.todo.todoList);
+  const todoMenuOption: string = useSelector((state: RootState) => state.todo.todoFilter); 
+  const todosByTodoMenuOption = ()=>{
+    if (todoMenuOption === TODO_MENU.ALL) {
+      return todos.filter((todo) => todo.status !== TODO_STATUS.DELETED);
+    } else {
+      return todos.filter((todo) => todo.status === todoMenuOption);
+    }
+  };
+
   const handleChange = (isChecked: boolean, id: number) => {
     dispatch(updateTodoStatus({id,isChecked}))
   };
@@ -22,7 +30,7 @@ const TodoListBody = ({ todos }: TodoListBodyProps) => {
   };
   return (
     <TodoListBodyContainer>
-      {todos.map((todo) => (
+      {todosByTodoMenuOption().map((todo) => (
         <li key={todo.id} className="todo-item">
           <ToggleInput
             id={todo.id.toString()}

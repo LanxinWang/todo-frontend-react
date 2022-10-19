@@ -28,8 +28,7 @@ afterEach(() => {
 const setup = () => {
   render(
     <Provider store={store}>
-      <TodoListBody
-      todos={mockedTodos}/>  
+      <TodoListBody />
     </Provider>,
     container)
   
