@@ -11,7 +11,6 @@ const mockedTodos: Todo[] = [
   },
 ];
 const toggleTodo = jest.fn();
-const deleteTodo = jest.fn();
 
 let container: any = null;
 beforeEach(() => {
@@ -21,7 +20,6 @@ beforeEach(() => {
 
 afterEach(() => {
   toggleTodo.mockClear();
-  deleteTodo.mockClear();
   unmountComponentAtNode(container);
   container.remove();
   container = null;
@@ -32,7 +30,6 @@ const setup = () => {
     <TodoListBody
       todos={mockedTodos}
       onToggleTodo={toggleTodo}
-      onDeleteTodo={deleteTodo}
     />,
     container
   );
@@ -42,14 +39,6 @@ describe("Todo List", () => {
   test("renders TodoList", () => {
     setup();
     expect(screen.getAllByRole("listitem").length).toBe(mockedTodos.length);
-  });
-
-  test("should delete todo when click todo delete button", () => {
-    setup();
-    const deleteBtn = screen.getByRole("button");
-    fireEvent.click(deleteBtn);
-    expect(deleteTodo).toHaveBeenCalledTimes(1);
-    expect(deleteTodo).toHaveBeenCalledWith(mockedTodos[0].id);
   });
 
   test("should exchange todo status when click todo status box", () => {

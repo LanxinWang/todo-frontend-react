@@ -17,10 +17,6 @@ function App() {
     TODO_MENU.ALL
   );
 
-  const deleteTodo = (id: string) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
-  };
-
   const toggleAllTodos = (checkFlag: boolean) => {
     setTodos(
       todos.map((todo) => {
@@ -65,7 +61,6 @@ function App() {
         />
         <TodoListBody
           todos={selectedTodos}
-          onDeleteTodo={deleteTodo}
           onToggleTodo={toggleTodo}
         />
         <TodoFooter

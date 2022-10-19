@@ -11,11 +11,10 @@ import {
 import {deleteTodo} from "../../store/TodoSlice"
 interface TodoListBodyProps {
   todos: Todo[],
-  onDeleteTodo: (id: string) =>void,
   onToggleTodo: (isChecked: boolean, id: string) => void
   
 }
-const TodoListBody = ({ todos, onDeleteTodo, onToggleTodo }: TodoListBodyProps) => {
+const TodoListBody = ({ todos, onToggleTodo }: TodoListBodyProps) => {
   const dispatch = useDispatch();
   const handleChange = (isChecked: boolean, id: string) => {
     onToggleTodo(isChecked, id);
