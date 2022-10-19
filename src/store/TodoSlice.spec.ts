@@ -65,7 +65,6 @@ describe("todo reducer",()=>{
         }])
     });
     it("should delete all todos which status is completed",()=>{
-
         const {todoList} = todoReducer(initialState, deleteAllCompletedTodos());
         expect(todoList).toEqual([{
             id: 1,

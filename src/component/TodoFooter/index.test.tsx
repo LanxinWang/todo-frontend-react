@@ -36,7 +36,6 @@ describe("Todo Footer", () => {
         todos={mockedTodos}
         selectedTodoStatusOption={selectedTodoStatusOption}
         onSetSelectedTodoStatusOption={setSelectedTodoStatusOption}
-        onClearCompletedTodos={clearCompletedTodos}
       />,
       container
     );
@@ -55,12 +54,5 @@ describe("Todo Footer", () => {
     fireEvent.click(activeButton, { target: "active" });
     expect(setSelectedTodoStatusOption).toBeCalledTimes(1);
     expect(setSelectedTodoStatusOption).toHaveBeenCalledWith("active");
-  });
-
-  test("should clear completed todos when click clear button", () => {
-    setup();
-    const clearCompletedButton = screen.getByText("Clear completed");
-    fireEvent.click(clearCompletedButton);
-    expect(clearCompletedTodos).toBeCalledTimes(1);
   });
 });

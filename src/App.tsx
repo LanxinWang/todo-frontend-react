@@ -5,7 +5,6 @@ import TodoFooter from "./component/TodoFooter";
 import { useState } from "react";
 import TODO_STATUS, { TITLE, TODO_MENU } from "./constants/constants";
 import {Todo} from "./types"
-import remove from "lodash.remove";
 import { TodoApp, TodoList, Footer, H1 } from "./style";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import {useSelector} from "react-redux";
@@ -16,11 +15,6 @@ function App() {
   const [selectedTodoStatusOption, setSelectedTodoStatusOption] = useState(
     TODO_MENU.ALL
   );
-
-  const clearCompletedTodos = () => {
-    remove(todos, (todo: Todo) => todo.status === TODO_STATUS.COMPLETED);
-    setTodos([...todos]);
-  };
 
   const TodosByStatusOption =
     selectedTodoStatusOption === TODO_MENU.ALL
@@ -45,12 +39,12 @@ function App() {
           todos={selectedTodos}
         />
         <TodoFooter
-          todos={todos}
+
+          todos={selectedTodos}
           onSetSelectedTodoStatusOption={(selectedTodoStatusOption) => {
             setSelectedTodoStatusOption(selectedTodoStatusOption);
           }}
           selectedTodoStatusOption={selectedTodoStatusOption}
-          onClearCompletedTodos={clearCompletedTodos}
         />
       </TodoList>
       <Footer id="info">

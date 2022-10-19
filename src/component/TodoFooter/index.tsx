@@ -8,6 +8,8 @@ import {
   ClearButton,
   MenuButton,
 } from "./style";
+import { useDispatch } from "react-redux";
+import { deleteAllCompletedTodos } from "../../store/TodoSlice";
 
 const todoMenu = [TODO_MENU.ALL, TODO_MENU.ACTIVE, TODO_MENU.COMPLETED];
 
@@ -15,22 +17,20 @@ interface TodoFooterProps {
   todos: Todo[],
   selectedTodoStatusOption: string ,
   onSetSelectedTodoStatusOption: (menuOption: string) => void,
-  onClearCompletedTodos: () => void,
-
 }
 
 const TodoFooter = ({
   todos,
   selectedTodoStatusOption,
   onSetSelectedTodoStatusOption,
-  onClearCompletedTodos,
 }: TodoFooterProps) => {
+  const dispatch = useDispatch();
   const handleMenuClick = (menuOption: string) => {
     onSetSelectedTodoStatusOption(menuOption);
   };
 
   const handleClearClick = () => {
-    onClearCompletedTodos();
+    dispatch(deleteAllCompletedTodos());
   };
 
   return (
