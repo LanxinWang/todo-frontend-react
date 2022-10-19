@@ -37,10 +37,18 @@ export const todoSlice = createSlice({
         : TODO_STATUS.ACTIVE;
         return todo
       })
+    },
+    deleteAllCompletedTodos: (state)=>{
+      state.todoList.map ((todo) => {
+        if (todo.status === TODO_STATUS.COMPLETED) {
+          todo.status = TODO_STATUS.DELETED
+        };
+        return todo;
+      })
     }
   }
 })
 
-export const { createTodo, deleteTodo, updateTodoStatus, updateAllTodosStatus } = todoSlice.actions
+export const { createTodo, deleteTodo, updateTodoStatus, updateAllTodosStatus, deleteAllCompletedTodos } = todoSlice.actions
 
 export default todoSlice.reducer
