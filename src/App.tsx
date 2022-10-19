@@ -10,10 +10,6 @@ import {useSelector} from "react-redux";
 import {RootState} from "./store/store";
 
 function App() {
-  const [selectedTodoStatusOption, setSelectedTodoStatusOption] = useState(
-    TODO_MENU.ALL
-  );
-
   const selectedTodos:Todo[] = useSelector((state: RootState) => state.todo.todoList);
 
   return (
@@ -32,13 +28,7 @@ function App() {
           todos={selectedTodos}
         />
         <TodoFooter
-
-          todos={selectedTodos}
-          onSetSelectedTodoStatusOption={(selectedTodoStatusOption) => {
-            setSelectedTodoStatusOption(selectedTodoStatusOption);
-          }}
-          selectedTodoStatusOption={selectedTodoStatusOption}
-        />
+          todos={selectedTodos} />
       </TodoList>
       <Footer id="info">
         <p>Double-click to edit a todo</p>

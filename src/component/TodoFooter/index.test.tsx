@@ -1,5 +1,7 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { unmountComponentAtNode } from "react-dom";
+import { Provider } from "react-redux";
+import { store } from "../../store/store";
 import { Todo } from "../../types/index";
 import TodoFooter from "./index";
 
@@ -11,10 +13,6 @@ const mockedTodos: Todo[] = [
   },
 ];
 
-const setSelectedTodoStatusOption = jest.fn();
-const selectedTodoStatusOption = "all";
-const clearCompletedTodos = jest.fn();
-
 describe("Todo Footer", () => {
   let container: any = null;
   beforeEach(() => {
@@ -23,8 +21,6 @@ describe("Todo Footer", () => {
   });
 
   afterEach(() => {
-    setSelectedTodoStatusOption.mockClear();
-    clearCompletedTodos.mockClear();
     unmountComponentAtNode(container);
     container.remove();
     container = null;
@@ -32,11 +28,11 @@ describe("Todo Footer", () => {
 
   const setup = () => {
     render(
-      <TodoFooter
+      <Provider store={store}>
+         <TodoFooter
         todos={mockedTodos}
-        selectedTodoStatusOption={selectedTodoStatusOption}
-        onSetSelectedTodoStatusOption={setSelectedTodoStatusOption}
-      />,
+        />
+      </Provider>,
       container
     );
   };
@@ -46,13 +42,5 @@ describe("Todo Footer", () => {
     expect(screen.getAllByRole("listitem").length).toBe(3);
     expect(screen.getByText("items left")).toBeInTheDocument();
     expect(screen.getByText("Clear completed")).toBeInTheDocument();
-  });
-
-  test("should select todo status when click todo status menu option", () => {
-    setup();
-    const activeButton = screen.getByText("active");
-    fireEvent.click(activeButton, { target: "active" });
-    expect(setSelectedTodoStatusOption).toBeCalledTimes(1);
-    expect(setSelectedTodoStatusOption).toHaveBeenCalledWith("active");
   });
 });

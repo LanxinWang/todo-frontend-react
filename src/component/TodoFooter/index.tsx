@@ -8,25 +8,24 @@ import {
   ClearButton,
   MenuButton,
 } from "./style";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteAllCompletedTodos } from "../../store/TodoSlice";
+import { RootState } from "../../store/store";
+import { updateTodoFilter } from "../../store/TodoSlice";
 
 const todoMenu = [TODO_MENU.ALL, TODO_MENU.ACTIVE, TODO_MENU.COMPLETED];
 
 interface TodoFooterProps {
   todos: Todo[],
-  selectedTodoStatusOption: string ,
-  onSetSelectedTodoStatusOption: (menuOption: string) => void,
 }
 
 const TodoFooter = ({
   todos,
-  selectedTodoStatusOption,
-  onSetSelectedTodoStatusOption,
 }: TodoFooterProps) => {
   const dispatch = useDispatch();
+  const todoMenuOption: string = useSelector((state: RootState) => state.todo.todoFilter);
   const handleMenuClick = (menuOption: string) => {
-    onSetSelectedTodoStatusOption(menuOption);
+    dispatch(updateTodoFilter({menuOption}));
   };
 
   const handleClearClick = () => {
@@ -47,7 +46,7 @@ const TodoFooter = ({
           <li key={menuOption}>
             <MenuButton
               id={menuOption}
-              selectedTodoStatusOption={selectedTodoStatusOption}
+              selectedTodoStatusOption={todoMenuOption}
               onClick={() => handleMenuClick(menuOption)}
             >
               {menuOption}
