@@ -2,7 +2,7 @@ import "./component/TodoHeader";
 import TodoHeader from "./component/TodoHeader";
 import TodoListBody from "./component/TodoListBody";
 import TodoFooter from "./component/TodoFooter";
-import TODO_STATUS, { TITLE} from "./constants/constants";
+import { TITLE} from "./constants/constants";
 import {Todo} from "./types"
 import { TodoApp, TodoList, Footer, H1 } from "./style";
 import {useSelector} from "react-redux";
@@ -17,12 +17,7 @@ function App() {
         <H1>{TITLE}</H1>
       </header>
       <TodoList>
-        <TodoHeader
-          activeTodosNumber={
-            selectedTodos.filter((todo) => todo.status === TODO_STATUS.ACTIVE).length
-          }
-          todosNumber={selectedTodos.length}
-        />
+        <TodoHeader/>
         <TodoListBody/>
         <TodoFooter
           todos={selectedTodos} />

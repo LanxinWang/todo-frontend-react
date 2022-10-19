@@ -1,5 +1,5 @@
 import { ChangeEvent, KeyboardEvent } from "react";
-import { ENTER_KEY } from "../../constants/constants";
+import TODO_STATUS, { ENTER_KEY } from "../../constants/constants";
 import {
   ToggleAllLabel,
   TodoHeaderContainer,
@@ -7,18 +7,15 @@ import {
   ToggleAllCheckbox,
 } from "./styles";
 import { createTodo, updateAllTodosStatus} from "../../store/TodoSlice";
-import { useDispatch } from 'react-redux'
-export interface TodoHeaderProps {
-  todosNumber:number,
-  activeTodosNumber:number,
-}
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from "../../store/store";
 
-const TodoHeader =({
-  todosNumber,
-  activeTodosNumber,
-}:TodoHeaderProps)=>
- {
+const TodoHeader = () => {
   const dispatch = useDispatch();
+  const todos = useSelector((state: RootState) => state.todo.todoList);
+  const activeTodosNumber = todos.filter((todo) => 
+  todo.status === TODO_STATUS.ACTIVE).length;
+  
   const handleChange = (checkFlag:boolean) => {
     dispatch(updateAllTodosStatus({checkFlag}));
   };
@@ -37,7 +34,7 @@ const TodoHeader =({
         onChange={(e:ChangeEvent<HTMLInputElement>) => handleChange(e.target.checked)}
       />
       <ToggleAllLabel htmlFor="toggle-all"
-      todosNumber={todosNumber}
+      todosNumber={todos.length}
        >
         ❯
       </ToggleAllLabel>
