@@ -31,20 +31,20 @@ export const todoSlice = createSlice({
         : TODO_STATUS.ACTIVE;
     },
     updateAllTodosStatus: (state, {payload:{checkFlag}})=>{
-      state.todoList.map ((todo) => {
+      state.todoList = state.todoList.map ((todo) => {
         todo.status = checkFlag
         ? TODO_STATUS.COMPLETED
         : TODO_STATUS.ACTIVE;
         return todo
-      })
+      });      
     },
     deleteAllCompletedTodos: (state)=>{
-      state.todoList.map ((todo) => {
+      state.todoList = state.todoList.map((todo) => {
         if (todo.status === TODO_STATUS.COMPLETED) {
           todo.status = TODO_STATUS.DELETED
         };
         return todo;
-      })
+      });      
     }
   }
 })
