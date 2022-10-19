@@ -1,14 +1,14 @@
 import todoReducer, {todoState, createTodo, deleteTodo, updateTodoStatus} from "./TodoSlice";
 
 const mockTodo = [{
-    id: 0,
-    status: "active",
-    name: "todo1"
-},
-{
     id: 1,
     status: "active",
     name: "todo2"
+},
+{
+    id: 0,
+    status: "active",
+    name: "todo1"
 }]
 describe("todo reducer",()=>{
     const initialState: todoState = {
@@ -34,16 +34,16 @@ describe("todo reducer",()=>{
         }])
     });
     it("should update todo status by id",()=>{
-        const {todoList} = todoReducer(initialState, updateTodoStatus({id: 0,isChecked: true}));
+        const {todoList} = todoReducer(initialState, updateTodoStatus({id: 0, isChecked: true}));
         expect(todoList).toEqual([{
-            id: 0,
-            status: "completed",
-            name: "todo1"
-        },
-        {
             id: 1,
             status: "active",
             name: "todo2"
+        },
+        {
+            id: 0,
+            status: "completed",
+            name: "todo1"
         }])
     });
 
