@@ -1,8 +1,8 @@
-import todoReducer, {todoState, createTodo, deleteTodo, updateTodoStatus, updateAllTodosStatus} from "./TodoSlice";
+import todoReducer, {todoState, createTodo, deleteTodo, updateTodoStatus, updateAllTodosStatus, deleteAllCompletedTodos} from "./TodoSlice";
 
 const mockTodo = [{
     id: 1,
-    status: "active",
+    status: "completed",
     name: "todo2"
 },
 {
@@ -29,7 +29,7 @@ describe("todo reducer",()=>{
         const {todoList} = todoReducer(initialState, deleteTodo({id: 0}));
         expect(todoList).toEqual([{
             id: 1,
-            status: "active",
+            status: "completed",
             name: "todo2"
         },
         {
@@ -42,7 +42,7 @@ describe("todo reducer",()=>{
         const {todoList} = todoReducer(initialState, updateTodoStatus({id: 0, isChecked: true}));
         expect(todoList).toEqual([{
             id: 1,
-            status: "active",
+            status: "completed",
             name: "todo2"
         },
         {
@@ -61,6 +61,20 @@ describe("todo reducer",()=>{
         {
             id: 0,
             status: "completed",
+            name: "todo1"
+        }])
+    });
+    it("should delete all todos which status is completed",()=>{
+
+        const {todoList} = todoReducer(initialState, deleteAllCompletedTodos());
+        expect(todoList).toEqual([{
+            id: 1,
+            status: "deleted",
+            name: "todo2"
+        },
+        {
+            id: 0,
+            status: "active",
             name: "todo1"
         }])
     });
