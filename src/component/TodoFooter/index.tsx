@@ -1,6 +1,5 @@
 import React from "react";
 import TODO_STATUS from "../../constants/constants";
-import { Todo } from "../../types/index"
 import { TODO_MENU } from "../../constants/constants";
 import {
   TodoFooterContainer,
@@ -15,14 +14,9 @@ import { updateTodoFilter } from "../../store/TodoSlice";
 
 const todoMenu = [TODO_MENU.ALL, TODO_MENU.ACTIVE, TODO_MENU.COMPLETED];
 
-interface TodoFooterProps {
-  todos: Todo[],
-}
-
-const TodoFooter = ({
-  todos,
-}: TodoFooterProps) => {
+const TodoFooter = () => {
   const dispatch = useDispatch();
+  const todos = useSelector((state: RootState) => state.todo.todoList);
   const todoMenuOption: string = useSelector((state: RootState) => state.todo.todoFilter);
   const handleMenuClick = (menuOption: string) => {
     dispatch(updateTodoFilter({menuOption}));

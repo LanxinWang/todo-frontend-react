@@ -3,24 +3,18 @@ import TodoHeader from "./component/TodoHeader";
 import TodoListBody from "./component/TodoListBody";
 import TodoFooter from "./component/TodoFooter";
 import { TITLE} from "./constants/constants";
-import {Todo} from "./types"
 import { TodoApp, TodoList, Footer, H1 } from "./style";
-import {useSelector} from "react-redux";
-import {RootState} from "./store/store";
 
 function App() {
-  const selectedTodos:Todo[] = useSelector((state: RootState) => state.todo.todoList);
-
   return (
     <TodoApp>
       <header>
         <H1>{TITLE}</H1>
       </header>
       <TodoList>
-        <TodoHeader/>
-        <TodoListBody/>
-        <TodoFooter
-          todos={selectedTodos} />
+        <TodoHeader />
+        <TodoListBody />
+        <TodoFooter />
       </TodoList>
       <Footer id="info">
         <p>Double-click to edit a todo</p>

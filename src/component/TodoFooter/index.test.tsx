@@ -1,17 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import { unmountComponentAtNode } from "react-dom";
 import { Provider } from "react-redux";
+import { TODO_MENU } from "../../constants/constants";
 import { store } from "../../store/store";
-import { Todo } from "../../types/index";
 import TodoFooter from "./index";
-
-const mockedTodos: Todo[] = [
-  {
-    id: 0,
-    status: "active",
-    name: "test",
-  },
-];
 
 describe("Todo Footer", () => {
   let container: any = null;
@@ -29,9 +21,7 @@ describe("Todo Footer", () => {
   const setup = () => {
     render(
       <Provider store={store}>
-         <TodoFooter
-        todos={mockedTodos}
-        />
+         <TodoFooter/>
       </Provider>,
       container
     );
@@ -39,7 +29,9 @@ describe("Todo Footer", () => {
 
   test("should render TodoFooter", () => {
     setup();
-    expect(screen.getAllByRole("listitem").length).toBe(3);
+    expect(screen.getByText(TODO_MENU.ACTIVE)).toBeInTheDocument();
+    expect(screen.getByText(TODO_MENU.COMPLETED)).toBeInTheDocument();
+    expect(screen.getByText(TODO_MENU.ALL)).toBeInTheDocument();
     expect(screen.getByText("items left")).toBeInTheDocument();
     expect(screen.getByText("Clear completed")).toBeInTheDocument();
   });
