@@ -26,7 +26,7 @@ function App() {
     );
   };
 
-  const toggleTodo = (isChecked: boolean, id: string) => {
+  const toggleTodo = (isChecked: boolean, id: number) => {
     let todoIndex = todos.findIndex((todo) => todo.id === id);
     todos[todoIndex].status = isChecked
       ? TODO_STATUS.COMPLETED

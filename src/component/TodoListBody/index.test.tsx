@@ -5,7 +5,7 @@ import TodoListBody from "./index";
 
 const mockedTodos: Todo[] = [
   {
-    id: "1",
+    id: 1,
     status: "active",
     name: "test",
   },

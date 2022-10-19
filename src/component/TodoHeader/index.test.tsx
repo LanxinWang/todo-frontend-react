@@ -8,7 +8,7 @@ import { store } from '../../store/store';
 
 const mockedTodos:Todo[] = [
   {
-    id: "1",
+    id: 0,
     status: "active",
     name: "test",
   },
