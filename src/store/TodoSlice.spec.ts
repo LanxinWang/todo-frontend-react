@@ -31,6 +31,11 @@ describe("todo reducer",()=>{
             id: 1,
             status: "active",
             name: "todo2"
+        },
+        {
+            id: 0,
+            status: "deleted",
+            name: "todo1"
         }])
     });
     it("should update todo status by id",()=>{
@@ -59,5 +64,4 @@ describe("todo reducer",()=>{
             name: "todo1"
         }])
     });
-
 })  

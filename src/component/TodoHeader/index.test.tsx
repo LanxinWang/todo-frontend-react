@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { unmountComponentAtNode } from "react-dom";
 import TODO_STATUS from "../../constants/constants";
 import { Todo } from "../../types/index";

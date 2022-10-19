@@ -21,7 +21,8 @@ export const todoSlice = createSlice({
       },...state.todoList];
     },
     deleteTodo: (state, {payload:{id}}) => {
-      state.todoList = state.todoList.filter((todo) => todo.id !== id)
+      let index = state.todoList.length - id -1;
+      state.todoList[index].status =  TODO_STATUS.DELETED;
     },
     updateTodoStatus: (state, {payload:{id,isChecked}})=>{
       let index = state.todoList.length - id -1;
