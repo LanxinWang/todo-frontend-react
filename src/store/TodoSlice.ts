@@ -1,7 +1,6 @@
 import {Todo} from "../types";
 import {createSlice} from '@reduxjs/toolkit';
 import TODO_STATUS from "../constants/constants";
-import { TodoList } from "../style";
 export interface todoState {
     todoList: Todo[];
   }
@@ -25,7 +24,8 @@ export const todoSlice = createSlice({
       state.todoList = state.todoList.filter((todo) => todo.id !== id)
     },
     updateTodoStatus: (state, {payload:{id,isChecked}})=>{
-      state.todoList[id].status = isChecked
+      let index = state.todoList.length - id -1;
+      state.todoList[index].status = isChecked
         ? TODO_STATUS.COMPLETED
         : TODO_STATUS.ACTIVE;
     }
