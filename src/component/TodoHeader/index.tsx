@@ -9,14 +9,12 @@ import {
 import { createTodo} from "../../store/TodoSlice";
 import { useDispatch } from 'react-redux'
 export interface TodoHeaderProps {
-  onAddTodo:(name:string) => void,
   onToggleAllTodos:(checkFlag:boolean) => void,
   todosNumber:number,
   activeTodosNumber:number,
 }
 
 const TodoHeader =({
-  onAddTodo,
   onToggleAllTodos,
   todosNumber,
   activeTodosNumber,

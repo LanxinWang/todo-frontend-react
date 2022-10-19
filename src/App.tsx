@@ -17,18 +17,6 @@ function App() {
     TODO_MENU.ALL
   );
 
-  const addTodo = (name: string) => {
-    if (name.trim() === "") return;
-    setTodos([
-      {
-        id: Date.now().toString(),
-        status: TODO_STATUS.ACTIVE,
-        name,
-      },
-      ...todos,
-    ]);
-  };
-
   const deleteTodo = (id: string) => {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
@@ -72,7 +60,6 @@ function App() {
           activeTodosNumber={
             selectedTodos.filter((todo) => todo.status === TODO_STATUS.ACTIVE).length
           }
-          onAddTodo={addTodo}
           onToggleAllTodos={toggleAllTodos}
           todosNumber={selectedTodos.length}
         />

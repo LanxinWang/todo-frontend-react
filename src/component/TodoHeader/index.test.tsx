@@ -36,7 +36,6 @@ const setup = () => {
       <TodoHeader
         todosNumber={mockedTodos.length}
         activeTodosNumber={mockedTodos.filter((todo) => todo.status === TODO_STATUS.ACTIVE).length}
-        onAddTodo={addTodo}
         onToggleAllTodos={toggleAllTodos}
     />
     </Provider>
