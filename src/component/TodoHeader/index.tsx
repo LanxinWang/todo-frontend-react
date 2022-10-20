@@ -13,8 +13,10 @@ import { RootState } from "../../store/store";
 const TodoHeader = () => {
   const dispatch = useDispatch();
   const todos = useSelector((state: RootState) => state.todo.todoList);
-  const activeTodosNumber = todos.filter((todo) => 
-  todo.status === TODO_STATUS.ACTIVE).length;
+  const completedTodosNumber = todos.filter((todo) => 
+  todo.status === TODO_STATUS.COMPLETED).length;
+  const deletedTodosNumber = todos.filter((todo) => 
+  todo.status === TODO_STATUS.DELETED).length;
   
   const handleChange = (checkFlag:boolean) => {
     dispatch(updateAllTodosStatus({checkFlag}));
@@ -31,7 +33,9 @@ const TodoHeader = () => {
     <TodoHeaderContainer>
       <ToggleAllCheckbox
         id="toggle-all"
-        activeTodosNumber={activeTodosNumber}
+        completedTodosNumber={completedTodosNumber}
+        deletedTodosNumber={deletedTodosNumber}
+        todosNumber={todos.length}
         onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e.target.checked)}
       />
       <ToggleAllLabel htmlFor="toggle-all"

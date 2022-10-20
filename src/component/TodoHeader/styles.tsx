@@ -44,12 +44,14 @@ export const NewTodoInput = styled.input.attrs(() => ({
 `;
 
 interface ToggleAllCheckboxProps {
-  activeTodosNumber: number;
+  completedTodosNumber: number;
+  deletedTodosNumber:number;
+  todosNumber: number;
 }
 export const ToggleAllCheckbox = styled.input.attrs<ToggleAllCheckboxProps>(
-  ({ activeTodosNumber }) => ({
+  ({ completedTodosNumber, deletedTodosNumber, todosNumber }) => ({
     type: "checkbox",
-    checked: activeTodosNumber === 0,
+    checked: completedTodosNumber + deletedTodosNumber === todosNumber,
   })
  )<ToggleAllCheckboxProps>`
   display: none;
