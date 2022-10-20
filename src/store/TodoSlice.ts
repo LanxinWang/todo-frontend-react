@@ -1,13 +1,14 @@
 import {Todo} from "../types";
 import {createSlice} from '@reduxjs/toolkit';
 import TODO_STATUS, {TODO_MENU} from "../constants/constants";
+import { getLocalStorage, setLocalStorage } from "../hooks/useLocalStorage";
 export interface todoState {
     todoList: Todo[];
     todoFilter: string;
   }
   
   const initialState: todoState = {
-    todoList: [],
+    todoList: getLocalStorage("todos",[]),
     todoFilter: TODO_MENU.ALL
   };
 
@@ -21,24 +22,30 @@ export const todoSlice = createSlice({
         status: TODO_STATUS.ACTIVE,
         name,
       },...state.todoList];
+      setLocalStorage("todos",state.todoList);
     },
     deleteTodo: (state, {payload:{id}}) => {
       let index = state.todoList.length - id -1;
       state.todoList[index].status =  TODO_STATUS.DELETED;
+      setLocalStorage("todos",state.todoList)
     },
     updateTodoStatus: (state, {payload:{id,isChecked}})=>{
       let index = state.todoList.length - id -1;
       state.todoList[index].status = isChecked
         ? TODO_STATUS.COMPLETED
         : TODO_STATUS.ACTIVE;
+      setLocalStorage("todos",state.todoList);
     },
     updateAllTodosStatus: (state, {payload:{checkFlag}})=>{
       state.todoList = state.todoList.map ((todo) => {
-        todo.status = checkFlag
-        ? TODO_STATUS.COMPLETED
-        : TODO_STATUS.ACTIVE;
+        if(todo.status!==TODO_STATUS.DELETED) {
+          todo.status = checkFlag
+          ? TODO_STATUS.COMPLETED
+          : TODO_STATUS.ACTIVE;
+        }
         return todo
-      });      
+      });  
+      setLocalStorage("todos",state.todoList);
     },
     deleteAllCompletedTodos: (state)=>{
       state.todoList = state.todoList.map((todo) => {
@@ -46,7 +53,8 @@ export const todoSlice = createSlice({
           todo.status = TODO_STATUS.DELETED;
         };
         return todo;
-      });      
+      }); 
+      setLocalStorage("todos",state.todoList);
     },
     updateTodoFilter: (state,{payload:{menuOption}})=>{
       state.todoFilter = menuOption;
