@@ -14,7 +14,7 @@ const mockTodo = [{
 }]
 describe("todo reducer",()=>{
     const initialState: todoState = {
-        todoList: getLocalStorage("todos",mockTodo),
+        todoList: mockTodo,
         todoFilter: TODO_MENU.ALL
       };
     it("should handle initial state",()=>{
