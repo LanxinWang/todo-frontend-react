@@ -1,17 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import { unmountComponentAtNode } from "react-dom";
 import { Provider } from "react-redux";
-import { Todo } from "../../types/index";
 import TodoListBody from "./index";
 import {store} from "../../store/store"
-
-const mockedTodos: Todo[] = [
-  {
-    id: 0,
-    status: "active",
-    name: "test",
-  },
-];
 
 let container: any = null;
 beforeEach(() => {
@@ -35,8 +26,10 @@ const setup = () => {
 };
 
 describe("Todo List", () => {
-  test("renders TodoList", () => {
+  it("should renders TodoList", () => {
     setup();
-    expect(screen.getAllByRole("listitem").length).toBe(mockedTodos.length);
+    expect(screen.getByRole("list", {
+    name: /todoList/i,
+  })).toBeInTheDocument();
   });
 });

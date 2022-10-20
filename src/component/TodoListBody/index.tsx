@@ -29,7 +29,7 @@ const TodoListBody = () => {
     dispatch(deleteTodo({id}))
   };
   return (
-    <TodoListBodyContainer>
+    <TodoListBodyContainer aria-label= "todoList">
       {todosByTodoMenuOption().map((todo) => (
         <li key={todo.id} className="todo-item">
           <ToggleInput
