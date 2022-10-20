@@ -42,6 +42,7 @@ describe("todo reducer",()=>{
         }])
     });
     it("should update todo whether finished status by id",()=>{
+        todoReducer(initialState, updateTodoStatus({id: 0, isChecked: false}));
         const {todoList} = todoReducer(initialState, updateTodoStatus({id: 0, isChecked: true}));
         expect(todoList).toEqual([{
             id: 1,
@@ -55,6 +56,7 @@ describe("todo reducer",()=>{
         }])
     });
     it("should update all todos whether finished status",()=>{
+        todoReducer(initialState, updateAllTodosStatus({checkFlag: false}));
         const {todoList} = todoReducer(initialState, updateAllTodosStatus({checkFlag: true}));
         expect(todoList).toEqual([{
             id: 1,
