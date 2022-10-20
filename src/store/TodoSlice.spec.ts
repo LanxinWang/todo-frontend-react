@@ -1,4 +1,5 @@
 import { TODO_MENU } from "../constants/constants";
+import { getLocalStorage } from "../LocalStorage";
 import todoReducer, {todoState, createTodo, deleteTodo, updateTodoStatus, updateAllTodosStatus, deleteAllCompletedTodos, updateTodoFilter} from "./TodoSlice";
 
 const mockTodo = [{
@@ -13,7 +14,7 @@ const mockTodo = [{
 }]
 describe("todo reducer",()=>{
     const initialState: todoState = {
-        todoList: [...mockTodo],
+        todoList: getLocalStorage("todos",mockTodo),
         todoFilter: TODO_MENU.ALL
       };
     it("should handle initial state",()=>{

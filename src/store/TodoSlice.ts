@@ -1,7 +1,7 @@
 import {Todo} from "../types";
 import {createSlice} from '@reduxjs/toolkit';
 import TODO_STATUS, {TODO_MENU} from "../constants/constants";
-import { getLocalStorage, setLocalStorage } from "../hooks/useLocalStorage";
+import { getLocalStorage, setLocalStorage } from "../LocalStorage";
 export interface todoState {
     todoList: Todo[];
     todoFilter: string;
