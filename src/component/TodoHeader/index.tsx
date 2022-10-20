@@ -20,8 +20,9 @@ const TodoHeader = () => {
     dispatch(updateAllTodosStatus({checkFlag}));
   };
   const handleKeyDown = (e:KeyboardEvent<HTMLInputElement>) => {
+    let name = (e.target as HTMLInputElement).value.trim();
     if (e.key === ENTER_KEY) {
-      dispatch(createTodo({name: (e.target as HTMLInputElement).value}));
+      name !== "" && dispatch(createTodo({name}));
       (e.target as HTMLInputElement).value = "";
     }
   };
@@ -31,7 +32,7 @@ const TodoHeader = () => {
       <ToggleAllCheckbox
         id="toggle-all"
         activeTodosNumber={activeTodosNumber}
-        onChange={(e:ChangeEvent<HTMLInputElement>) => handleChange(e.target.checked)}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e.target.checked)}
       />
       <ToggleAllLabel htmlFor="toggle-all"
       todosNumber={todos.length}
