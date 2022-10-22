@@ -1,29 +1,9 @@
-import { render, screen } from "@testing-library/react";
-import { unmountComponentAtNode } from "react-dom";
+import { screen } from "@testing-library/react";
 import TodoHeader from "./index";
-import { Provider } from 'react-redux';
-import { store } from '../../store/store';
-
-let container: HTMLDivElement;
-beforeEach(() => {
-  container = document.createElement("div");
-  document.body.appendChild(container);
-});
-
-afterEach(() => {
-  unmountComponentAtNode(container);
-  container.remove();
-});
+import {renderWithProviders} from "../../utils/test-utils"
 
 const setup = () => {
-
-  render(
-    <Provider store={store}>
-      <TodoHeader/>
-    </Provider>
-    ,
-    {container}
-  );
+    renderWithProviders(<TodoHeader/>)
 };
 
 describe("Todo Header", () => {

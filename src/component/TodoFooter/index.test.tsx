@@ -1,30 +1,11 @@
-import { render, screen } from "@testing-library/react";
-import { unmountComponentAtNode } from "react-dom";
-import { Provider } from "react-redux";
+import { screen } from "@testing-library/react";
 import { TODO_MENU } from "../../constants/constants";
-import { store } from "../../store/store";
+import { renderWithProviders } from "../../utils/test-utils";
 import TodoFooter from "./index";
 
 describe("Todo Footer", () => {
-  let container: any = null;
-  beforeEach(() => {
-    container = document.createElement("div");
-    document.body.appendChild(container);
-  });
-
-  afterEach(() => {
-    unmountComponentAtNode(container);
-    container.remove();
-    container = null;
-  });
-
   const setup = () => {
-    render(
-      <Provider store={store}>
-         <TodoFooter/>
-      </Provider>,
-      container
-    );
+    renderWithProviders(<TodoFooter />,);
   };
 
   test("should render TodoFooter", () => {

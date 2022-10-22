@@ -1,5 +1,4 @@
 import { TODO_MENU } from "../constants/constants";
-import { getLocalStorage } from "../LocalStorage";
 import todoReducer, {todoState, createTodo, deleteTodo, updateTodoStatus, updateAllTodosStatus, deleteAllCompletedTodos, updateTodoFilter} from "./TodoSlice";
 
 const mockTodo = [{
