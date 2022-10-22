@@ -7,12 +7,12 @@ import {
   ToggleAllCheckbox,
 } from "./styles";
 import { createTodo, updateAllTodosStatus} from "../../store/TodoSlice";
-import { useDispatch, useSelector } from 'react-redux'
+import {useAppDispatch, useAppSelector} from "../../hooks"
 import { RootState } from "../../store/store";
 
 const TodoHeader = () => {
-  const dispatch = useDispatch();
-  const todos = useSelector((state: RootState) => state.todo.todoList);
+  const dispatch = useAppDispatch();
+  const todos = useAppSelector((state: RootState) => state.todo.todoList);
   const completedTodosNumber = todos.filter((todo) => 
   todo.status === TODO_STATUS.COMPLETED).length;
   const deletedTodosNumber = todos.filter((todo) => 

@@ -7,17 +7,17 @@ import {
   ClearButton,
   MenuButton,
 } from "./style";
-import { useDispatch, useSelector } from "react-redux";
 import { deleteAllCompletedTodos } from "../../store/TodoSlice";
 import { RootState } from "../../store/store";
 import { updateTodoFilter } from "../../store/TodoSlice";
+import {useAppDispatch, useAppSelector} from "../../hooks"
 
 const todoMenu = [TODO_MENU.ALL, TODO_MENU.ACTIVE, TODO_MENU.COMPLETED];
 
 const TodoFooter = () => {
-  const dispatch = useDispatch();
-  const todos = useSelector((state: RootState) => state.todo.todoList);
-  const todoMenuOption: string = useSelector((state: RootState) => state.todo.todoFilter);
+  const dispatch = useAppDispatch();
+  const todos = useAppSelector((state: RootState) => state.todo.todoList);
+  const todoMenuOption: string = useAppSelector((state: RootState) => state.todo.todoFilter);
   const handleMenuClick = (menuOption: string) => {
     dispatch(updateTodoFilter({menuOption}));
   };

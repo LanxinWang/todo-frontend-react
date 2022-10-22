@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {useAppDispatch, useAppSelector} from "../../hooks"
 import {
   TodoListBodyContainer,
   ToggleInput,
@@ -11,9 +11,9 @@ import {deleteTodo, updateTodoStatus} from "../../store/TodoSlice"
 import { RootState } from "../../store/store";
 import TODO_STATUS, { TODO_MENU } from "../../constants/constants";
 const TodoListBody = () => {
-  const dispatch = useDispatch();
-  const todos = useSelector((state: RootState) => state.todo.todoList);
-  const todoMenuOption: string = useSelector((state: RootState) => state.todo.todoFilter); 
+  const dispatch = useAppDispatch();
+  const todos = useAppSelector((state: RootState) => state.todo.todoList);
+  const todoMenuOption: string = useAppSelector((state: RootState) => state.todo.todoFilter); 
   const todosByTodoMenuOption = ()=>{
     if (todoMenuOption === TODO_MENU.ALL) {
       return todos.filter((todo) => todo.status !== TODO_STATUS.DELETED);
@@ -23,6 +23,7 @@ const TodoListBody = () => {
   };
 
   const handleChange = (isChecked: boolean, id: number) => {
+    console.log("------checked-----------:",isChecked);
     dispatch(updateTodoStatus({id,isChecked}))
   };
   const handleClick = (id: number) => {
