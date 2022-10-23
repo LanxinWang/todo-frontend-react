@@ -1,5 +1,6 @@
 import { fireEvent, screen } from "@testing-library/react";
 import App from "./App";
+import { TODO_MENU } from "./constants/constants";
 import { renderWithProviders } from "./utils/test-utils";
 
 const mockedTodos = [
@@ -10,9 +11,11 @@ const mockedTodos = [
 const setup = () => {
   renderWithProviders(<App />,{
       preloadedState: {todo: {
-        todoList: mockedTodos,
-        todoFilter: "all",
-      }
+        todoList: mockedTodos
+      },
+      filter: {
+        todoFilter: TODO_MENU.ALL
+    }
   }})
 };
 

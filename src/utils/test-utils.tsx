@@ -6,10 +6,9 @@ import type { PreloadedState } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 
 import type { RootState,store } from '../store/store'
-// As a basic setup, import your same slice reducers
 import todoReducer from '../features/todos/TodoSlice'
-// This type interface extends the default options for render from RTL, as well
-// as allows the user to specify other things such as initialState, store.
+import filterReducer from '../features/filter/filterSlice'
+import { TODO_MENU } from '../constants/constants'
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
     preloadedState?: PreloadedState<RootState>
     store?: typeof store
@@ -18,14 +17,16 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
 export function renderWithProviders(
   ui: React.ReactElement,
   {
-    preloadedState = {todo: {
-        todoList: [],
-        todoFilter: 'all'
-    }
-      
-    },
+    preloadedState = {
+      todo: {
+          todoList: [],
+      },
+      filter: {
+          todoFilter: TODO_MENU.ALL,
+      },
+  },
     // Automatically create a store instance if no store was passed in
-    store = configureStore({ reducer: { todo: todoReducer },preloadedState}),
+    store = configureStore({ reducer: { todo: todoReducer, filter: filterReducer },preloadedState}),
     ...renderOptions
   }: ExtendedRenderOptions = {}
 ) {

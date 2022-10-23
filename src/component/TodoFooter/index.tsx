@@ -9,7 +9,7 @@ import {
 } from "./style";
 import { deleteAllCompletedTodos } from "../../features/todos/TodoSlice";
 import { RootState } from "../../store/store";
-import { updateTodoFilter } from "../../features/todos/TodoSlice";
+import { updateTodoFilter } from "../../features/filter/filterSlice";
 import {useAppDispatch, useAppSelector} from "../../hooks"
 
 const todoMenu = [TODO_MENU.ALL, TODO_MENU.ACTIVE, TODO_MENU.COMPLETED];
@@ -17,7 +17,7 @@ const todoMenu = [TODO_MENU.ALL, TODO_MENU.ACTIVE, TODO_MENU.COMPLETED];
 const TodoFooter = () => {
   const dispatch = useAppDispatch();
   const todos = useAppSelector((state: RootState) => state.todo.todoList);
-  const todoMenuOption: string = useAppSelector((state: RootState) => state.todo.todoFilter);
+  const todoMenuOption: string = useAppSelector((state: RootState) => state.filter.todoFilter);
   const handleMenuClick = (menuOption: string) => {
     dispatch(updateTodoFilter({menuOption}));
   };

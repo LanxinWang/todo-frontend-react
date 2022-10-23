@@ -1,14 +1,12 @@
 import {Todo} from "../../types";
 import {createSlice} from '@reduxjs/toolkit';
-import TODO_STATUS, {TODO_MENU} from "../../constants/constants";
+import TODO_STATUS from "../../constants/constants";
 export interface todoState {
     todoList: Todo[];
-    todoFilter: string;
   }
   
   const initialState: todoState = {
     todoList: [],
-    todoFilter: TODO_MENU.ALL
   };
 
 const todoSlice = createSlice({
@@ -49,14 +47,11 @@ const todoSlice = createSlice({
         };
         return todo;
       }); 
-    },
-    updateTodoFilter: (state,{payload:{menuOption}})=>{
-      state.todoFilter = menuOption;
     }
   }
 })
 
-export const { createTodo, deleteTodo, updateTodoStatus, updateAllTodosStatus, deleteAllCompletedTodos, updateTodoFilter} = todoSlice.actions
+export const { createTodo, deleteTodo, updateTodoStatus, updateAllTodosStatus, deleteAllCompletedTodos } = todoSlice.actions
 
 // export const selectTodos = ((state: RootState) => state.todo.todoList);
 // export const selectTodoFilter = ((state: RootState) => state.todo.todoFilter);

@@ -13,7 +13,7 @@ import TODO_STATUS, { TODO_MENU } from "../../constants/constants";
 const TodoListBody = () => {
   const dispatch = useAppDispatch();
   const todos = useAppSelector((state: RootState) => state.todo.todoList);
-  const todoMenuOption: string = useAppSelector((state: RootState) => state.todo.todoFilter); 
+  const todoMenuOption: string = useAppSelector((state: RootState) => state.filter.todoFilter); 
   const todosByTodoMenuOption = ()=>{
     if (todoMenuOption === TODO_MENU.ALL) {
       return todos.filter((todo) => todo.status !== TODO_STATUS.DELETED);
