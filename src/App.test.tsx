@@ -90,10 +90,10 @@ describe("toggle todo",  () => {
   test("should toggle first todo in todo list", () => {
     setup();
     const toggleBox = screen.getAllByLabelText("")[0] as HTMLInputElement;
-    fireEvent.click(toggleBox);
+    fireEvent(toggleBox,new MouseEvent('click'));
     expect(toggleBox.checked).toBe(true);
-    // fireEvent.click(toggleBox);
-    // expect(toggleBox.checked).toBe(false);
+    fireEvent(toggleBox,new MouseEvent('click'));
+    expect(toggleBox.checked).toBe(false);
   });
 
   test("should toggle all todos checked in todo list", () => {
