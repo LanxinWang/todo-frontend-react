@@ -1,5 +1,5 @@
-import { TODO_MENU } from "../constants/constants";
-import todoReducer, {todoState, createTodo, deleteTodo, updateTodoStatus, updateAllTodosStatus, deleteAllCompletedTodos, updateTodoFilter} from "./TodoSlice";
+import { TODO_MENU } from "../../constants/constants";
+import todoReducer, {todoState, createTodo, deleteTodo, updateTodoStatus, updateAllTodosStatus, deleteAllCompletedTodos} from "./TodoSlice";
 
 const mockTodo = [{
     id: 1,
@@ -14,7 +14,6 @@ const mockTodo = [{
 describe("todo reducer",()=>{
     const initialState: todoState = {
         todoList: mockTodo,
-        todoFilter: TODO_MENU.ALL
       };
     it("should handle initial state",()=>{
         expect(todoReducer(undefined, { type: 'unknown' })).toEqual({
@@ -81,9 +80,5 @@ describe("todo reducer",()=>{
             status: "active",
             name: "todo1"
         }])
-    });
-    it("should update todo filter value by todo menu option",()=>{
-        const {todoFilter} = todoReducer(initialState, updateTodoFilter({menuOption: TODO_MENU.ACTIVE}));
-        expect(todoFilter).toEqual(TODO_MENU.ACTIVE);
     });
 })  

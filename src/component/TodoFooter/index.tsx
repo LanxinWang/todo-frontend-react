@@ -7,9 +7,9 @@ import {
   ClearButton,
   MenuButton,
 } from "./style";
-import { deleteAllCompletedTodos } from "../../store/TodoSlice";
+import { deleteAllCompletedTodos } from "../../features/todos/TodoSlice";
 import { RootState } from "../../store/store";
-import { updateTodoFilter } from "../../store/TodoSlice";
+import { updateTodoFilter } from "../../features/todos/TodoSlice";
 import {useAppDispatch, useAppSelector} from "../../hooks"
 
 const todoMenu = [TODO_MENU.ALL, TODO_MENU.ACTIVE, TODO_MENU.COMPLETED];

@@ -7,7 +7,7 @@ import { Provider } from 'react-redux'
 
 import type { RootState,store } from '../store/store'
 // As a basic setup, import your same slice reducers
-import todoReducer from '../store/TodoSlice'
+import todoReducer from '../features/todos/TodoSlice'
 // This type interface extends the default options for render from RTL, as well
 // as allows the user to specify other things such as initialState, store.
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {

@@ -7,7 +7,7 @@ import {
   P,
   DeleteButton,
 } from "./style";
-import {deleteTodo, updateTodoStatus} from "../../store/TodoSlice"
+import {deleteTodo, updateTodoStatus} from "../../features/todos/TodoSlice"
 import { RootState } from "../../store/store";
 import TODO_STATUS, { TODO_MENU } from "../../constants/constants";
 const TodoListBody = () => {

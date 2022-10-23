@@ -1,6 +1,6 @@
-import {Todo} from "../types";
+import {Todo} from "../../types";
 import {createSlice} from '@reduxjs/toolkit';
-import TODO_STATUS, {TODO_MENU} from "../constants/constants";
+import TODO_STATUS, {TODO_MENU} from "../../constants/constants";
 export interface todoState {
     todoList: Todo[];
     todoFilter: string;

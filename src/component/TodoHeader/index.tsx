@@ -6,7 +6,7 @@ import {
   NewTodoInput,
   ToggleAllCheckbox,
 } from "./styles";
-import { createTodo, updateAllTodosStatus} from "../../store/TodoSlice";
+import { createTodo, updateAllTodosStatus} from "../../features/todos/TodoSlice";
 import {useAppDispatch, useAppSelector} from "../../hooks"
 import { RootState } from "../../store/store";
 
