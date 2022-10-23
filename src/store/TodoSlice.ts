@@ -1,7 +1,6 @@
 import {Todo} from "../types";
 import {createSlice} from '@reduxjs/toolkit';
 import TODO_STATUS, {TODO_MENU} from "../constants/constants";
-import { RootState } from "./store";
 export interface todoState {
     todoList: Todo[];
     todoFilter: string;
@@ -27,13 +26,13 @@ const todoSlice = createSlice({
       let index = state.todoList.length - id -1;
       state.todoList[index].status =  TODO_STATUS.DELETED;
     },
-    updateTodoStatus: (state, {payload:{id,isChecked}})=>{
+    updateTodoStatus: (state, {payload:{id,isChecked}}) => {
       let index = state.todoList.length - id -1;
       state.todoList[index].status = isChecked
         ? TODO_STATUS.COMPLETED
         : TODO_STATUS.ACTIVE;
     },
-    updateAllTodosStatus: (state, {payload:{checkFlag}})=>{
+    updateAllTodosStatus: (state, {payload:{checkFlag}}) => {
       state.todoList = state.todoList.map ((todo) => {
         if(todo.status!==TODO_STATUS.DELETED) {
           todo.status = checkFlag
@@ -59,6 +58,6 @@ const todoSlice = createSlice({
 
 export const { createTodo, deleteTodo, updateTodoStatus, updateAllTodosStatus, deleteAllCompletedTodos, updateTodoFilter} = todoSlice.actions
 
-export const selectTodos = (state: RootState) => state.todo.todoList;
-export const selectTodoFilter = (state: RootState) => state.todo.todoFilter;
+// export const selectTodos = ((state: RootState) => state.todo.todoList);
+// export const selectTodoFilter = ((state: RootState) => state.todo.todoFilter);
 export default todoSlice.reducer
