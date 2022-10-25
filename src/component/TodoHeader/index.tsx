@@ -1,21 +1,19 @@
 import { ChangeEvent, KeyboardEvent } from "react";
-import TODO_STATUS, { ENTER_KEY } from "../../constants/constants";
+import { ENTER_KEY } from "../../constants/constants";
 import {
   ToggleAllLabel,
   TodoHeaderContainer,
   NewTodoInput,
   ToggleAllCheckbox,
 } from "./styles";
-import { createTodo, selectTodos, updateAllTodosStatus} from "../../features/todos/TodoSlice";
+import { createTodo, selectCompletedTodos, selectDeletedTodos, selectTodos, updateAllTodosStatus} from "../../features/todos/TodoSlice";
 import {useAppDispatch, useAppSelector} from "../../hooks"
 
 const TodoHeader = () => {
   const dispatch = useAppDispatch();
   const todos = useAppSelector(selectTodos);
-  const completedTodosNumber = todos.filter((todo) => 
-  todo.status === TODO_STATUS.COMPLETED).length;
-  const deletedTodosNumber = todos.filter((todo) => 
-  todo.status === TODO_STATUS.DELETED).length;
+  const completedTodosNumber = useAppSelector(selectCompletedTodos).length;
+  const deletedTodosNumber = useAppSelector(selectDeletedTodos).length;
   
   const handleChange = (checkFlag:boolean) => {
     dispatch(updateAllTodosStatus({checkFlag}));
