@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent } from "react";
+import { useState } from "react";
 import { ENTER_KEY } from "../../constants/constants";
 import {
   ToggleAllLabel,
@@ -14,15 +14,20 @@ const TodoHeader = () => {
   const todos = useAppSelector(selectTodos);
   const completedTodosNumber = useAppSelector(selectCompletedTodos).length;
   const deletedTodosNumber = useAppSelector(selectDeletedTodos).length;
+  const [name, setName] = useState('')
   
   const handleChange = (checkFlag:boolean) => {
     dispatch(updateAllTodosStatus({checkFlag}));
   };
-  const handleKeyDown = (e:KeyboardEvent<HTMLInputElement>) => {
-    let name = (e.target as HTMLInputElement).value.trim();
-    if (e.key === ENTER_KEY) {
-      name !== "" && dispatch(createTodo({name}));
-      (e.target as HTMLInputElement).value = "";
+
+  const handleTodoInputChange = (name: string )=>{
+    setName(name);
+  }
+
+  const handleKeyDown = (key: string) => {
+    if (key === ENTER_KEY) {
+      name.trim() !== "" && dispatch(createTodo({name}));
+      setName('');
     }
   };
 
@@ -33,7 +38,7 @@ const TodoHeader = () => {
         completedTodosNumber={completedTodosNumber}
         deletedTodosNumber={deletedTodosNumber}
         todosNumber={todos.length}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e.target.checked)}
+        onChange={(e) => handleChange(e.target.checked)}
       />
       <ToggleAllLabel htmlFor="toggle-all"
       todosNumber={todos.length}
@@ -42,7 +47,9 @@ const TodoHeader = () => {
       </ToggleAllLabel>
       <NewTodoInput 
       id="new-todo-input" 
-      onKeyDown={(e:KeyboardEvent<HTMLInputElement>) => handleKeyDown(e)} />
+      value = {name}
+      onChange={(e) => handleTodoInputChange(e.target.value)}
+      onKeyDown={(e) => handleKeyDown(e.key)} />
     </TodoHeaderContainer>
   );
 }
