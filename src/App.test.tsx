@@ -1,4 +1,5 @@
 import { fireEvent, screen } from "@testing-library/react";
+import React from "react";
 import App from "./App";
 import { TODO_MENU } from "./constants/constants";
 import { renderWithProviders } from "./utils/test-utils";
@@ -34,12 +35,16 @@ describe("App", () => {
 });
 
 describe("add todo", () => {
-  test("should add a todo when name is not null and key down", async () => {
+  test("should add a todo when name is not null and key down", async () => {   
     setup();
     const todoInput = screen.getByPlaceholderText("What needs to be done?");
     const name = Date.now.toString();
+    fireEvent.change(todoInput,{
+      target:{
+        value: name,
+      }
+    })
     fireEvent.keyDown(todoInput, {
-      target: { value: name },
       key: "Enter",
     });
     expect(screen.getByText(name)).toBeInTheDocument();
@@ -48,8 +53,12 @@ describe("add todo", () => {
   test("should do not add a todo when name is null and key down", () => {
     setup();
     const todoInput = screen.getByPlaceholderText("What needs to be done?");
+    fireEvent.change(todoInput,{
+      target:{
+        value: "",
+      }
+    })
     fireEvent.keyDown(todoInput, {
-      target: { value: "  " },
       key: "Enter",
     });
     const todoItems = screen
@@ -61,9 +70,12 @@ describe("add todo", () => {
   test("should do not add a todo when name is not null and key down not 'enter key", () => {
     setup();
     const todoInput = screen.getByPlaceholderText("What needs to be done?");
-
+    fireEvent.change(todoInput,{
+      target:{
+        value: "mock name",
+      }
+    })
     fireEvent.keyDown(todoInput, {
-      target: { value: "todo3" },
       key: "other key",
     });
     const todoItems = screen

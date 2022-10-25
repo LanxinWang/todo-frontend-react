@@ -16,15 +16,15 @@ const TodoHeader = () => {
   const deletedTodosNumber = useAppSelector(selectDeletedTodos).length;
   const [name, setName] = useState('')
   
-  const handleChange = (checkFlag:boolean) => {
+  const handleChange = (checkFlag: boolean) => {
     dispatch(updateAllTodosStatus({checkFlag}));
   };
 
-  const handleTodoInputChange = (name: string )=>{
+  const handleTodoInputChange = (name: string ) => {
     setName(name);
   }
 
-  const handleKeyDown = (key: string) => {
+  const handleKeyDown = (key: string, name: string) => {
     if (key === ENTER_KEY) {
       name.trim() !== "" && dispatch(createTodo({name}));
       setName('');
@@ -40,16 +40,14 @@ const TodoHeader = () => {
         todosNumber={todos.length}
         onChange={(e) => handleChange(e.target.checked)}
       />
-      <ToggleAllLabel htmlFor="toggle-all"
-      todosNumber={todos.length}
-       >
+      <ToggleAllLabel htmlFor="toggle-all" todosNumber={todos.length}>
         ❯
       </ToggleAllLabel>
       <NewTodoInput 
       id="new-todo-input" 
       value = {name}
       onChange={(e) => handleTodoInputChange(e.target.value)}
-      onKeyDown={(e) => handleKeyDown(e.key)} />
+      onKeyDown={(e) => handleKeyDown(e.key, name)} />
     </TodoHeaderContainer>
   );
 }
