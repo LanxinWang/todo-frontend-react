@@ -1,4 +1,5 @@
-import todoReducer, {todoState, createTodo, deleteTodo, updateTodoStatus, updateAllTodosStatus, deleteAllCompletedTodos} from "./TodoSlice";
+import { RootState } from "../../store/store";
+import todoReducer, {todoState, createTodo, deleteTodo, updateTodoStatus, updateAllTodosStatus, deleteAllCompletedTodos, selectTodos, selectDeletedTodos, selectCompletedTodos} from "./TodoSlice";
 
 const mockTodo = [{
     id: 1,
@@ -9,7 +10,15 @@ const mockTodo = [{
     id: 0,
     status: "active",
     name: "todo1"
-}]
+}];
+const mockRootState: RootState = {
+    todo: {
+        todoList: mockTodo
+    },
+    filter: {
+        todoFilter: "all",
+    },
+};  
 describe("todo reducer",()=>{
     const initialState: todoState = {
         todoList: mockTodo,
@@ -79,4 +88,14 @@ describe("todo reducer",()=>{
             name: "todo1"
         }])
     });
+    it("should return todos list",()=>{      
+        expect(selectTodos(mockRootState)).toEqual(mockTodo)
+    });
+    it("should return deleted todos list",()=>{       
+        expect(selectDeletedTodos(mockRootState)).toEqual([])
+    });
+    it("should return completed todos list",()=>{     
+        expect(selectCompletedTodos(mockRootState)).toEqual([mockTodo[0]])
+    });
+    
 })  
