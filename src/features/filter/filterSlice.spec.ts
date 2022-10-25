@@ -1,5 +1,6 @@
 import { TODO_MENU } from "../../constants/constants";
-import filterReducer, { updateTodoFilter } from "./filterSlice";
+import { RootState } from "../../store/store";
+import filterReducer, { selectTodoFilter, updateTodoFilter } from "./filterSlice";
 
 describe("todo reducer",()=>{
     const initialState = {
@@ -14,5 +15,18 @@ describe("todo reducer",()=>{
         const {todoFilter} = filterReducer(initialState, updateTodoFilter({menuOption: TODO_MENU.ACTIVE}));
         expect(todoFilter).toEqual(TODO_MENU.ACTIVE);
     });
+    it("should return mock filter string",()=>{
+        const mockRootState: RootState = {
+            todo: {
+                todoList: []
+            },
+            filter: {
+                todoFilter: "mock string"
+            },
+        };
+
+        expect(selectTodoFilter(mockRootState)).toEqual("mock string");
+    });
+    
 });
 
