@@ -7,17 +7,17 @@ import {
   ClearButton,
   MenuButton,
 } from "./style";
-import { deleteAllCompletedTodos } from "../../features/todos/TodoSlice";
-import { RootState } from "../../store/store";
-import { updateTodoFilter } from "../../features/filter/filterSlice";
+import { deleteAllCompletedTodos, selectTodos } from "../../features/todos/TodoSlice";
+import { selectTodoFilter, updateTodoFilter } from "../../features/filter/filterSlice";
 import {useAppDispatch, useAppSelector} from "../../hooks"
 
 const todoMenu = [TODO_MENU.ALL, TODO_MENU.ACTIVE, TODO_MENU.COMPLETED];
 
 const TodoFooter = () => {
   const dispatch = useAppDispatch();
-  const todos = useAppSelector((state: RootState) => state.todo.todoList);
-  const todoMenuOption: string = useAppSelector((state: RootState) => state.filter.todoFilter);
+  const todos = useAppSelector(selectTodos);
+  const todoMenuOption: string = useAppSelector(selectTodoFilter);
+
   const handleMenuClick = (menuOption: string) => {
     dispatch(updateTodoFilter({menuOption}));
   };

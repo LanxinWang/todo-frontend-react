@@ -1,6 +1,7 @@
 import {Todo} from "../../types";
-import {createSlice} from '@reduxjs/toolkit';
+import {createSelector, createSlice} from '@reduxjs/toolkit';
 import TODO_STATUS from "../../constants/constants";
+import { RootState} from "../../store/store";
 export interface todoState {
     todoList: Todo[];
   }
@@ -53,6 +54,9 @@ const todoSlice = createSlice({
 
 export const { createTodo, deleteTodo, updateTodoStatus, updateAllTodosStatus, deleteAllCompletedTodos } = todoSlice.actions
 
-// export const selectTodos = ((state: RootState) => state.todo.todoList);
-// export const selectTodoFilter = ((state: RootState) => state.todo.todoFilter);
+export const selectTodos = ((state: RootState) => state.todo.todoList);
+
+export const completedTodosNumber = createSelector(selectTodos, (todoList) => 
+  todoList.filter(todo => todo.status === TODO_STATUS.COMPLETED)).length;
+
 export default todoSlice.reducer

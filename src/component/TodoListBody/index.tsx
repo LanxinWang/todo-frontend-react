@@ -7,13 +7,13 @@ import {
   P,
   DeleteButton,
 } from "./style";
-import {deleteTodo, updateTodoStatus} from "../../features/todos/TodoSlice"
-import { RootState } from "../../store/store";
+import {deleteTodo, selectTodos, updateTodoStatus} from "../../features/todos/TodoSlice"
 import TODO_STATUS, { TODO_MENU } from "../../constants/constants";
+import { selectTodoFilter } from "../../features/filter/filterSlice";
 const TodoListBody = () => {
   const dispatch = useAppDispatch();
-  const todos = useAppSelector((state: RootState) => state.todo.todoList);
-  const todoMenuOption: string = useAppSelector((state: RootState) => state.filter.todoFilter); 
+  const todos = useAppSelector(selectTodos);
+  const todoMenuOption: string = useAppSelector(selectTodoFilter); 
   const todosByTodoMenuOption = ()=>{
     if (todoMenuOption === TODO_MENU.ALL) {
       return todos.filter((todo) => todo.status !== TODO_STATUS.DELETED);
@@ -23,7 +23,6 @@ const TodoListBody = () => {
   };
 
   const handleChange = (isChecked: boolean, id: number) => {
-    console.log("------checked-----------:",isChecked);
     dispatch(updateTodoStatus({id,isChecked}))
   };
   const handleClick = (id: number) => {

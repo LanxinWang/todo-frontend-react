@@ -6,13 +6,12 @@ import {
   NewTodoInput,
   ToggleAllCheckbox,
 } from "./styles";
-import { createTodo, updateAllTodosStatus} from "../../features/todos/TodoSlice";
+import { createTodo, selectTodos, updateAllTodosStatus} from "../../features/todos/TodoSlice";
 import {useAppDispatch, useAppSelector} from "../../hooks"
-import { RootState } from "../../store/store";
 
 const TodoHeader = () => {
   const dispatch = useAppDispatch();
-  const todos = useAppSelector((state: RootState) => state.todo.todoList);
+  const todos = useAppSelector(selectTodos);
   const completedTodosNumber = todos.filter((todo) => 
   todo.status === TODO_STATUS.COMPLETED).length;
   const deletedTodosNumber = todos.filter((todo) => 
