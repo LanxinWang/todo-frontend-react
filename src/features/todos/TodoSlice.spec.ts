@@ -1,5 +1,5 @@
 import { RootState } from "../../store/store";
-import todoReducer, {todoState, createTodo, deleteTodo, updateTodoStatus, updateAllTodosStatus, deleteAllCompletedTodos, selectTodos, selectDeletedTodos, selectCompletedTodos} from "./TodoSlice";
+import todoReducer, {todoState, createTodo, deleteTodo, updateTodoStatus, updateAllTodosStatus, deleteAllCompletedTodos, selectTodos, selectDeletedTodos, selectCompletedTodos, selectShowTodos} from "./TodoSlice";
 
 const mockTodo = [{
     id: 1,
@@ -96,6 +96,9 @@ describe("todo reducer",()=>{
     });
     it("should return completed todos list",()=>{     
         expect(selectCompletedTodos(mockRootState)).toEqual([mockTodo[0]])
+    });
+    it("should return special status todos list",()=>{   
+        expect(selectShowTodos(mockRootState)).toEqual(mockTodo)
     });
     
 })  

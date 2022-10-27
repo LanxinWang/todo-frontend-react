@@ -7,20 +7,10 @@ import {
   P,
   DeleteButton,
 } from "./style";
-import {deleteTodo, selectTodos, updateTodoStatus} from "../../features/todos/TodoSlice"
-import TODO_STATUS, { TODO_MENU } from "../../constants/constants";
-import { selectTodoFilter } from "../../features/filter/filterSlice";
+import {deleteTodo, selectShowTodos, updateTodoStatus} from "../../features/todos/TodoSlice"
 const TodoListBody = () => {
   const dispatch = useAppDispatch();
-  const todos = useAppSelector(selectTodos);
-  const todoMenuOption: string = useAppSelector(selectTodoFilter); 
-  const todosByTodoMenuOption = ()=>{
-    if (todoMenuOption === TODO_MENU.ALL) {
-      return todos.filter((todo) => todo.status !== TODO_STATUS.DELETED);
-    } else {
-      return todos.filter((todo) => todo.status === todoMenuOption);
-    }
-  };
+  const showTodos = useAppSelector(selectShowTodos);
 
   const handleChange = (isChecked: boolean, id: number) => {
     dispatch(updateTodoStatus({id,isChecked}))
@@ -30,7 +20,7 @@ const TodoListBody = () => {
   };
   return (
     <TodoListBodyContainer aria-label= "todoList">
-      {todosByTodoMenuOption().map((todo) => (
+      {showTodos.map((todo) => (
         <li key={todo.id} className="todo-item">
           <ToggleInput
             id={todo.id.toString()}
