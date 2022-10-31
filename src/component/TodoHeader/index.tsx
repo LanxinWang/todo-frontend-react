@@ -30,7 +30,6 @@ const TodoHeader = () => {
       setName('');
     }
   };
-  console.log("todos:",todos);
   
   return (
     <TodoHeaderContainer>
