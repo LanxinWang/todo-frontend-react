@@ -10,10 +10,11 @@ export const TodoHeaderContainer = styled.div`
 `;
 
 interface ToggleAllLabelProps {
-  todosNumber: number
+  todosNumber: number,
+  deletedTodosNumber: number
 }
 export const ToggleAllLabel = styled.label`
-  visibility: ${({todosNumber}:ToggleAllLabelProps) => (todosNumber > 0 ? "visible" : "hidden")};
+  visibility: ${({todosNumber,deletedTodosNumber}:ToggleAllLabelProps) => (todosNumber - deletedTodosNumber > 0 ? "visible" : "hidden")};
   width: 30px;
   height: 40px;
   text-align: center;
@@ -51,7 +52,7 @@ interface ToggleAllCheckboxProps {
 export const ToggleAllCheckbox = styled.input.attrs<ToggleAllCheckboxProps>(
   ({ completedTodosNumber, deletedTodosNumber, todosNumber }) => ({
     type: "checkbox",
-    checked: completedTodosNumber + deletedTodosNumber === todosNumber,
+    checked: (completedTodosNumber + deletedTodosNumber === todosNumber) && (todosNumber!==0),
   })
  )<ToggleAllCheckboxProps>`
   display: none;

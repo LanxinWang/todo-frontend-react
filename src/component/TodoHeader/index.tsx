@@ -30,7 +30,8 @@ const TodoHeader = () => {
       setName('');
     }
   };
-
+  console.log("todos:",todos);
+  
   return (
     <TodoHeaderContainer>
       <ToggleAllCheckbox
@@ -40,7 +41,7 @@ const TodoHeader = () => {
         todosNumber={todos.length}
         onChange={(e) => handleChange(e.target.checked)}
       />
-      <ToggleAllLabel htmlFor="toggle-all" todosNumber={todos.length}>
+      <ToggleAllLabel htmlFor="toggle-all" todosNumber={todos.length} deletedTodosNumber={deletedTodosNumber}>
         ❯
       </ToggleAllLabel>
       <NewTodoInput 
