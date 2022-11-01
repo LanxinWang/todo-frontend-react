@@ -2,17 +2,29 @@ import "./component/TodoHeader";
 import TodoHeader from "./component/TodoHeader";
 import TodoListBody from "./component/TodoListBody";
 import TodoFooter from "./component/TodoFooter";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TODO_STATUS, { TITLE, TODO_MENU } from "./constants/constants";
 import {Todo} from "./types"
 import remove from "lodash.remove";
 import { TodoApp, TodoList, Footer, H1 } from "./style";
+import axios from "axios";
 function App() {
+  const BASE_URL = "http://localhost:5000/todos";
 
   const [todos, setTodos] = useState([] as Todo[]);
   const [selectedTodoStatusOption, setSelectedTodoStatusOption] = useState(
     TODO_MENU.ALL
   );
+
+  useEffect(()=>{
+    axios.get(BASE_URL)
+    .then((res) => {   
+      console.log("res.data:",res.data);
+      setTodos(res.data)
+    })
+    .catch((e) => {console.log("error:",e);
+    });
+  },[]);
 
   const addTodo = (name: string) => {
     if (name.trim() === "") return;
