@@ -7,9 +7,9 @@ import TODO_STATUS, { TITLE, TODO_MENU } from "./constants/constants";
 import {Todo} from "./types"
 import remove from "lodash.remove";
 import { TodoApp, TodoList, Footer, H1 } from "./style";
-import { useLocalStorage } from "./hooks/useLocalStorage";
 function App() {
-  const [todos, setTodos] = useLocalStorage("todos", []);
+
+  const [todos, setTodos] = useState([] as Todo[]);
   const [selectedTodoStatusOption, setSelectedTodoStatusOption] = useState(
     TODO_MENU.ALL
   );
