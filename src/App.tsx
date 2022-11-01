@@ -14,7 +14,7 @@ function App() {
   const [todos, setTodos] = useState([] as Todo[]);
   const [selectedTodoStatusOption, setSelectedTodoStatusOption] = useState(
     TODO_MENU.ALL
-  );
+  );  
 
   useEffect(()=>{
     axios.get(BASE_URL)
@@ -33,7 +33,7 @@ function App() {
       name,
     };
     await axios.post(BASE_URL+'/create',{todo:newTodo}).then((res)=>{
-      console.log("create a new todo:",res);
+      console.log("create a new todo:",res.data);
       setTodos([newTodo,...todos])
       return res;
     }).catch((e)=>{
@@ -53,13 +53,20 @@ function App() {
     });
   };
 
-  const toggleAllTodos = (checkFlag: boolean) => {
-    setTodos(
-      todos.map((todo) => {
-        todo.status = checkFlag ? TODO_STATUS.COMPLETED : TODO_STATUS.ACTIVE;
-        return todo;
-      })
-    );
+  const toggleAllTodos = async (checkFlag: boolean) => {
+    await axios.post(BASE_URL+'/updateAll',{checkFlag}).then((res)=>{
+      setTodos(
+        todos.map((todo) => {
+          if (todo.status !== TODO_STATUS.DELETED ) {
+          todo.status = checkFlag ? TODO_STATUS.COMPLETED : TODO_STATUS.ACTIVE;
+          }
+          return todo;
+        })
+      );
+    }).catch((e)=>{
+      console.log("Error:create a new todo:",e);
+    });
+
   };
 
   const toggleTodo = (isChecked: boolean, index: number) => {
