@@ -102,12 +102,9 @@ function App() {
       </header>
       <TodoList>
         <TodoHeader
-          activeTodosNumber={
-            todos.filter((todo) => todo.status === TODO_STATUS.ACTIVE).length
-          }
           onAddTodo={addTodo}
           onToggleAllTodos={toggleAllTodos}
-          todosNumber={todos.length}
+          todos={todos}
         />
         <TodoListBody
           todos={TodosByStatusOption}

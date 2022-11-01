@@ -1,5 +1,6 @@
 import { ChangeEvent, KeyboardEvent } from "react";
-import { ENTER_KEY } from "../../constants/constants";
+import TODO_STATUS, { ENTER_KEY } from "../../constants/constants";
+import { Todo } from "../../types";
 import {
   ToggleAllLabel,
   TodoHeaderContainer,
@@ -10,17 +11,19 @@ import {
 export interface TodoHeaderProps {
   onAddTodo:(name:string) => void,
   onToggleAllTodos:(checkFlag:boolean) => void,
-  todosNumber:number,
-  activeTodosNumber:number,
+  todos:Todo[],
 }
 
 const TodoHeader =({
   onAddTodo,
   onToggleAllTodos,
-  todosNumber,
-  activeTodosNumber,
+  todos,
 }:TodoHeaderProps)=>
  {
+  const todoNumber = todos.length;
+  const completedTodosNumber = todos.filter((todo) => todo.status === TODO_STATUS.COMPLETED).length;
+  const deletedTodosNumber = todos.filter((todo) => todo.status === TODO_STATUS.DELETED).length;
+
   const handleChange = (checkFlag:boolean) => {
     onToggleAllTodos(checkFlag);
   };
@@ -35,11 +38,14 @@ const TodoHeader =({
     <TodoHeaderContainer>
       <ToggleAllCheckbox
         id="toggle-all"
-        activeTodosNumber={activeTodosNumber}
+        todosNumber={todoNumber}
+        deletedTodosNumber={deletedTodosNumber}
+        completedTodosNumber={completedTodosNumber}
         onChange={(e:ChangeEvent<HTMLInputElement>) => handleChange(e.target.checked)}
       />
       <ToggleAllLabel htmlFor="toggle-all"
-      todosNumber={todosNumber}
+      todosNumber={todos.length}
+      deletedTodosNumber={deletedTodosNumber}
        >
         ❯
       </ToggleAllLabel>

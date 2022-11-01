@@ -1,6 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { unmountComponentAtNode } from "react-dom";
-import TODO_STATUS from "../../constants/constants";
 import { Todo } from "../../types/index";
 import TodoHeader from "./index";
 
@@ -31,8 +30,7 @@ afterEach(() => {
 const setup = () => {
   render(
     <TodoHeader
-      todosNumber={mockedTodos.length}
-      activeTodosNumber={mockedTodos.filter((todo) => todo.status === TODO_STATUS.ACTIVE).length}
+      todos={mockedTodos}
       onAddTodo={addTodo}
       onToggleAllTodos={toggleAllTodos}
     />,
