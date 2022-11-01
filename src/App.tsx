@@ -19,27 +19,38 @@ function App() {
   useEffect(()=>{
     axios.get(BASE_URL)
     .then((res) => {   
-      console.log("res.data:",res.data);
       setTodos(res.data)
     })
     .catch((e) => {console.log("error:",e);
     });
   },[]);
 
-  const addTodo = (name: string) => {
+  const addTodo = async (name: string) => {
     if (name.trim() === "") return;
-    setTodos([
-      {
-        index: todos.length,
-        status: TODO_STATUS.ACTIVE,
-        name,
-      },
-      ...todos,
-    ]);
+    let newTodo = {
+      index: todos.length,
+      status: TODO_STATUS.ACTIVE,
+      name,
+    };
+    await axios.post(BASE_URL+'/create',{todo:newTodo}).then((res)=>{
+      console.log("create a new todo:",res);
+      setTodos([newTodo,...todos])
+      return res;
+    }).catch((e)=>{
+      console.log("Error:create a new todo:",e);
+    });
   };
 
-  const deleteTodo = (index: number) => {
-    setTodos(todos.filter((todo) => todo.index !== index));
+  const deleteTodo = async (index: number) => {
+    await axios.post(BASE_URL+'/delete',{index}).then((res)=>{
+      console.log("delete todo by index:",res);
+      setTodos(todos.map((todo) => {
+        if(todo.index === index) {todo.status = TODO_STATUS.DELETED};
+        return todo;
+      }));
+    }).catch((e)=>{
+      console.log("Error:create a new todo:",e);
+    });
   };
 
   const toggleAllTodos = (checkFlag: boolean) => {
