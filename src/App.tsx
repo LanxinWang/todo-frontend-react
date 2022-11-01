@@ -5,7 +5,6 @@ import TodoFooter from "./component/TodoFooter";
 import { useEffect, useState } from "react";
 import TODO_STATUS, { TITLE, TODO_MENU } from "./constants/constants";
 import {Todo} from "./types"
-import remove from "lodash.remove";
 import { TodoApp, TodoList, Footer, H1 } from "./style";
 import axios from "axios";
 function App() {
@@ -47,7 +46,7 @@ function App() {
         return todo;
       }));
     }).catch((e)=>{
-      console.log("Error:create a new todo:",e);
+      console.log("Error:can not delete todo:",e);
     });
   };
 
@@ -62,7 +61,7 @@ function App() {
         })
       );
     }).catch((e)=>{
-      console.log("Error:create a new todo:",e);
+      console.log("Error:can not toggle all todos:",e);
     });
   };
 
@@ -74,18 +73,26 @@ function App() {
         : TODO_STATUS.ACTIVE;
       setTodos([...todos]);
     }).catch((e)=>{
-      console.log("Error:create a new todo:",e);
+      console.log("Error:can not toggle todo:",e);
     });
   };
 
-  const clearCompletedTodos = () => {
-    remove(todos, (todo: Todo) => todo.status === TODO_STATUS.COMPLETED);
-    setTodos([...todos]);
+  const clearCompletedTodos = async () => {
+    await axios.post(BASE_URL+'/deleteCompleted').then(()=>{
+      setTodos(todos.map((todo) => {
+        if (todo.status === TODO_STATUS.COMPLETED ) {
+          todo.status = TODO_STATUS.DELETED;
+        }
+        return todo;
+      }));
+    }).catch((e)=>{
+      console.log("Error:can not delete all completed todos:",e);
+    });
   };
 
   const TodosByStatusOption =
     selectedTodoStatusOption === TODO_MENU.ALL
-      ? todos
+      ? todos.filter((todo) => todo.status !== TODO_STATUS.DELETED)
       : todos.filter((todo) => todo.status === selectedTodoStatusOption);
 
   return (
