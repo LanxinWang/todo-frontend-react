@@ -30,7 +30,7 @@ function App() {
     if (name.trim() === "") return;
     setTodos([
       {
-        id: Date.now().toString(),
+        index: todos.length,
         status: TODO_STATUS.ACTIVE,
         name,
       },
@@ -38,8 +38,8 @@ function App() {
     ]);
   };
 
-  const deleteTodo = (id: string) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
+  const deleteTodo = (index: number) => {
+    setTodos(todos.filter((todo) => todo.index !== index));
   };
 
   const toggleAllTodos = (checkFlag: boolean) => {
@@ -51,8 +51,8 @@ function App() {
     );
   };
 
-  const toggleTodo = (isChecked: boolean, id: string) => {
-    let todoIndex = todos.findIndex((todo) => todo.id === id);
+  const toggleTodo = (isChecked: boolean, index: number) => {
+    let todoIndex = todos.findIndex((todo) => todo.index === index);
     todos[todoIndex].status = isChecked
       ? TODO_STATUS.COMPLETED
       : TODO_STATUS.ACTIVE;

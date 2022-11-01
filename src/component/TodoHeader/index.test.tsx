@@ -6,7 +6,7 @@ import TodoHeader from "./index";
 
 const mockedTodos:Todo[] = [
   {
-    id: "1",
+    index: 1,
     status: "active",
     name: "test",
   },
