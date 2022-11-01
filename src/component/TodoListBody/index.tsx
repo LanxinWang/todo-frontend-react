@@ -26,15 +26,15 @@ const TodoListBody = ({ todos, onDeleteTodo, onToggleTodo }: TodoListBodyProps) 
       {todos.map((todo) => (
         <li key={todo.index} className="todo-item">
           <ToggleInput
-            id={`todo.index`}
+            id={`${todo.index}`}
             todoStatus={todo.status}
             onChange={(e) => {
-              handleChange(e.target.checked, Number(e.target.id));
+              handleChange(e.target.checked, todo.index);
             }}
           />
-          <ToggleLabel htmlFor={`todo.index`} />
+          <ToggleLabel htmlFor={`${todo.index}`}/>
           <P className={todo.status}>{todo.name}</P>
-          <DeleteButton onClick={() => handleClick(Number(todo.index))}>×</DeleteButton>
+          <DeleteButton onClick={() => handleClick(todo.index)}>×</DeleteButton>
         </li>
       ))}
     </TodoListBodyContainer>
