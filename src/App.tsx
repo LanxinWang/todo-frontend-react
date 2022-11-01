@@ -33,7 +33,6 @@ function App() {
       name,
     };
     await axios.post(BASE_URL+'/create',{todo:newTodo}).then((res)=>{
-      console.log("create a new todo:",res.data);
       setTodos([newTodo,...todos])
       return res;
     }).catch((e)=>{
@@ -42,8 +41,7 @@ function App() {
   };
 
   const deleteTodo = async (index: number) => {
-    await axios.post(BASE_URL+'/delete',{index}).then((res)=>{
-      console.log("delete todo by index:",res);
+    await axios.post(BASE_URL+'/delete',{index}).then(()=>{
       setTodos(todos.map((todo) => {
         if(todo.index === index) {todo.status = TODO_STATUS.DELETED};
         return todo;
@@ -54,7 +52,7 @@ function App() {
   };
 
   const toggleAllTodos = async (checkFlag: boolean) => {
-    await axios.post(BASE_URL+'/updateAll',{checkFlag}).then((res)=>{
+    await axios.post(BASE_URL+'/updateAll',{checkFlag}).then(()=>{
       setTodos(
         todos.map((todo) => {
           if (todo.status !== TODO_STATUS.DELETED ) {
@@ -66,15 +64,18 @@ function App() {
     }).catch((e)=>{
       console.log("Error:create a new todo:",e);
     });
-
   };
 
-  const toggleTodo = (isChecked: boolean, index: number) => {
-    let todoIndex = todos.findIndex((todo) => todo.index === index);
-    todos[todoIndex].status = isChecked
-      ? TODO_STATUS.COMPLETED
-      : TODO_STATUS.ACTIVE;
-    setTodos([...todos]);
+  const toggleTodo = async (isChecked: boolean, index: number) => {
+    await axios.post(BASE_URL+'/update',{index, isChecked}).then(()=>{
+      let todoIndex = todos.length - 1 - index;
+      todos[todoIndex].status = isChecked
+        ? TODO_STATUS.COMPLETED
+        : TODO_STATUS.ACTIVE;
+      setTodos([...todos]);
+    }).catch((e)=>{
+      console.log("Error:create a new todo:",e);
+    });
   };
 
   const clearCompletedTodos = () => {
