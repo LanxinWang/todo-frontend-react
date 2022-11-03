@@ -1,5 +1,5 @@
 export type Todo ={
-    index: number,
+    _id: number,
     status: string,
     name: string,
   }

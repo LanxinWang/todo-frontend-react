@@ -1,26 +1,24 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { unmountComponentAtNode } from "react-dom";
 import App from "./App";
+import axios from "axios";
 
-let container: HTMLDivElement;
+jest.mock("axios");
+
 const mockedTodos = [
   { id: "1", status: "active", name: "todo1" },
   { id: "2", status: "active", name: "todo2" },
 ];
-beforeEach(() => {
-  container = document.createElement("div");
-  document.body.appendChild(container);
-  localStorage.setItem("todos", JSON.stringify(mockedTodos));
-});
-
-afterEach(() => {
-  localStorage.removeItem("todos");
-  unmountComponentAtNode(container);
-  container.remove();
-});
 
 const setup = () => {
-  render(<App />, {container});
+  (axios.get as jest.MockedFunction<typeof axios.get>)
+  .mockImplementation((url: string) => {
+    if (url === 'http://localhost:5000/todos') {
+        return Promise.resolve({ data: {mockedTodos} });
+    } else {
+      return Promise.resolve();
+    }
+});
+  render(<App />);
 };
 
 describe("App", () => {
@@ -40,12 +38,11 @@ describe("App", () => {
 describe("add todo", () => {
   test("should add a todo when name is not null and key down", async () => {
     setup();
-    const todoInput = screen.getByPlaceholderText("What needs to be done?");
+    const todoInput: HTMLInputElement = screen.getByPlaceholderText("What needs to be done?");
+    todoInput.value = "todo3"
     fireEvent.keyDown(todoInput, {
-      target: { value: "todo3" },
       key: "Enter",
     });
-
     const todoItems = screen
       .getAllByRole("listitem")
       .filter((todo) => todo.className === "todo-item");

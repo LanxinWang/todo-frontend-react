@@ -9,32 +9,32 @@ import {
 } from "./style";
 interface TodoListBodyProps {
   todos: Todo[],
-  onDeleteTodo: (index: number) =>void,
-  onToggleTodo: (isChecked: boolean, index: number) => void
+  onDeleteTodo: (_id: number) =>void,
+  onToggleTodo: (isChecked: boolean, _id: number) => void
   
 }
 
 const TodoListBody = ({ todos, onDeleteTodo, onToggleTodo }: TodoListBodyProps) => {
-  const handleChange = (isChecked: boolean, index: number) => {
-    onToggleTodo(isChecked, index);
+  const handleChange = (isChecked: boolean, _id: number) => {
+    onToggleTodo(isChecked, _id);
   };
-  const handleClick = (index: number) => {
-    onDeleteTodo(index);
+  const handleClick = (_id: number) => {
+    onDeleteTodo(_id);
   };
   return (
     <TodoListBodyContainer>
       {todos.map((todo) => (
-        <li key={todo.index} className="todo-item">
+        <li key={todo._id} className="todo-item">
           <ToggleInput
-            id={`${todo.index}`}
+            id={todo._id.toString()}
             todoStatus={todo.status}
             onChange={(e) => {
-              handleChange(e.target.checked, todo.index);
+              handleChange(e.target.checked, todo._id);
             }}
           />
-          <ToggleLabel htmlFor={`${todo.index}`}/>
+          <ToggleLabel htmlFor={todo._id.toString()}/>
           <P className={todo.status}>{todo.name}</P>
-          <DeleteButton onClick={() => handleClick(todo.index)}>×</DeleteButton>
+          <DeleteButton onClick={() => handleClick(todo._id)}>×</DeleteButton>
         </li>
       ))}
     </TodoListBodyContainer>

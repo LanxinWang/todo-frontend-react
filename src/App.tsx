@@ -27,11 +27,11 @@ function App() {
   const addTodo = async (name: string) => {
     if (name.trim() === "") return;
     let newTodo = {
-      index: todos.length,
+      _id: todos.length,
       status: TODO_STATUS.ACTIVE,
       name,
     };
-    await axios.post(BASE_URL+'/create',{todo:newTodo}).then((res)=>{
+    await axios.post(BASE_URL,{todo: newTodo}).then((res)=>{
       setTodos([newTodo,...todos])
       return res;
     }).catch((e)=>{
@@ -39,10 +39,10 @@ function App() {
     });
   };
 
-  const deleteTodo = async (index: number) => {
-    await axios.post(BASE_URL+'/delete',{index}).then(()=>{
+  const deleteTodo = async (_id: number) => {
+    await axios.delete(BASE_URL+`/${_id}`).then(()=>{
       setTodos(todos.map((todo) => {
-        if(todo.index === index) {todo.status = TODO_STATUS.DELETED};
+        if(todo._id === _id) {todo.status = TODO_STATUS.DELETED};
         return todo;
       }));
     }).catch((e)=>{
@@ -51,7 +51,7 @@ function App() {
   };
 
   const toggleAllTodos = async (checkFlag: boolean) => {
-    await axios.post(BASE_URL+'/updateAll',{checkFlag}).then(()=>{
+    await axios.put(BASE_URL,{checkFlag}).then(()=>{
       setTodos(
         todos.map((todo) => {
           if (todo.status !== TODO_STATUS.DELETED ) {
@@ -65,9 +65,9 @@ function App() {
     });
   };
 
-  const toggleTodo = async (isChecked: boolean, index: number) => {
-    await axios.post(BASE_URL+'/update',{index, isChecked}).then(()=>{
-      let todoIndex = todos.length - 1 - index;
+  const toggleTodo = async (isChecked: boolean, _id: number) => {
+    await axios.put(BASE_URL+`/${_id}`,{isChecked}).then(()=>{
+      let todoIndex = todos.length - 1 - _id;
       todos[todoIndex].status = isChecked
         ? TODO_STATUS.COMPLETED
         : TODO_STATUS.ACTIVE;
@@ -78,7 +78,7 @@ function App() {
   };
 
   const clearCompletedTodos = async () => {
-    await axios.post(BASE_URL+'/deleteCompleted').then(()=>{
+    await axios.delete(BASE_URL).then(()=>{
       setTodos(todos.map((todo) => {
         if (todo.status === TODO_STATUS.COMPLETED ) {
           todo.status = TODO_STATUS.DELETED;

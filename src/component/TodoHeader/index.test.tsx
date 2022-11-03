@@ -5,7 +5,7 @@ import TodoHeader from "./index";
 
 const mockedTodos:Todo[] = [
   {
-    index: 1,
+    _id: 1,
     status: "active",
     name: "test",
   },
@@ -49,10 +49,13 @@ describe("Todo Header", () => {
 
   test("should add todo when click enter key", () => {
     setup();
-    const NewTodoInput = screen.getByRole("textbox");
-    fireEvent.keyDown(NewTodoInput, {
-      target: { value: "test" },
+    const newTodoInput: HTMLInputElement = screen.getByPlaceholderText("What needs to be done?")
+    newTodoInput.value = "test";
+    console.log("value:",newTodoInput.value);
+    
+    fireEvent.keyDown(newTodoInput, {
       key: "Enter",
+      keyCode: 13
     });
     expect(addTodo).toHaveBeenCalledTimes(1);
     expect(addTodo).toHaveBeenCalledWith("test");

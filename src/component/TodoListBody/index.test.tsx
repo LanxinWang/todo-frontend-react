@@ -5,7 +5,7 @@ import TodoListBody from "./index";
 
 const mockedTodos: Todo[] = [
   {
-    index: 1,
+    _id: 1,
     status: "active",
     name: "test",
   },
@@ -49,7 +49,7 @@ describe("Todo List", () => {
     const deleteBtn = screen.getByRole("button");
     fireEvent.click(deleteBtn);
     expect(deleteTodo).toHaveBeenCalledTimes(1);
-    expect(deleteTodo).toHaveBeenCalledWith(mockedTodos[0].index);
+    expect(deleteTodo).toHaveBeenCalledWith(mockedTodos[0]._id);
   });
 
   test("should exchange todo status when click todo status box", () => {
