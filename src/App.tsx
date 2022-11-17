@@ -11,14 +11,14 @@ function App() {
   const BASE_URL = "http://localhost:5000/todos";
 
   const [todos, setTodos] = useState([] as Todo[]);
-  const [selectedTodoStatusOption, setSelectedTodoStatusOption] = useState(
-    TODO_MENU.ALL
-  );  
+  const [selectedTodoStatusOption, setSelectedTodoStatusOption] = useState(TODO_MENU.ALL);  
+  const getTodos = async () => await axios.get(BASE_URL);
 
-  useEffect(()=>{
-    axios.get(BASE_URL)
-    .then((res) => {   
-      setTodos(res.data)
+  useEffect(() => {
+    getTodos()
+    .then((res) => {         
+      setTodos(res.data);
+      console.log("getTodos:",res.data);
     })
     .catch((e) => {console.log("error:",e);
     });
@@ -33,7 +33,6 @@ function App() {
     };
     await axios.post(BASE_URL,{todo: newTodo}).then((res)=>{
       setTodos([newTodo,...todos])
-      return res;
     }).catch((e)=>{
       console.log("Error:create a new todo:",e);
     });
@@ -41,8 +40,9 @@ function App() {
 
   const deleteTodo = async (_id: number) => {
     await axios.delete(BASE_URL+`/${_id}`).then(()=>{
+      console.log("delete todo");
       setTodos(todos.map((todo) => {
-        if(todo._id === _id) {todo.status = TODO_STATUS.DELETED};
+        todo.status = todo._id === _id ? TODO_STATUS.DELETED : todo.status;
         return todo;
       }));
     }).catch((e)=>{
@@ -51,7 +51,8 @@ function App() {
   };
 
   const toggleAllTodos = async (checkFlag: boolean) => {
-    await axios.put(BASE_URL,{checkFlag}).then(()=>{
+    const updateIds = todos.filter(todo => todo.status !== TODO_STATUS.DELETED).map(todo => todo._id);
+    await axios.put(BASE_URL, {checkFlag, updateIds}).then(()=>{
       setTodos(
         todos.map((todo) => {
           if (todo.status !== TODO_STATUS.DELETED ) {
@@ -78,7 +79,10 @@ function App() {
   };
 
   const clearCompletedTodos = async () => {
-    await axios.delete(BASE_URL).then(()=>{
+    const deletedIds = todos
+    .filter(todo => todo.status === TODO_STATUS.COMPLETED)
+    .map(todo => todo._id);
+    await axios.delete(BASE_URL, {data:{deletedIds}}).then(()=>{
       setTodos(todos.map((todo) => {
         if (todo.status === TODO_STATUS.COMPLETED ) {
           todo.status = TODO_STATUS.DELETED;

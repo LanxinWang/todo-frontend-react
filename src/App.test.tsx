@@ -1,177 +1,233 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import {  fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act } from "react-dom/test-utils";
 import App from "./App";
 import axios from "axios";
-
-jest.mock("axios");
+import TODO_STATUS, { TODO_MENU } from "./constants/constants";
 
 const mockedTodos = [
-  { id: "1", status: "active", name: "todo1" },
-  { id: "2", status: "active", name: "todo2" },
+  { _id: 1, status: TODO_STATUS.COMPLETED, name: "todo2" },
+  { _id: 0, status: TODO_STATUS.ACTIVE, name: "todo1" }
 ];
 
-const setup = () => {
-  (axios.get as jest.MockedFunction<typeof axios.get>)
-  .mockImplementation((url: string) => {
-    if (url === 'http://localhost:5000/todos') {
-        return Promise.resolve({ data: {mockedTodos} });
-    } else {
-      return Promise.resolve();
-    }
+beforeEach(() => {
+  jest.spyOn(axios, "get").mockImplementation(() => {
+    return Promise.resolve({ data: mockedTodos });
+  });
+  jest.spyOn(axios, "post").mockImplementation(() => {
+    return Promise.resolve({});
+  });
+  jest.spyOn(axios, "delete").mockImplementation(() => {
+    return Promise.resolve({});
+  });
+  jest.spyOn(axios, "put").mockImplementation(() => {
+    return Promise.resolve({});
+  });
 });
-  render(<App />);
-};
 
-describe("App", () => {
-  test("should renders APP", () => {
-    setup();
-    const todoTitle = screen.queryByRole("heading");
+afterEach(() => {
+  jest.resetAllMocks();
+  jest.restoreAllMocks();
+  jest.clearAllMocks();
+})
+
+const setup = async () => {
+  // eslint-disable-next-line testing-library/no-unnecessary-act
+  await act(async () => {
+    render(<App />);
+  });
+}
+/** 
+describe("render App", () => {
+  test("should render APP", async () => {
+    await setup();
+    const todoTitle = screen.getByRole("heading");
     const todoInput = screen.getByPlaceholderText("What needs to be done?");
     const todoMenu = screen.getAllByRole("link");
     const todoFooter = screen.getByRole("contentinfo");
+    const todo1 = screen.getByText("todo1")
+    expect(todoFooter).toBeInTheDocument();
     expect(todoTitle).toBeInTheDocument();
     expect(todoInput).toBeInTheDocument();
     expect(todoMenu.length).toBe(2);
     expect(todoFooter).toBeInTheDocument();
+    expect(todo1).toBeInTheDocument();
   });
 });
-
+ 
 describe("add todo", () => {
   test("should add a todo when name is not null and key down", async () => {
-    setup();
-    const todoInput: HTMLInputElement = screen.getByPlaceholderText("What needs to be done?");
-    todoInput.value = "todo3"
-    fireEvent.keyDown(todoInput, {
-      key: "Enter",
-    });
-    const todoItems = screen
-      .getAllByRole("listitem")
-      .filter((todo) => todo.className === "todo-item");
-    expect(todoItems.length).toBe(3);
+    await setup();
+    const todoInput:HTMLInputElement = screen.getByPlaceholderText("What needs to be done?");
+    fireEvent.change(todoInput, {target: {value: 'todo3'}})
+    fireEvent.keyDown(todoInput, {key: 'Enter', code: 'Enter', charCode: 13})
+    await waitFor(() => {
+      const newTodo = screen.getByText("todo3");
+      expect(newTodo).toBeInTheDocument();
+    })
   });
 
-  test("should do not add a todo when name is null and key down", () => {
-    setup();
-    const todoInput = screen.getByPlaceholderText("What needs to be done?");
+  test("should do not add a todo when name is null and key down", async () => {
+    await setup();
 
-    fireEvent.keyDown(todoInput, {
-      target: { value: "  " },
-      key: "Enter",
-    });
-    const todoItems = screen
+    const todoInput = screen.getByPlaceholderText("What needs to be done?");
+    fireEvent.change(todoInput, {target: {value: ' '}})
+    fireEvent.keyDown(todoInput, {key: 'Enter', code: 'Enter', charCode: 13})
+
+    await waitFor(() => {
+      const todoItems = screen
       .getAllByRole("listitem")
       .filter((todo) => todo.className === "todo-item");
     expect(todoItems.length).toBe(2);
+    })
   });
 
-  test("should do not add a todo when name is not null and key down not 'enter key", () => {
-    setup();
+  test("should do not add a todo when name is not null and key down not 'enter key", async () => {
+    await setup();
     const todoInput = screen.getByPlaceholderText("What needs to be done?");
 
-    fireEvent.keyDown(todoInput, {
-      target: { value: "todo3" },
-      key: "other key",
-    });
-    const todoItems = screen
+    fireEvent.change(todoInput, {target: {value: 'todo3'}})
+    fireEvent.keyDown(todoInput, {key: 'other key', code: 'other', charCode: 0})
+
+    await waitFor(() => {
+      const todoItems = screen
       .getAllByRole("listitem")
       .filter((todo) => todo.className === "todo-item");
     expect(todoItems.length).toBe(2);
+    })
+    await waitFor(() => {
+    expect(screen.queryByText("todo3")).not.toBeInTheDocument();
+    })
   });
 });
-
+*/
 describe("delete todo", () => {
-  test("should delete first todo in todo list when click destroy button", async () => {
-    setup();
-    const destroyButton = screen.getAllByText("×")[0];
-    const li = screen
-      .getAllByRole("listitem")
-      .filter((todo) => todo.className === "todo-item")[0] as HTMLLIElement | any;
-    fireEvent.click(destroyButton, li.key);
+  
+  // test("render app", async () => {
+  //   await setup();
+  //   const allButton: HTMLButtonElement = screen.getByText(TODO_MENU.ALL);
+  //   fireEvent.click(allButton);
+  //   expect(screen.getByText("todo1")).toBeInTheDocument();
+  //   expect(screen.getByText("todo2")).toBeInTheDocument();
+  // });
 
-    const todoItems = screen
+  // test("add a todo", async () => {
+  //   await setup();
+  //   const todoInput:HTMLInputElement = screen.getByPlaceholderText("What needs to be done?");
+  //   fireEvent.change(todoInput, {target: {value: 'todo3'}})
+  //   fireEvent.keyDown(todoInput, {key: 'Enter', code: 'Enter', charCode: 13})
+  //   await waitFor(() => {
+  //     const newTodo = screen.getByText("todo3");
+  //     expect(newTodo).toBeInTheDocument();
+  //   })
+  // });
+
+  test("should delete first todo in todo list when click destroy button", async () => {
+    await setup();
+    const destroyButton = screen.getAllByText("×")[0];
+    fireEvent.click(destroyButton);
+    await waitFor(() => {
+      expect(screen.getByText("todo1")).toBeInTheDocument();
+    })
+    await waitFor(() => {
+      expect(screen.queryByText("todo2")).not.toBeInTheDocument();
+    })
+    await waitFor(() => {
+      const todoItems = screen
       .getAllByRole("listitem")
       .filter((todo) => todo.className === "todo-item");
-    expect(todoItems.length).toBe(1);
+      expect(todoItems.length).toBe(1);
+    })
+
+  });
+
+  test("same render app", async () => {
+    await setup();
+    expect(screen.getByText("todo1")).toBeInTheDocument();
+    expect(screen.getByText("todo2")).toBeInTheDocument();
   });
 });
 
+/**
 describe("toggle todo", () => {
-  test("should toggle first todo in todo list", () => {
-    setup();
+  test("should toggle first todo in todo list", async () => {
+    await setup();
     const toggleBox = screen.getAllByLabelText("")[0] as HTMLInputElement;
     fireEvent.click(toggleBox);
-    expect(toggleBox.checked).toBe(true);
+    await waitFor(()=>{
+      expect(toggleBox.checked).toBe(true);
+    }); 
     fireEvent.click(toggleBox);
-    expect(toggleBox.checked).toBe(false);
-  });
-
-  test("should toggle all todos checked in todo list", () => {
-    setup();
-    const toggleAll = screen.getByLabelText("❯") as HTMLInputElement;
-    fireEvent.click(toggleAll);
-    const todos = screen.getAllByLabelText("") as HTMLInputElement[];
-    todos.forEach((todo) => {
-      expect(todo.checked).toBe(true);
+    await waitFor(()=>{
+      expect(toggleBox.checked).toBe(false);
     });
   });
 
-  test("should toggle all todos unchecked in todo list", () => {
-    setup();
+  test("should toggle all todos checked in todo list", async () => {
+    await setup();
+    const toggleAll = screen.getByLabelText("❯") as HTMLInputElement;
+    fireEvent.click(toggleAll);
+    await waitFor(()=>{
+      const todos = screen.getAllByLabelText("") as HTMLInputElement[];
+      todos.forEach((todo) => {
+        expect(todo.checked).toBe(true);
+      });
+    });
+  });
+
+  test("should toggle all todos unchecked in todo list", async () => {
+    await setup();
     const toggleAll = screen.getByLabelText("❯") as HTMLInputElement;
     fireEvent.click(toggleAll);
     fireEvent.click(toggleAll);
-    const todos = screen.getAllByLabelText("") as HTMLInputElement[];
-    todos.forEach((todo) => {
-      expect(todo.checked).toBe(false);
+    await waitFor(() => {
+      const todos = screen.getAllByLabelText("") as HTMLInputElement[];
+      todos.forEach((todo) => {
+        expect(todo.checked).toBe(false);
+      });
     });
+    // await waitFor(() => {
+    //   expect(screen.getByText("todo2")).toBeInTheDocument();
+    // });
   });
 });
 
 describe("clear all completed todos", () => {
-  test("should clear completed todos in todo list", () => {
-    setup();
-    const todos = screen.getAllByLabelText("");
-    fireEvent.click(todos[0]);
+  test("should clear completed todos in todo list", async () => {
+    await setup();
     const clearCompletedButton = screen.getByText("Clear completed");
     fireEvent.click(clearCompletedButton);
-    expect(screen.getAllByLabelText("").length).toBe(1);
-    const todoList = screen
+    await waitFor(() => {
+      const todoList = screen
       .getAllByRole("listitem")
       .filter((li) => li.className === "todo-item");
-    expect(todoList.length).toBe(1);
+      expect(todoList.length).toBe(1);
+    });
   });
 });
 
 describe("todo status menu", () => {
-  test("should show active status todos", () => {
-    setup();
+  // test("should show active status todos", async () => {
+  //   await setup();
+  //   const activeButton: HTMLButtonElement = screen.getByText("active");
+  //   fireEvent.click(activeButton);
+  //   expect(screen.getByText("todo1")).toBeInTheDocument();
+  //   expect(screen.queryByText("todo2")).not.toBeInTheDocument();
+  // });
 
-    const activeButton = screen.getByText("active");
-    fireEvent.click(activeButton);
-    const activeTodoList = screen
-      .getAllByRole("listitem")
-      .filter((li) => li.className === "todo-item");
-    expect(activeTodoList.length).toBe(2);
-  });
+  // test("should show completed status todos", async () => {
+  //   await setup();
+  //   const completedButton: HTMLButtonElement = screen.getByText(TODO_MENU.COMPLETED);
+  //   fireEvent.click(completedButton);
+  //   expect(screen.getByText("todo2")).toBeInTheDocument();
+  //   expect(screen.queryByText("todo1")).not.toBeInTheDocument();
+  // });
 
-  test("should show completed status todos", () => {
-    render(<App />);
-    const todoInput = screen.getByPlaceholderText("What needs to be done?");
-
-    fireEvent.keyDown(todoInput, {
-      target: { value: "todo1" },
-      key: "Enter",
-    });
-
-    fireEvent.keyDown(todoInput, {
-      target: { value: "todo2" },
-      key: "Enter",
-    });
-
-    const completedButton = screen.getByText("completed");
-    fireEvent.click(completedButton);
-    const completedTodoList = screen
-      .getAllByRole("listitem")
-      .filter((li) => li.className === "todo-item");
-    expect(completedTodoList.length).toBe(0);
-  });
+  // test("should show all none-deleted status todos", async () => {
+  //   await setup();
+  //   const allButton: HTMLButtonElement = screen.getByText(TODO_MENU.ALL);
+  //   fireEvent.click(allButton);
+  //   expect(screen.getByText("todo1")).toBeInTheDocument();
+  //   expect(screen.getByText("todo2")).toBeInTheDocument();
+  // });
 });
+*/
