@@ -49,14 +49,9 @@ describe("Todo Header", () => {
 
   test("should add todo when click enter key", () => {
     setup();
-    const newTodoInput: HTMLInputElement = screen.getByPlaceholderText("What needs to be done?")
-    newTodoInput.value = "test";
-    console.log("value:",newTodoInput.value);
-    
-    fireEvent.keyDown(newTodoInput, {
-      key: "Enter",
-      keyCode: 13
-    });
+    const newTodoInput: HTMLInputElement = screen.getByPlaceholderText("What needs to be done?");
+    fireEvent.change(newTodoInput, {target: {value: 'test'}})
+    fireEvent.keyDown(newTodoInput, {key: 'Enter', code: 'Enter', charCode: 13})
     expect(addTodo).toHaveBeenCalledTimes(1);
     expect(addTodo).toHaveBeenCalledWith("test");
   });

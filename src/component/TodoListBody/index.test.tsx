@@ -57,6 +57,6 @@ describe("Todo List", () => {
     const toggleBox = screen.getByLabelText("");
     fireEvent.click(toggleBox, { target: { checked: false, index: 1 } });
     expect(toggleTodo).toHaveBeenCalledTimes(1);
-    expect(toggleTodo).toHaveBeenCalledWith(true, "1");
+    expect(toggleTodo).toHaveBeenCalledWith(true, 1);
   });
 });
