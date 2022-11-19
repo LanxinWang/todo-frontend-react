@@ -18,7 +18,6 @@ function App() {
     getTodos()
     .then((res) => {         
       setTodos(res.data);
-      console.log("getTodos:",res.data);
     })
     .catch((e) => {console.log("error:",e);
     });
