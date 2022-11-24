@@ -24,20 +24,18 @@ const TodoFooter = ({
   selectedTodoStatusOption,
   onSetSelectedTodoStatusOption,
 }: TodoFooterProps) => {
+
   const [ deleteAllCompletedTodos ] = useMutation(DELETE_ALL_COMPLETED_TODOS);
 
-  const clearCompletedTodos = () => {
-    const deletedIds = todos
-    .filter(todo => todo.status === TODO_STATUS.COMPLETED)
-    .map(todo => `${todo._id}`);
-    deleteAllCompletedTodos( { variables: { deletedIds } } )
-  };
   const handleMenuClick = (menuOption: string) => {
     onSetSelectedTodoStatusOption(menuOption);
   };
 
   const handleClearClick = () => {
-    clearCompletedTodos();
+    const deletedIds = todos
+    .filter(todo => todo.status === TODO_STATUS.COMPLETED)
+    .map(todo => `${todo._id}`);
+    deleteAllCompletedTodos( { variables: { deletedIds } } )
   };
 
   return (
