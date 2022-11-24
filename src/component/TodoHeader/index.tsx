@@ -24,7 +24,7 @@ const TodoHeader =({
 
   const [ addATodo ] = useMutation(ADD_A_TODO);
   const [ updateAllTodoStatus ] = useMutation(UPDATE_ALL_TODOS);
-  const [name,setName] = useState("")
+  const [name, setName] = useState("");
 
   const handleLabelChange = (checkFlag: boolean) => {
     const updateIds = todos.filter(todo => todo.status !== TODO_STATUS.DELETED).map(todo => todo._id);    
@@ -37,8 +37,7 @@ const TodoHeader =({
       }
       setName("");
     }
-  };
-  console.log("render header");
+  };  
 
   return (
     <TodoHeaderContainer>
@@ -62,7 +61,6 @@ const TodoHeader =({
         onChange={(e)=>{setName(e.target.value)}}
         onKeyDown={(e) => handleKeyDown(e.key)} />
       {/* </form> */}
-
     </TodoHeaderContainer>
   );
 }
