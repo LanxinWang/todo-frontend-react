@@ -38,6 +38,7 @@ const TodoHeader =({
       setName("");
     }
   };
+  console.log("render header");
 
   return (
     <TodoHeaderContainer>

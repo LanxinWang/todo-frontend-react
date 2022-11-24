@@ -12,7 +12,7 @@ function App() {
   const [selectedTodoStatusOption, setSelectedTodoStatusOption] = useState(TODO_MENU.ALL);  
   const { data } = useQuery(GET_TODOS, {variables: { statuses: [TODO_STATUS.ACTIVE, TODO_STATUS.COMPLETED] } });
   const todos: Todo[] = data?.getTodos.todo || [];
-
+  console.log("todos",todos);
   return (
     <TodoApp>
       <header>
@@ -23,6 +23,7 @@ function App() {
           todos={todos}
         />
         <TodoListBody
+          todos={todos}
           selectedTodoStatusOption={selectedTodoStatusOption}
         />
         <TodoFooter

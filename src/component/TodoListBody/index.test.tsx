@@ -31,6 +31,7 @@ const setup = () => {
   render(
     <TodoListBody
       selectedTodoStatusOption={"all"}
+      todos={mockedTodos}
     />,
     container
   );
