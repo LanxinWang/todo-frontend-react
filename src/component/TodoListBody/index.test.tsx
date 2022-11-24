@@ -31,8 +31,6 @@ const setup = () => {
   render(
     <TodoListBody
       todos={mockedTodos}
-      onToggleTodo={toggleTodo}
-      onDeleteTodo={deleteTodo}
     />,
     container
   );

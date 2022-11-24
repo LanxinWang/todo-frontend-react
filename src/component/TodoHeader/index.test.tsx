@@ -31,8 +31,6 @@ const setup = () => {
   render(
     <TodoHeader
       todos={mockedTodos}
-      onAddTodo={addTodo}
-      onToggleAllTodos={toggleAllTodos}
     />,
     container
   );

@@ -71,7 +71,7 @@ export const UPDATE_A_TODO = gql `
 `
 
 export const UPDATE_ALL_TODOS = gql `
-    mutation UpdateAllTodosStatus( $updateIds: [String], $isChecked: Boolean!) {
+    mutation UpdateAllTodosStatus( $updateIds: [String]!, $isChecked: Boolean!) {
         updateAllTodosStatus(updateIds: $updateIds, isChecked: $isChecked) {
             code
             message

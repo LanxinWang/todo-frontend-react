@@ -1,4 +1,6 @@
+import { useMutation } from "@apollo/client";
 import React from "react";
+import { DELETE_A_TODO, UPDATE_A_TODO } from "../../graphqlApi";
 import {Todo} from "../../types/index";
 import {
   TodoListBodyContainer,
@@ -9,17 +11,23 @@ import {
 } from "./style";
 interface TodoListBodyProps {
   todos: Todo[],
-  onDeleteTodo: (_id: number) =>void,
-  onToggleTodo: (isChecked: boolean, _id: number) => void
-  
 }
 
-const TodoListBody = ({ todos, onDeleteTodo, onToggleTodo }: TodoListBodyProps) => {
+const TodoListBody = ({ todos }: TodoListBodyProps) => {
+  const [ deleteATodo ] = useMutation(DELETE_A_TODO);
+  const [ updateATodoStatus ] = useMutation(UPDATE_A_TODO);
+
+  const deleteTodo = (_id: number) => {
+    deleteATodo({ variables: { id: `${_id}`} })
+  };
+  const toggleTodo = (isChecked: boolean, _id: number) => {
+    updateATodoStatus( {variables: {id: `${_id}`, isChecked}} )
+  };
   const handleChange = (isChecked: boolean, _id: number) => {
-    onToggleTodo(isChecked, _id);
+    toggleTodo(isChecked, _id);
   };
   const handleClick = (_id: number) => {
-    onDeleteTodo(_id);
+    deleteTodo(_id);
   };
   return (
     <TodoListBodyContainer>

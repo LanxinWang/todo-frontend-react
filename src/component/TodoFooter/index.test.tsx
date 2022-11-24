@@ -36,7 +36,6 @@ describe("Todo Footer", () => {
         todos={mockedTodos}
         selectedTodoStatusOption={selectedTodoStatusOption}
         onSetSelectedTodoStatusOption={setSelectedTodoStatusOption}
-        onClearCompletedTodos={clearCompletedTodos}
       />,
       container
     );

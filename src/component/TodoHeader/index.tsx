@@ -1,5 +1,7 @@
+import { useMutation } from "@apollo/client";
 import { ChangeEvent, useState } from "react";
 import TODO_STATUS, { ENTER_KEY } from "../../constants/constants";
+import { ADD_A_TODO, UPDATE_ALL_TODOS } from "../../graphqlApi";
 import { Todo } from "../../types";
 import {
   ToggleAllLabel,
@@ -9,14 +11,10 @@ import {
 } from "./styles";
 
 export interface TodoHeaderProps {
-  onAddTodo:(name:string) => void,
-  onToggleAllTodos:(checkFlag:boolean) => void,
   todos:Todo[],
 }
 
 const TodoHeader =({
-  onAddTodo,
-  onToggleAllTodos,
   todos,
 }:TodoHeaderProps)=>
  {
@@ -24,15 +22,25 @@ const TodoHeader =({
   const completedTodosNumber = todos.filter((todo) => todo.status === TODO_STATUS.COMPLETED).length;
   const deletedTodosNumber = todos.filter((todo) => todo.status === TODO_STATUS.DELETED).length;
 
+  const [ addATodo ] = useMutation(ADD_A_TODO);
+  const [ updateAllTodoStatus ] = useMutation(UPDATE_ALL_TODOS);
   const [name,setName] = useState("")
 
+  const addTodo = (name: string) => {
+    addATodo({ variables: { id: `${todos.length}`, status: TODO_STATUS.ACTIVE, name } });
+  };
+  const toggleAllTodos = (checkFlag: boolean) => {
+    const updateIds = todos.filter(todo => todo.status !== TODO_STATUS.DELETED).map(todo => `${todo._id}`);    
+    updateAllTodoStatus( { variables: {updateIds, isChecked: checkFlag }} )
+  };
+
   const handleLabelChange = (checkFlag: boolean) => {
-    onToggleAllTodos(checkFlag);
+    toggleAllTodos(checkFlag);
   };
   const handleKeyDown = (key: string) => {
     if (key === ENTER_KEY) {
       if (name.trim() !== "") {
-        onAddTodo(name); 
+        addTodo(name); 
       }
       setName("");
     }
@@ -56,11 +64,14 @@ const TodoHeader =({
        >
         ❯
       </ToggleAllLabel>
-      <NewTodoInput 
-      id="new-todo-input" 
-      value={name}
-      onChange={(e)=>{handleInputChange(e.target.value)}}
-      onKeyDown={(e) => handleKeyDown(e.key)} />
+      {/* <form> */}
+        <NewTodoInput 
+        id="new-todo-input" 
+        value={name}
+        onChange={(e)=>{handleInputChange(e.target.value)}}
+        onKeyDown={(e) => handleKeyDown(e.key)} />
+      {/* </form> */}
+
     </TodoHeaderContainer>
   );
 }

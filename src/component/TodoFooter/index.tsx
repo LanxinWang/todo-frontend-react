@@ -8,6 +8,8 @@ import {
   ClearButton,
   MenuButton,
 } from "./style";
+import { useMutation } from "@apollo/client";
+import { DELETE_ALL_COMPLETED_TODOS } from "../../graphqlApi";
 
 const todoMenu = [TODO_MENU.ALL, TODO_MENU.ACTIVE, TODO_MENU.COMPLETED];
 
@@ -15,22 +17,27 @@ interface TodoFooterProps {
   todos: Todo[],
   selectedTodoStatusOption: string ,
   onSetSelectedTodoStatusOption: (menuOption: string) => void,
-  onClearCompletedTodos: () => void,
-
 }
 
 const TodoFooter = ({
   todos,
   selectedTodoStatusOption,
   onSetSelectedTodoStatusOption,
-  onClearCompletedTodos,
 }: TodoFooterProps) => {
+  const [ deleteAllCompletedTodos ] = useMutation(DELETE_ALL_COMPLETED_TODOS);
+
+  const clearCompletedTodos = () => {
+    const deletedIds = todos
+    .filter(todo => todo.status === TODO_STATUS.COMPLETED)
+    .map(todo => `${todo._id}`);
+    deleteAllCompletedTodos( { variables: { deletedIds } } )
+  };
   const handleMenuClick = (menuOption: string) => {
     onSetSelectedTodoStatusOption(menuOption);
   };
 
   const handleClearClick = () => {
-    onClearCompletedTodos();
+    clearCompletedTodos();
   };
 
   return (
