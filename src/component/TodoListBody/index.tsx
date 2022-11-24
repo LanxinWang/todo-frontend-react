@@ -1,6 +1,7 @@
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import React from "react";
-import { DELETE_A_TODO, UPDATE_A_TODO } from "../../graphqlApi";
+import TODO_STATUS, { TODO_MENU } from "../../constants/constants";
+import { DELETE_A_TODO, GET_TODOS, UPDATE_A_TODO } from "../../graphqlApi";
 import {Todo} from "../../types/index";
 import {
   TodoListBodyContainer,
@@ -10,12 +11,15 @@ import {
   DeleteButton,
 } from "./style";
 interface TodoListBodyProps {
-  todos: Todo[],
+  selectedTodoStatusOption: String
 }
-const TodoListBody = ({ todos }: TodoListBodyProps) => {
+
+const TodoListBody = ({  selectedTodoStatusOption }: TodoListBodyProps) => {
+  let statuses = selectedTodoStatusOption === TODO_MENU.ALL ? [TODO_STATUS.ACTIVE, TODO_STATUS.COMPLETED]: [selectedTodoStatusOption];
   const [ deleteATodo ] = useMutation(DELETE_A_TODO);
   const [ updateATodoStatus ] = useMutation(UPDATE_A_TODO);
-
+  const { data } = useQuery(GET_TODOS, {variables: { statuses } } );
+  const renderTodos: Todo[] = data?.getTodos.todo || [];
   const handleChange = (isChecked: boolean, _id: number) => {
     updateATodoStatus( {variables: {id: `${_id}`, isChecked}} )
   };
@@ -25,7 +29,7 @@ const TodoListBody = ({ todos }: TodoListBodyProps) => {
   
   return (
     <TodoListBodyContainer>
-      {todos.map((todo) => (
+      {renderTodos.map((todo) => (
         <li key={todo._id} className="todo-item">
           <ToggleInput
             id={todo._id.toString()}

@@ -10,14 +10,8 @@ import { useQuery } from "@apollo/client";
 import { GET_TODOS } from "./graphqlApi";
 function App() {
   const [selectedTodoStatusOption, setSelectedTodoStatusOption] = useState(TODO_MENU.ALL);  
-  const { data } = useQuery(GET_TODOS);
-  const todos: Todo[] = data?.todos || [];
-  console.log("todos:", todos);
-
-  const TodosByStatusOption =
-    selectedTodoStatusOption === TODO_MENU.ALL
-      ? todos.filter((todo) => todo.status !== TODO_STATUS.DELETED)
-      : todos.filter((todo) => todo.status === selectedTodoStatusOption);
+  const { data } = useQuery(GET_TODOS, {variables: { statuses: [TODO_STATUS.ACTIVE, TODO_STATUS.COMPLETED] } });
+  const todos: Todo[] = data?.getTodos.todo || [];
 
   return (
     <TodoApp>
@@ -29,7 +23,7 @@ function App() {
           todos={todos}
         />
         <TodoListBody
-          todos={TodosByStatusOption}
+          selectedTodoStatusOption={selectedTodoStatusOption}
         />
         <TodoFooter
           todos={todos}

@@ -1,11 +1,14 @@
 import { gql } from "@apollo/client";
 
 export const GET_TODOS = gql`
-    query GetTodos {
-        todos {
-            _id
-            status
-            name
+    query GetTodos($statuses: [String]!) {
+        getTodos(statuses: $statuses) {
+            code
+            todo {
+              _id
+              name
+              status
+            }
         }
     }
 `;

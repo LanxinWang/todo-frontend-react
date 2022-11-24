@@ -30,7 +30,7 @@ afterEach(() => {
 const setup = () => {
   render(
     <TodoListBody
-      todos={mockedTodos}
+      selectedTodoStatusOption={"all"}
     />,
     container
   );
