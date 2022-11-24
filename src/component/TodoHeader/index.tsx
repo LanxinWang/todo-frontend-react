@@ -27,13 +27,13 @@ const TodoHeader =({
   const [name,setName] = useState("")
 
   const handleLabelChange = (checkFlag: boolean) => {
-    const updateIds = todos.filter(todo => todo.status !== TODO_STATUS.DELETED).map(todo => `${todo._id}`);    
+    const updateIds = todos.filter(todo => todo.status !== TODO_STATUS.DELETED).map(todo => todo._id);    
     updateAllTodoStatus( { variables: {updateIds, isChecked: checkFlag }} )
   };
   const handleKeyDown = (key: string) => {
     if (key === ENTER_KEY) {
       if (name.trim() !== "") {
-        addATodo({ variables: { id: `${todos.length}`, status: TODO_STATUS.ACTIVE, name } }); 
+        addATodo({ variables: { id: todos.length, status: TODO_STATUS.ACTIVE, name } }); 
       }
       setName("");
     }

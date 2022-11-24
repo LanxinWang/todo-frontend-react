@@ -34,7 +34,7 @@ const TodoFooter = ({
   const handleClearClick = () => {
     const deletedIds = todos
     .filter(todo => todo.status === TODO_STATUS.COMPLETED)
-    .map(todo => `${todo._id}`);
+    .map(todo => todo._id);
     deleteAllCompletedTodos( { variables: { deletedIds } } )
   };
 

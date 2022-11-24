@@ -1,6 +1,6 @@
 import { useMutation } from "@apollo/client";
 import React from "react";
-import { TODO_MENU } from "../../constants/constants";
+import TODO_STATUS, { TODO_MENU } from "../../constants/constants";
 import { DELETE_A_TODO, UPDATE_A_TODO } from "../../graphqlApi";
 import {Todo} from "../../types/index";
 import {
@@ -18,12 +18,12 @@ interface TodoListBodyProps {
 const TodoListBody = ({ todos, selectedTodoStatusOption }: TodoListBodyProps) => {
   const [ deleteATodo ] = useMutation(DELETE_A_TODO);
   const [ updateATodoStatus ] = useMutation(UPDATE_A_TODO);
-  const renderTodos: Todo[] = selectedTodoStatusOption === TODO_MENU.ALL ? todos : todos.filter((todo) => todo.status !== selectedTodoStatusOption)
+  let renderTodos: Todo[] = selectedTodoStatusOption === TODO_MENU.ALL ? todos.filter((todo) => todo.status !== TODO_STATUS.DELETED) : todos.filter((todo) => todo.status === selectedTodoStatusOption);
   const handleChange = (isChecked: boolean, _id: number) => {
-    updateATodoStatus( {variables: {id: `${_id}`, isChecked}} )
-  };
+    updateATodoStatus( {variables: {id: _id, isChecked}} )
+  };  
   const handleClick = (_id: number) => {
-    deleteATodo({ variables: { id: `${_id}`} })
+    deleteATodo({ variables: { id: _id} })
   };
   
   return (

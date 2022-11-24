@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const GET_TODOS = gql`
-    query GetTodos($statuses: [String]!) {
-        getTodos(statuses: $statuses) {
+    query GetTodos {
+        getTodos {
             code
             todo {
               _id
@@ -14,7 +14,7 @@ export const GET_TODOS = gql`
 `;
 
 export const ADD_A_TODO = gql`
-    mutation AddATodo($id: String!, $status: String!, $name: String!) {
+    mutation AddATodo($id: Int!, $status: String!, $name: String!) {
         addATodo(_id: $id, status: $status, name: $name) {
             code
             success
@@ -29,7 +29,7 @@ export const ADD_A_TODO = gql`
 `;
 
 export const DELETE_A_TODO = gql `
-    mutation DeleteATodo($id: String!) {
+    mutation DeleteATodo($id: Int!) {
         deleteATodo(_id: $id) {
             code
             success
@@ -45,7 +45,7 @@ export const DELETE_A_TODO = gql `
 `
 
 export const DELETE_ALL_COMPLETED_TODOS = gql `
-    mutation DeleteAllCompletedTodos( $deletedIds: [String]!) {
+    mutation DeleteAllCompletedTodos( $deletedIds: [Int]!) {
         deleteAllCompletedTodos(deletedIds: $deletedIds) {
             code
             message
@@ -59,7 +59,7 @@ export const DELETE_ALL_COMPLETED_TODOS = gql `
 `
 
 export const UPDATE_A_TODO = gql `
-    mutation UpdateATodoById($id: String!, $isChecked: Boolean!) {
+    mutation UpdateATodoById($id: Int!, $isChecked: Boolean!) {
         updateATodoStatus(_id: $id, isChecked: $isChecked) {
             code
             success
@@ -74,7 +74,7 @@ export const UPDATE_A_TODO = gql `
 `
 
 export const UPDATE_ALL_TODOS = gql `
-    mutation UpdateAllTodosStatus( $updateIds: [String]!, $isChecked: Boolean!) {
+    mutation UpdateAllTodosStatus( $updateIds: [Int]!, $isChecked: Boolean!) {
         updateAllTodosStatus(updateIds: $updateIds, isChecked: $isChecked) {
             code
             message

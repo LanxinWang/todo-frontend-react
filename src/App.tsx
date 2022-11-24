@@ -3,16 +3,15 @@ import TodoHeader from "./component/TodoHeader";
 import TodoListBody from "./component/TodoListBody";
 import TodoFooter from "./component/TodoFooter";
 import { useState } from "react";
-import TODO_STATUS, { TITLE, TODO_MENU } from "./constants/constants";
+import { TITLE, TODO_MENU } from "./constants/constants";
 import {Todo} from "./types"
 import { TodoApp, TodoList, Footer, H1 } from "./style";
 import { useQuery } from "@apollo/client";
 import { GET_TODOS } from "./graphqlApi";
 function App() {
   const [selectedTodoStatusOption, setSelectedTodoStatusOption] = useState(TODO_MENU.ALL);  
-  const { data } = useQuery(GET_TODOS, {variables: { statuses: [TODO_STATUS.ACTIVE, TODO_STATUS.COMPLETED] } });
+  const { data } = useQuery(GET_TODOS);
   const todos: Todo[] = data?.getTodos.todo || [];
-  console.log("todos",todos);
   return (
     <TodoApp>
       <header>
