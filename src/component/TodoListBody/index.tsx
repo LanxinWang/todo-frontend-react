@@ -12,23 +12,17 @@ import {
 interface TodoListBodyProps {
   todos: Todo[],
 }
-
 const TodoListBody = ({ todos }: TodoListBodyProps) => {
   const [ deleteATodo ] = useMutation(DELETE_A_TODO);
   const [ updateATodoStatus ] = useMutation(UPDATE_A_TODO);
 
-  const deleteTodo = (_id: number) => {
-    deleteATodo({ variables: { id: `${_id}`} })
-  };
-  const toggleTodo = (isChecked: boolean, _id: number) => {
+  const handleChange = (isChecked: boolean, _id: number) => {
     updateATodoStatus( {variables: {id: `${_id}`, isChecked}} )
   };
-  const handleChange = (isChecked: boolean, _id: number) => {
-    toggleTodo(isChecked, _id);
-  };
   const handleClick = (_id: number) => {
-    deleteTodo(_id);
+    deleteATodo({ variables: { id: `${_id}`} })
   };
+  
   return (
     <TodoListBodyContainer>
       {todos.map((todo) => (
