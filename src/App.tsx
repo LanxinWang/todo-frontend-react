@@ -10,7 +10,7 @@ import { useQuery } from "@apollo/client";
 import { GET_TODOS } from "./graphqlApi";
 function App() {
   const [selectedTodoStatusOption, setSelectedTodoStatusOption] = useState(TODO_MENU.ALL);  
-  const { data } = useQuery(GET_TODOS);
+  const { data, refetch } = useQuery(GET_TODOS);
   const todos: Todo[] = data?.getTodos.todo || [];  
   console.log("todos:", todos);
   return (
@@ -21,6 +21,7 @@ function App() {
       <TodoList>
         <TodoHeader
           todos={todos}
+          onRefetchTodos={refetch}
         />
         <TodoListBody
           todos={todos}

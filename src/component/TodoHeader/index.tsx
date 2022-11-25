@@ -1,4 +1,4 @@
-import { useMutation } from "@apollo/client";
+import { ApolloQueryResult, OperationVariables, useMutation } from "@apollo/client";
 import { ChangeEvent, useState } from "react";
 import TODO_STATUS, { ENTER_KEY } from "../../constants/constants";
 import { ADD_A_TODO, UPDATE_ALL_TODOS } from "../../graphqlApi";
@@ -12,10 +12,11 @@ import {
 
 export interface TodoHeaderProps {
   todos:Todo[],
+  onRefetchTodos: (variables?: Partial<OperationVariables> | undefined) => Promise<ApolloQueryResult<any>>
 }
 
 const TodoHeader =({
-  todos,
+  todos, onRefetchTodos
 }:TodoHeaderProps)=>
  {
   const todoNumber = todos.length;
@@ -28,12 +29,13 @@ const TodoHeader =({
 
   const handleLabelChange = (checkFlag: boolean) => {
     const updateIds = todos.filter(todo => todo.status !== TODO_STATUS.DELETED).map(todo => todo._id);    
-    updateAllTodoStatus( { variables: {updateIds, isChecked: checkFlag }} )
+    updateAllTodoStatus( { variables: {updateIds, isChecked: checkFlag }} )    
   };
   const handleKeyDown = (key: string) => {
     if (key === ENTER_KEY) {
       if (name.trim() !== "") {
         addATodo({ variables: { id: todos.length, status: TODO_STATUS.ACTIVE, name } }); 
+        onRefetchTodos();
       }
       setName("");
     }
@@ -54,13 +56,13 @@ const TodoHeader =({
        >
         ❯
       </ToggleAllLabel>
-      {/* <form> */}
-        <NewTodoInput 
-        id="new-todo-input" 
-        value={name}
-        onChange={(e)=>{setName(e.target.value)}}
-        onKeyDown={(e) => handleKeyDown(e.key)} />
-      {/* </form> */}
+      <NewTodoInput 
+      id="new-todo-input" 
+      value={name}
+      onChange={(e)=>{setName(e.target.value)}}
+      onKeyDown={(e) => handleKeyDown(e.key)} >
+      </NewTodoInput>
+      {/* <p> {`render header+ ${new Date()}`}</p> */}
     </TodoHeaderContainer>
   );
 }
