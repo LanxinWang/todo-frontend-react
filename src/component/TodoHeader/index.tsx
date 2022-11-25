@@ -62,7 +62,6 @@ const TodoHeader =({
       onChange={(e)=>{setName(e.target.value)}}
       onKeyDown={(e) => handleKeyDown(e.key)} >
       </NewTodoInput>
-      {/* <p> {`render header+ ${new Date()}`}</p> */}
     </TodoHeaderContainer>
   );
 }

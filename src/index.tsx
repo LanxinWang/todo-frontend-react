@@ -8,11 +8,7 @@ const client = new ApolloClient({
   uri: 'http://localhost:4000/',
   cache,
 });
-// cache.restore({
-//   data: {
-//     todos: []
-//   }
-// });
+
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 
 root.render(
