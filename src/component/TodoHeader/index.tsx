@@ -1,7 +1,7 @@
-import { ApolloQueryResult, OperationVariables, useMutation } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import { ChangeEvent, useState } from "react";
 import TODO_STATUS, { ENTER_KEY } from "../../constants/constants";
-import { ADD_A_TODO, UPDATE_ALL_TODOS } from "../../graphqlApi";
+import { ADD_A_TODO, GET_TODOS, UPDATE_ALL_TODOS } from "../../graphqlApi";
 import { Todo } from "../../types";
 import {
   ToggleAllLabel,
@@ -11,19 +11,43 @@ import {
 } from "./styles";
 
 export interface TodoHeaderProps {
-  todos:Todo[],
-  onRefetchTodos: (variables?: Partial<OperationVariables> | undefined) => Promise<ApolloQueryResult<any>>
+  todos:Todo[]
 }
 
 const TodoHeader =({
-  todos, onRefetchTodos
+  todos
 }:TodoHeaderProps)=>
  {
   const todoNumber = todos.length;
   const completedTodosNumber = todos.filter((todo) => todo.status === TODO_STATUS.COMPLETED).length;
   const deletedTodosNumber = todos.filter((todo) => todo.status === TODO_STATUS.DELETED).length;
 
-  const [ addATodo ] = useMutation(ADD_A_TODO);
+  const [ addATodo ] = useMutation(ADD_A_TODO, {
+    // update(cache, { data: { addATodo } }) {
+    //   cache.modify({
+    //     fields: {
+    //       data: addATodo,
+    //       todo(existingTodos = []) {
+    //         const newTodoRef = cache.writeFragment({
+    //           data: addATodo.todo,
+    //           fragment: gql`
+    //             fragment NewTodo on Todo {
+    //               id
+    //               status
+    //               name
+    //             }
+    //           `
+    //         });
+    //         return [...existingTodos, newTodoRef];
+    //       }
+    //     }
+    //   });
+    // }
+    refetchQueries: [
+      {query: GET_TODOS}, // DocumentNode object parsed with gql
+      'getTodos' // Query name
+    ],
+  });
   const [ updateAllTodoStatus ] = useMutation(UPDATE_ALL_TODOS);
   const [name, setName] = useState("");
 
@@ -35,7 +59,6 @@ const TodoHeader =({
     if (key === ENTER_KEY) {
       if (name.trim() !== "") {
         addATodo({ variables: { id: todos.length, status: TODO_STATUS.ACTIVE, name } }); 
-        onRefetchTodos();
       }
       setName("");
     }

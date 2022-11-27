@@ -1,4 +1,3 @@
-import { OperationVariables, ApolloQueryResult } from "@apollo/client";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { unmountComponentAtNode } from "react-dom";
 import { Todo } from "../../types/index";
@@ -31,9 +30,8 @@ afterEach(() => {
 const setup = () => {
   render(
     <TodoHeader
-      todos={mockedTodos} onRefetchTodos={function (variables?: Partial<OperationVariables> | undefined): Promise<ApolloQueryResult<any>> {
-        throw new Error("Function not implemented.");
-      } }    />,
+      todos={mockedTodos} 
+    />,
     container
   );
 };
