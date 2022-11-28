@@ -1,6 +1,6 @@
-import {  fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { render, screen} from "@testing-library/react";
 import App from "./App";
-import TODO_STATUS, { TODO_MENU } from "./constants/constants";
+import TODO_STATUS from "./constants/constants";
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { SchemaLink } from '@apollo/client/link/schema';
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
