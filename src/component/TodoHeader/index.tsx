@@ -1,4 +1,4 @@
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { ChangeEvent, useState } from "react";
 import TODO_STATUS, { ENTER_KEY } from "../../constants/constants";
 import { ADD_A_TODO, GET_TODOS, UPDATE_ALL_TODOS } from "../../graphqlApi";
@@ -23,29 +23,9 @@ const TodoHeader =({
   const deletedTodosNumber = todos.filter((todo) => todo.status === TODO_STATUS.DELETED).length;
 
   const [ addATodo ] = useMutation(ADD_A_TODO, {
-    // update(cache, { data: { addATodo } }) {
-    //   cache.modify({
-    //     fields: {
-    //       data: addATodo,
-    //       todo(existingTodos = []) {
-    //         const newTodoRef = cache.writeFragment({
-    //           data: addATodo.todo,
-    //           fragment: gql`
-    //             fragment NewTodo on Todo {
-    //               id
-    //               status
-    //               name
-    //             }
-    //           `
-    //         });
-    //         return [...existingTodos, newTodoRef];
-    //       }
-    //     }
-    //   });
-    // }
     refetchQueries: [
-      {query: GET_TODOS}, // DocumentNode object parsed with gql
-      'getTodos' // Query name
+      {query: GET_TODOS}, 
+      'getTodos' 
     ],
   });
   const [ updateAllTodoStatus ] = useMutation(UPDATE_ALL_TODOS);

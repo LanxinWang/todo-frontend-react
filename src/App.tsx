@@ -12,7 +12,6 @@ function App() {
   const [selectedTodoStatusOption, setSelectedTodoStatusOption] = useState(TODO_MENU.ALL);  
   const { data } = useQuery(GET_TODOS);
   const todos: Todo[] = data?.getTodos.todo || [];  
-  console.log("todos:", todos);
   return (
     <TodoApp>
       <header>
