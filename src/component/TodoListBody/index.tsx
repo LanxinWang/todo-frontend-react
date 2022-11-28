@@ -18,7 +18,9 @@ interface TodoListBodyProps {
 const TodoListBody = ({ todos, selectedTodoStatusOption }: TodoListBodyProps) => {
   const [ deleteATodo ] = useMutation(DELETE_A_TODO);
   const [ updateATodoStatus ] = useMutation(UPDATE_A_TODO);
+
   let renderTodos: Todo[] = selectedTodoStatusOption === TODO_MENU.ALL ? todos.filter((todo) => todo.status !== TODO_STATUS.DELETED) : todos.filter((todo) => todo.status === selectedTodoStatusOption);
+  
   const handleChange = (isChecked: boolean, _id: number) => {
     updateATodoStatus( {variables: {id: _id, isChecked}} )
   };  
