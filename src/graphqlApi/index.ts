@@ -2,13 +2,10 @@ import { gql } from "@apollo/client";
 
 export const GET_TODOS = gql`
     query GetTodos {
-        getTodos {
-            code
-            todo {
-              _id
-              name
-              status
-            }
+        todos {
+            _id
+            name
+            status
         }
     }
 `;
@@ -16,13 +13,9 @@ export const GET_TODOS = gql`
 export const ADD_A_TODO = gql`
     mutation AddATodo($id: Int!, $status: String!, $name: String!) {
         addATodo(_id: $id, status: $status, name: $name) {
-            code
-            message
-            todo {
-                _id
-                status
-                name
-            }
+            _id
+            status
+            name
         }
     }
 `;
@@ -30,13 +23,9 @@ export const ADD_A_TODO = gql`
 export const DELETE_A_TODO = gql `
     mutation DeleteATodo($id: Int!) {
         deleteATodo(_id: $id) {
-            code
-            message
-            todo {
-                _id
-                status
-                name
-            }
+            _id
+            status
+            name
         }
     }
 
@@ -45,13 +34,9 @@ export const DELETE_A_TODO = gql `
 export const DELETE_ALL_COMPLETED_TODOS = gql `
     mutation DeleteAllCompletedTodos( $deletedIds: [Int]!) {
         deleteAllCompletedTodos(deletedIds: $deletedIds) {
-            code
-            message
-            todo {
-                _id
-                status
-                name
-            }
+            _id
+            status
+            name
         }
     }
 `
@@ -59,13 +44,9 @@ export const DELETE_ALL_COMPLETED_TODOS = gql `
 export const UPDATE_A_TODO = gql `
     mutation UpdateATodoById($id: Int!, $isChecked: Boolean!) {
         updateATodoStatus(_id: $id, isChecked: $isChecked) {
-            code
-            message
-            todo {
-                _id
-                status
-                name
-            }
+            _id
+            status
+            name
         }
     }
 `
@@ -73,13 +54,9 @@ export const UPDATE_A_TODO = gql `
 export const UPDATE_ALL_TODOS = gql `
     mutation UpdateAllTodosStatus( $updateIds: [Int]!, $isChecked: Boolean!) {
         updateAllTodosStatus(updateIds: $updateIds, isChecked: $isChecked) {
-            code
-            message
-            todo {
-                _id
-                status
-                name
-            }
+            _id
+            status
+            name
         }
     }
 `

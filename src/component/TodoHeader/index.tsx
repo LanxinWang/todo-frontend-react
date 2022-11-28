@@ -25,7 +25,7 @@ const TodoHeader =({
   const [ addATodo ] = useMutation(ADD_A_TODO, {
     refetchQueries: [
       {query: GET_TODOS}, 
-      'getTodos' 
+      'todos' 
     ],
   });
   const [ updateAllTodosStatus ] = useMutation(UPDATE_ALL_TODOS);

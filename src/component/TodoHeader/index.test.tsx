@@ -33,7 +33,7 @@ const mockSchema = addMocksToSchema({
   schema,
   resolvers: {
     Query: {
-      getTodos: getTodosQuerySpy
+      todos: getTodosQuerySpy
     },
     Mutation: {
       addATodo: addATodoMutationSpy,

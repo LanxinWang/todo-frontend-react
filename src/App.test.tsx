@@ -20,7 +20,7 @@ const mockSchema = addMocksToSchema({
   schema,
   resolvers: {
     Query: {
-      getTodos: () => ({ code: "200", message: "get all todos", todo: mockedTodos}),
+      todos: () => mockedTodos,
     }
   }
 });
