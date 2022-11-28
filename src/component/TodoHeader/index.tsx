@@ -28,12 +28,12 @@ const TodoHeader =({
       'getTodos' 
     ],
   });
-  const [ updateAllTodoStatus ] = useMutation(UPDATE_ALL_TODOS);
+  const [ updateAllTodosStatus ] = useMutation(UPDATE_ALL_TODOS);
   const [name, setName] = useState("");
 
   const handleLabelChange = (checkFlag: boolean) => {
-    const updateIds = todos.filter(todo => todo.status !== TODO_STATUS.DELETED).map(todo => todo._id);    
-    updateAllTodoStatus( { variables: {updateIds, isChecked: checkFlag }} )    
+    const updateIds = todos.filter(todo => todo.status !== TODO_STATUS.DELETED).map(todo => todo._id);
+    updateAllTodosStatus( { variables: {updateIds, isChecked: checkFlag }} )    
   };
   const handleKeyDown = (key: string) => {
     if (key === ENTER_KEY) {
